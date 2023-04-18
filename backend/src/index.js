@@ -5,7 +5,8 @@ const compression = require('compression');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
-
+const JSendResponse = require('./utils/jsend-response.js').JSendResponse;
+const AppError = require('./utils/app-error.js').AppError;
 
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/', { useNewUrlParser: true, useUnifiedTopology: true, dbName: 'projectFinder' })
@@ -18,29 +19,23 @@ app.use(compression());
 app.use(helmet());
 app.use(morgan('dev'));
 
-
-// Add security middleware
-app.use((req, res, next) => {
-    if (req.headers['x-api-key'] !== 'myapikey') {
-        res.status(401).send('Unauthorized');
-    } else {
-        next();
-    }
-});
-
 // Define routes
-app.get('/', (req, res) => {
+app.get('/api/v1/', (req, res) => {
     res.send('Hello World!');
 });
 
+app.use('/', require('./routes/auth.route.js'));
+
 // Global error handler middleware
-app.use((err, req, res, next) => {
-    if (err instanceof AppError) {
-        res.status(err.statusCode).json({ error: err.message, status: err.statusCode });
-    } else {
-        console.error(err.stack);
-        res.status(500).send('Something broke!');
+app.use((err, _, res, next) => {
+    try {
+        res.status(err.statusCode).json(new JSendResponse().fail(err.message));
     }
+    catch (e) {
+        console.error(err.stack);
+        res.status(500).json(new JSendResponse().error("Internal server error"));
+    }
+    next();
 });
 
 // Start the server

@@ -5,3 +5,5 @@ class AppError extends Error {
         this.name = this.constructor.name;
     }
 }
+
+module.exports = AppError;
