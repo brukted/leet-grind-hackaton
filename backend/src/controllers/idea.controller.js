@@ -55,7 +55,7 @@ exports.updateIdea = async (req, res, next) => {
   }
 };
 
-// Delete faq
+// Delete idea
 exports.deleteIdea = async (req, res, next) => {
   try {
     const getIdea = await Idea.findById(req.params.id);
@@ -81,10 +81,7 @@ exports.getIdea = async (req, res, next) => {
     const getIdea = await Idea.findById(req.params.id);
 
     // Respond
-    res.status(200).json({
-      status: "SUCCESS",
-      data: getIdea,
-    });
+
     res.send(new JSendResponse().success((data = idea)));
   } catch (error) {
     next(error);
