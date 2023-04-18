@@ -10,6 +10,11 @@ exports.createIdea = async (req, res, next) => {
     return next(new AppError("Request body is missing", 400));
   }
 
+  const idea = await Idea.findOne({ github: req.body.github });
+  if (idea) {
+    return next(new AppError("Idea already exist", 400));
+  }
+
   try {
     // create idea
     const idea = await Idea.create(req.body);
@@ -21,7 +26,7 @@ exports.createIdea = async (req, res, next) => {
       )
     );
   } catch (error) {
-    next(new AppError("Server Error", 500));
+    next(new AppError("Server Error", 500, error.stack));
   }
 };
 

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const gigSchema = new mongoose.Schema({
-    name: {
+    title: {
         type: String,
         required: true,
         minlength: 3,
@@ -18,16 +18,23 @@ const gigSchema = new mongoose.Schema({
         required: true
     },
     // Array of refs to ideas
-    ideas: [{
+    idea: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Idea'
-    }],
+        ref: 'Idea',
+        required: true
+    },
     // Array of refs to applications
     applications: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Application'
     }],
-   
+});
+
+gigSchema.pre('remove', async function (next) {
+    await this.model('Application').deleteMany({
+        gig: this._id
+    });
+    next();
 });
 
 // Export the model

@@ -29,19 +29,18 @@ app.use('/', require('./routes/auth.route.js'));
 
 // Protect all routes after this middleware
 app.use(protectRoute);
-app.use('/', require('./routes/profile.route.js'));
-app.use('/api/v1/idea', require('./routes/ideas.route.js'));
-app.use('/api/v1/application', require('./routes/application.route.js'));
-
+app.use('/api/v1/', require('./routes/profile.route.js'));
+app.use('/api/v1/ideas', require('./routes/ideas.route.js'));
+app.use('/api/v1', require('./routes/gig.route.js'));
 
 // Global error handler middleware
 app.use((err, _, res, next) => {
     try {
-        res.status(err.statusCode).json(new JSendResponse().fail(err.message));
+        res.status(err.statusCode).json(new JSendResponse().fail(err.message, err.stack));
     }
     catch (e) {
         console.error(err.stack);
-        res.status(500).json(new JSendResponse().error("Internal server error"));
+        res.status(500).json(new JSendResponse().error("Internal server error", err.stack));
     }
     next();
 });
