@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ProjectFinder</string>
+
+    <!-- Bottom Navigation -->
+    <string name="home">Home</string>
+    <string name="applications">Applications</string>
+    <string name="ideas">Ideas</string>
+    <string name="profile">Profile</string>
 </resources>
