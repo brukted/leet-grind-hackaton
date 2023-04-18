@@ -14,7 +14,6 @@ import com.leetgrind.projectfinder.common.Constants.USER_PREFERENCES
 import com.leetgrind.projectfinder.common.interceptors.AuthTokenInterceptor
 import com.leetgrind.projectfinder.common.interceptors.JSendInterceptor
 import com.leetgrind.projectfinder.common.interceptors.NetworkInterceptor
-import com.leetgrind.projectfinder.data.local.converters.ListToJsonConverter
 import com.leetgrind.projectfinder.data.local.prefs.LocalPrefStore
 import dagger.Module
 import dagger.Provides
@@ -37,10 +36,6 @@ object AppModule {
     @Provides
     @Singleton
     fun provideGson() = Gson()
-
-    @Provides
-    @Singleton
-    fun provideConverter(gson: Gson) = ListToJsonConverter(gson)
 
     @Provides
     @Singleton
