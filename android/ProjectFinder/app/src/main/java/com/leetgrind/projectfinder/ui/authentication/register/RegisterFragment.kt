@@ -1,4 +1,4 @@
-package com.leetgrind.projectfinder.ui.authentication
+package com.leetgrind.projectfinder.ui.authentication.register
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

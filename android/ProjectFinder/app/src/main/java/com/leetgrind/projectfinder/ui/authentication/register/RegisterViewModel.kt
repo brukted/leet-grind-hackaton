@@ -1,4 +1,4 @@
-package com.leetgrind.projectfinder.ui.authentication
+package com.leetgrind.projectfinder.ui.authentication.register
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -8,6 +8,11 @@ import com.leetgrind.projectfinder.common.Resource
 import com.leetgrind.projectfinder.data.repository.DefaultAuthRepository
 import com.leetgrind.projectfinder.domain.model.RegistrationForm
 import com.leetgrind.projectfinder.domain.model.ValidationResult
+import com.leetgrind.projectfinder.ui.authentication.validateCvLink
+import com.leetgrind.projectfinder.ui.authentication.validateEmail
+import com.leetgrind.projectfinder.ui.authentication.validateGithub
+import com.leetgrind.projectfinder.ui.authentication.validateLinkedIn
+import com.leetgrind.projectfinder.ui.authentication.validateName
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
