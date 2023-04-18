@@ -26,11 +26,13 @@ app.get('/api/v1/health', (req, res) => {
     res.send(new JSendResponse().success(data = undefined, message = 'Server is healthy'));
 });
 app.use('/', require('./routes/auth.route.js'));
-app.use('/api/v1/idea', require('./routes/ideas.route.js'));
 
 // Protect all routes after this middleware
 app.use(protectRoute);
 app.use('/', require('./routes/profile.route.js'));
+app.use('/api/v1/idea', require('./routes/ideas.route.js'));
+app.use('/api/v1/application', require('./routes/application.route.js'));
+
 
 // Global error handler middleware
 app.use((err, _, res, next) => {
