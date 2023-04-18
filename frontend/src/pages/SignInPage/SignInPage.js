@@ -67,6 +67,7 @@ export const SignIn = () => {
                                     <span className="label-text">Email</span>
                                 </label>
                                 <input
+                                    name="email"
                                     type="email"
                                     placeholder="your@email.com"
                                     className="input input-bordered w-full max-w-md"
@@ -80,6 +81,7 @@ export const SignIn = () => {
                                     <span className="label-text">Password</span>
                                 </label>
                                 <input
+                                    name="password"
                                     type="password"
                                     placeholder="Password"
                                     className="input input-bordered w-full max-w-xmds"
@@ -101,7 +103,7 @@ export const SignIn = () => {
                         <div className="text-center pt-12 pb-12">
                             <p>
                                 Don't have an account?{" "}
-                                <a href="register.html" className="underline font-semibold">
+                                <a href={`/sign-up`} className="underline font-semibold">
                                     Register here.
                                 </a>
                             </p>
