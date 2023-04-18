@@ -1,5 +1,6 @@
 
 const Application = require("../models/application.model");
+const Gig = require("../models/gig.model");
 const AppError = require("../utils/app-error");
 const { JSendResponse } = require("../utils/jsend-response");
 
@@ -17,6 +18,7 @@ exports.createApplication = async (req, res, next) => {
 
       // create application
       const application_ = await Application.create(req.body);
+      await Gig.findByIdAndUpdate(req.body.gig, {$push : {applications : application_._id }});
   
       res.send(
         new JSendResponse().success(
@@ -66,7 +68,8 @@ exports.deleteApplication = async (req, res, next) => {
         return next(new AppError("There is no application with the specified id", 400));
   
       await Application.findByIdAndDelete(req.params.id);
-     
+      await Gig.findByIdAndUpdate(req.body.gig, {$pull : {applications : application_._id }});
+      
       res.send(
         new JSendResponse().success(
           (data = undefined),

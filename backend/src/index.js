@@ -32,6 +32,7 @@ app.use(protectRoute);
 app.use('/api/v1/', require('./routes/profile.route.js'));
 app.use('/api/v1/ideas', require('./routes/ideas.route.js'));
 app.use('/api/v1', require('./routes/gig.route.js'));
+app.use('/api/v1/application', require('./routes/application.route.js'));
 
 // Global error handler middleware
 app.use((err, _, res, next) => {
