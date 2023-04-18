@@ -5,8 +5,8 @@ const compression = require('compression');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
+const protectRoute = require('./middlewares/auth.middleware.js');
 const JSendResponse = require('./utils/jsend-response.js').JSendResponse;
-const AppError = require('./utils/app-error.js').AppError;
 
 // Connect to MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/', { dbName: 'projectFinder' })
@@ -17,15 +17,20 @@ mongoose.connect('mongodb://127.0.0.1:27017/', { dbName: 'projectFinder' })
 app.use(bodyParser.json());
 app.use(compression());
 app.use(helmet());
-app.use(morgan('dev'));
+app.use(morgan('tiny'));
 
 // Define routes
-app.get('/api/v1/', (req, res) => {
-    res.send('Hello World!');
-});
 
+// Public routes
+app.get('/api/v1/health', (req, res) => {
+    res.send(new JSendResponse().success(data = undefined, message = 'Server is healthy'));
+});
 app.use('/', require('./routes/auth.route.js'));
 app.use('/api/v1/idea', require('./routes/ideas.route.js'));
+
+// Protect all routes after this middleware
+app.use(protectRoute);
+app.use('/', require('./routes/profile.route.js'));
 
 // Global error handler middleware
 app.use((err, _, res, next) => {
