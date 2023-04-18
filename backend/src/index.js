@@ -9,7 +9,7 @@ const JSendResponse = require('./utils/jsend-response.js').JSendResponse;
 const AppError = require('./utils/app-error.js').AppError;
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/', { useNewUrlParser: true, useUnifiedTopology: true, dbName: 'projectFinder' })
+mongoose.connect('mongodb://127.0.0.1:27017/', { dbName: 'projectFinder' })
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('Could not connect to MongoDB', err));
 
@@ -25,6 +25,7 @@ app.get('/api/v1/', (req, res) => {
 });
 
 app.use('/', require('./routes/auth.route.js'));
+app.use('/api/v1/idea', require('./routes/ideas.route.js'));
 
 // Global error handler middleware
 app.use((err, _, res, next) => {
