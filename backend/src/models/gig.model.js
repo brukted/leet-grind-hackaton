@@ -27,11 +27,7 @@ const gigSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Application'
     }],
-    // Array of refs to files
-    attachments: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'File'
-    }]
+   
 });
 
 // Export the model

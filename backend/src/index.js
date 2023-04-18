@@ -9,7 +9,7 @@ const protectRoute = require('./middlewares/auth.middleware.js');
 const JSendResponse = require('./utils/jsend-response.js').JSendResponse;
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/', { useNewUrlParser: true, useUnifiedTopology: true, dbName: 'projectFinder' })
+mongoose.connect('mongodb://127.0.0.1:27017/', { dbName: 'projectFinder' })
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('Could not connect to MongoDB', err));
 
@@ -26,6 +26,7 @@ app.get('/api/v1/health', (req, res) => {
     res.send(new JSendResponse().success(data = undefined, message = 'Server is healthy'));
 });
 app.use('/', require('./routes/auth.route.js'));
+app.use('/api/v1/idea', require('./routes/ideas.route.js'));
 
 // Protect all routes after this middleware
 app.use(protectRoute);
