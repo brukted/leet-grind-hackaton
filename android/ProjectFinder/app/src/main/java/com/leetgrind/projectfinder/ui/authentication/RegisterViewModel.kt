@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import com.leetgrind.projectfinder.domain.model.ValidationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
