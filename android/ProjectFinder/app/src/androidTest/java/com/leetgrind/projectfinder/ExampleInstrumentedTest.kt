@@ -1,4 +1,4 @@
-package com.example.projectfinder
+package com.leetgrind.projectfinder
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

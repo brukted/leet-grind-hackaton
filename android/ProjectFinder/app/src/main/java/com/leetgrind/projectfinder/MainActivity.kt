@@ -1,4 +1,4 @@
-package com.example.projectfinder
+package com.leetgrind.projectfinder
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
