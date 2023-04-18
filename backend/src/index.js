@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const protectRoute = require('./middlewares/auth.middleware.js');
 const JSendResponse = require('./utils/jsend-response.js').JSendResponse;
+var cors = require('cors')
+
 
 // Connect to MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/', { dbName: 'projectFinder' })
@@ -18,6 +20,9 @@ app.use(bodyParser.json());
 app.use(compression());
 app.use(helmet());
 app.use(morgan('tiny'));
+app.use(cors({
+    origin: '*',
+}));
 
 // Define routes
 
