@@ -1,12 +1,11 @@
 const Idea = require("../models/idea.model");
 const AppError = require("../utils/app-error");
-const { JSendResponse } = require('../utils/jsend-response');
+const { JSendResponse } = require("../utils/jsend-response");
 
 exports.createIdea = async (req, res, next) => {
   // Validate the request body
-  
 
-  req.body.author = req.user_id
+  req.body.author = req.user_id;
   if (!req.body) {
     return next(new AppError("Request body is missing", 400));
   }
@@ -15,17 +14,19 @@ exports.createIdea = async (req, res, next) => {
     // create idea
     const idea = await Idea.create(req.body);
 
-    res.send(new JSendResponse().success(data = idea, message = 'idea created successful'));
-
+    res.send(
+      new JSendResponse().success(
+        (data = idea),
+        (message = "idea created successful")
+      )
+    );
   } catch (error) {
     next(new AppError("Server Error", 500));
   }
 };
 
-
 // update idea
 exports.updateIdea = async (req, res, next) => {
-
   try {
     const getIdea = await Idea.findById(req.params.id);
 
@@ -38,67 +39,60 @@ exports.updateIdea = async (req, res, next) => {
       new: true,
     });
 
-    res.send(new JSendResponse().success(data = idea, message = 'idea created successful'));
-
-
+    res.send(
+      new JSendResponse().success(
+        (data = idea),
+        (message = "idea created successful")
+      )
+    );
   } catch (error) {
     next(new AppError("Server Error", 500));
   }
-
 };
-
 
 // Delete faq
 exports.deleteIdea = async (req, res, next) => {
-    try {
-      const getIdea = await Idea.findById(req.params.id);
-      if (!getIdea)
-        return next(new AppError("There is no idea with the specified id", 400));
+  try {
+    const getIdea = await Idea.findById(req.params.id);
+    if (!getIdea)
+      return next(new AppError("There is no idea with the specified id", 400));
 
-      await Idea.findByIdAndDelete(req.params.id);
-  
-    
-      res.send(new JSendResponse().success(data =  undefined, message = 'idea deleted successfully'));
+    await Idea.findByIdAndDelete(req.params.id);
 
-
-    } catch (error) {
-      next(error);
-    }
-  };
-
-
+    res.send(
+      new JSendResponse().success(
+        (data = undefined),
+        (message = "idea deleted successfully")
+      )
+    );
+  } catch (error) {
+    next(error);
+  }
+};
 
 // get ideas
 exports.getIdea = async (req, res, next) => {
-    try {
-      
+  try {
     const getIdea = await Idea.findById(req.params.id);
-        
-      // Respond
-      res.status(200).json({
-        status: "SUCCESS",
-        data: getIdea,
-      });
-      res.send(new JSendResponse().success(data = idea,));
 
-
-    } catch (error) {
-      next(error);
-    }
-  };
-
+    // Respond
+    res.status(200).json({
+      status: "SUCCESS",
+      data: getIdea,
+    });
+    res.send(new JSendResponse().success((data = idea)));
+  } catch (error) {
+    next(error);
+  }
+};
 
 // get ideas
 exports.getIdeas = async (req, res, next) => {
-    try {
+  try {
+    const getIdea = await Idea.find({ author: req.user_id });
 
-      const getIdea = await Idea.find({ author: req.user_id });
-
-      res.send(new JSendResponse().success(data = getIdea));
-      
-
-    } catch (error) {
-      next(error);
-    }
-  };
-
+    res.send(new JSendResponse().success((data = getIdea)));
+  } catch (error) {
+    next(error);
+  }
+};
