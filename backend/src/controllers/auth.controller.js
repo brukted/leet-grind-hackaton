@@ -29,12 +29,10 @@ const signup = async (req, res, next) => {
     // Save the user in the database
     try {
         const data = await user.save();
-        res.send(data);
+        res.send(new JSendResponse().success(data, message = 'User created successfully'));
     }
     catch (err) {
-        res.status(500).send({
-            message: err.message || "Some error occurred while creating the user."
-        });
+        res.status(500).send(new JSendResponse().fail(err.message));
     }
 }
 
@@ -55,17 +53,7 @@ const login = async (req, res, next) => {
     res.send(new JSendResponse().success(data = { user: user, token: token }, message = 'Login successful'));
 }
 
-const editProfile = async (req, res) => {
-
-}
-
-const getProfile = async (req, res) => {
-
-}
-
 module.exports = {
     signup,
-    login,
-    editProfile,
-    getProfile
+    login
 }
