@@ -4,12 +4,20 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import com.leetgrind.projectfinder.common.Resource
+import com.leetgrind.projectfinder.data.repository.DefaultAuthRepository
+import com.leetgrind.projectfinder.domain.model.RegistrationForm
 import com.leetgrind.projectfinder.domain.model.ValidationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.transform
 import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
+    private val authRepository: DefaultAuthRepository,
     application: Application
 ) : AndroidViewModel(application) {
     val firstName: MutableLiveData<String> = MutableLiveData("")
@@ -75,5 +83,30 @@ class RegisterViewModel @Inject constructor(
             value = it.isSuccessful
         }
     }
+
+    private fun getRegistrationForm() = RegistrationForm(
+        firstName = firstName.value!!,
+        lastName = lastName.value!!,
+        email = email.value!!,
+        github = github.value!!,
+        linkedIn = linkedIn.value!!,
+        cvLink = cvLink.value!!
+    )
+
+    fun register(): Flow<Resource<Unit>> = flow {
+        val registrationForm = getRegistrationForm()
+        authRepository.register(registrationForm)
+            .transform<Resource<Unit>, Resource<Unit>> { resource ->
+                when (resource) {
+                    is Resource.Loading -> this@flow.emit(Resource.Loading())
+                    is Resource.Success -> this@flow.emit(Resource.Success(data = Unit))
+                    is Resource.Error -> {
+                        this@flow.emit(Resource.Error(message = resource.message ?: "Unknown error"))
+                    }
+                }
+            }.collect()
+    }
+
+
 
 }
