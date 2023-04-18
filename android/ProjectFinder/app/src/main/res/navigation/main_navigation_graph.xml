@@ -6,19 +6,19 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="HomeFragment"
+        android:name="com.leetgrind.projectfinder.ui.home.HomeFragment"
         android:label="Home" />
     <fragment
         android:id="@+id/applicationsFragment"
-        android:name="ApplicationsFragment"
+        android:name="com.leetgrind.projectfinder.ui.applications.ApplicationsFragment"
         android:label="Applications" />
     <fragment
         android:id="@+id/ideasFragment"
-        android:name="IdeasFragment"
+        android:name="com.leetgrind.projectfinder.ui.ideas.IdeasFragment"
         android:label="Ideas" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="ProfileFragment"
+        android:name="com.leetgrind.projectfinder.ui.profile.ProfileFragment"
         android:label="Profile" />
 
 </navigation>
