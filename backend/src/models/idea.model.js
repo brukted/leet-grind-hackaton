@@ -23,30 +23,24 @@ const ideaSchema = new mongoose.Schema({
         maxlength: 255,
         unique: true
     },
-    
     // Array of refs to gigs
     gigs: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Gig'
     }],
-
     // Array of refs to files
     attachments: [String]
-    
 })
 
 
-ideaSchema.pre('remove', async function(next){
-
+ideaSchema.pre('remove', async function (next) {
     await this.model('Gig').deleteMany({
-      idea: this._id
+        idea: this._id
     });
 
-    console.log('done');
     next();
-  
-  });
-  
+});
+
 
 // Export the model
 module.exports = mongoose.model('Idea', ideaSchema);
