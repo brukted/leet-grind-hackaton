@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="registerViewModel"
+            type="com.leetgrind.projectfinder.ui.authentication.RegisterViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.authentication.RegisterFragment">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/firstName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:hint="First Name"
+            app:errorEnabled="true"
+            app:error="@{!registerViewModel.firstNameError.successful ? registerViewModel.firstNameError.errorMessage : null}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={registerViewModel.firstName}"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:hint="Last Name"
+            app:errorEnabled="true"
+            app:error="@{!registerViewModel.lastNameError.successful ? registerViewModel.lastNameError.errorMessage : null}"
+            app:layout_constraintEnd_toEndOf="@+id/firstName"
+            app:layout_constraintStart_toStartOf="@+id/firstName"
+            app:layout_constraintTop_toBottomOf="@+id/firstName">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={registerViewModel.lastName}"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:hint="Email"
+            app:errorEnabled="true"
+            app:error="@{!registerViewModel.emailError.successful ? registerViewModel.emailError.errorMessage : null}"
+            app:layout_constraintEnd_toEndOf="@+id/lastName"
+            app:layout_constraintStart_toStartOf="@+id/lastName"
+            app:layout_constraintTop_toBottomOf="@+id/lastName">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={registerViewModel.email}"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/github"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:hint="Github"
+            app:errorEnabled="true"
+            app:error="@{!registerViewModel.githubError.successful ? registerViewModel.githubError.errorMessage : null}"
+            app:layout_constraintEnd_toEndOf="@+id/email"
+            app:layout_constraintStart_toStartOf="@+id/email"
+            app:layout_constraintTop_toBottomOf="@+id/email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={registerViewModel.github}"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/linkedIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:hint="LinkedIn"
+            app:errorEnabled="true"
+            app:error="@{!registerViewModel.linkedInError.successful ? registerViewModel.linkedInError.errorMessage : null}"
+            app:layout_constraintEnd_toEndOf="@+id/github"
+            app:layout_constraintStart_toStartOf="@+id/github"
+            app:layout_constraintTop_toBottomOf="@+id/github">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={registerViewModel.linkedIn}"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/cvLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:hint="CV Link"
+            app:errorEnabled="true"
+            app:error="@{!registerViewModel.cvLinkError.successful ? registerViewModel.cvLinkError.errorMessage : null}"
+            app:layout_constraintEnd_toEndOf="@+id/linkedIn"
+            app:layout_constraintStart_toStartOf="@+id/linkedIn"
+            app:layout_constraintTop_toBottomOf="@+id/linkedIn">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={registerViewModel.cvLink}"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/register"
+            style="@style/Widget.Material3.Button.ElevatedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Register"
+            app:layout_constraintEnd_toEndOf="@+id/cvLink"
+            app:layout_constraintTop_toBottomOf="@+id/cvLink" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
