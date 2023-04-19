@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import { ideasState } from "../../recoil_state";
 import { useNavigate, useParams } from "react-router-dom";
 import IdeaCard from "../HomePage/components/IdeaCard";
+import { createApplication } from "../../services/applicationService";
 
 const ApplicationApply = () => {
   const { id } = useParams();
@@ -16,11 +17,20 @@ const ApplicationApply = () => {
     setIdea(result || {});
   }, [ideas, id]);
 
-  const handleMessageChange = (event) => setMessage(event.target.value);
+  const handleMessageChange = (event) => {
+    setMessage(event.target.value);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     // TODO: send form data to server
+    const formData = {
+      note: message,
+      gigId: idea.id,
+    };
+    if (formData.note && formData.gigId) {
+      createApplication(formData.gigId, formData.note);
+    }
   };
 
   const handleGoBack = () => {
@@ -50,9 +60,7 @@ const ApplicationApply = () => {
       <br></br>
       <div className="p-4 bg-white rounded-lg shadow-lg">
         <div className="flex items-center justify-between mb-4">
-          <div className="text-lg font-bold">
-            {idea && idea.author && idea.author.name}
-          </div>
+          <div className="text-lg font-bold">{idea && idea.author}</div>
         </div>
         <div className="mb-4">{idea.description}</div>
         <div className="flex flex-wrap gap-2 mb-4">

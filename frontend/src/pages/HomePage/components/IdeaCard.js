@@ -15,15 +15,7 @@ const IdeaCard = ({ idea }) => {
   return (
     <div className="p-4 bg-white rounded-lg shadow-lg">
       <div className="flex items-center justify-between mb-4">
-        <div className="text-lg font-bold">{author.name}</div>
-        <div className="flex items-center space-x-2">
-          <button className="p-2 transition-colors duration-200 bg-gray-100 rounded-full hover:bg-gray-200">
-            <Heart size={20} />
-          </button>
-          <button className="p-2 transition-colors duration-200 bg-gray-100 rounded-full hover:bg-gray-200">
-            <Eye size={20} />
-          </button>
-        </div>
+        <div className="text-lg font-bold">{author}</div>
       </div>
       <div className="mb-4">{description}</div>
       <div className="flex flex-wrap gap-2 mb-4">
@@ -40,7 +32,7 @@ const IdeaCard = ({ idea }) => {
       <div className="flex items-center justify-between">
         <a
           href={githubLink}
-          target="_blank"
+          target={githubLink}
           rel="noreferrer"
           className="text-blue-500 hover:underline"
         >

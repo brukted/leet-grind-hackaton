@@ -3,114 +3,30 @@ import { Clipboard, Clock, CheckCircle, XCircle } from "phosphor-react";
 import TabItem from "../components/TabItem";
 import ApplicationTableRow from "../components/ApplicationTableRow.js";
 import { MyApplicationCard } from "../../../  components/MyApplicationCard";
-import axios from "axios";
 import { useRecoilState } from "recoil";
 import { myApplicationsState } from "../../../recoil_state";
+import { getMyApplications } from "../../../services/applicationService";
 
 const Applications = () => {
   const [activeTab, setActiveTab] = useState("Pending");
   const [applications, setApplications] = useRecoilState(myApplicationsState);
 
   useEffect(() => {
-    setApplications([
-      {
-        id: 1,
-        title: "Software Engineer",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
-        note: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
-        createdAt: "April 17, 2023",
-        status: "Pending",
-        applications: [],
-      },
-      {
-        id: 2,
-        title: "Product Manager",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
-        note: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
-        createdAt: "April 15, 2023",
-        status: "Pending",
-        applications: [],
-      },
-      {
-        id: 3,
-        title: "Data Analyst",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
-        note: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
-        createdAt: "April 12, 2023",
-        status: "Accepted",
-        applications: [],
-      },
-      {
-        id: 4,
-        title: "UX Designer",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
-        note: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
-        createdAt: "April 10, 2023",
-        status: "Accepted",
-        applications: [],
-      },
-      {
-        id: 5,
-        title: "Marketing Specialist",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
-        note: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
-        createdAt: "April 7, 2023",
-        status: "Accepted",
-        applications: [],
-      },
-      {
-        id: 6,
-        title: "Business Development Manager",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
-        note: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
-        createdAt: "April 5, 2023",
-        status: "Accepted",
-        applications: [],
-      },
-      {
-        id: 7,
-        title: "Graphic Designer",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
-        note: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
-        createdAt: "April 2, 2023",
-        status: "Accepted",
-        applications: [],
-      },
-      {
-        id: 8,
-        title: "Customer Support Representative",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
-        note: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
-        createdAt: "March 30, 2023",
-        status: "Rejected",
-        applications: [],
-      },
-    ]);
-    // axios
-    //   .get("/me/applications")
-    //   .then((response) => {
-    //     console.log("Response Applications: ", response);
-    //     const result = response.data.data.map((val) => {
-    //       return {
-    //         title: val.gig.title,
-    //         description: val.gig.description,
-    //         createdAt: val.gig.createdAt,
-    //         status: val.status,
-    //       };
-    //     });
-    //     setApplications(result);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
+    getMyApplications().then((response) => {
+      console.log("My Applications: ", response);
+      const results = response.map((val) => {
+        return {
+          id: val._id,
+          title: val.gigModel.title,
+          note: val.note,
+          createdAt: val.createdAt,
+          status: val.status,
+          description: val.gigModel.description,
+          tags: val.gigModel.tags,
+        };
+      });
+      setApplications(results || []);
+    });
   }, []);
 
   const handleTabClick = (tabName) => {
@@ -154,7 +70,9 @@ const Applications = () => {
         {activeTab === "Pending" && (
           <div class="grid grid-cols-1 gap-4">
             {applications
-              .filter((val) => val.status === "Pending")
+              .filter(
+                (val) => val.status.toLowerCase() === "Pending".toLowerCase()
+              )
               .map((application) => (
                 <MyApplicationCard
                   key={application.id}
@@ -166,7 +84,9 @@ const Applications = () => {
         {activeTab === "Accepted" && (
           <div class="grid grid-cols-1 gap-4">
             {applications
-              .filter((val) => val.status === "Accepted")
+              .filter(
+                (val) => val.status.toLowerCase() === "Accepted".toLowerCase()
+              )
               .map((application) => (
                 <MyApplicationCard
                   key={application.id}
@@ -178,7 +98,9 @@ const Applications = () => {
         {activeTab === "Rejected" && (
           <div class="grid grid-cols-1 gap-4">
             {applications
-              .filter((val) => val.status === "Rejected")
+              .filter(
+                (val) => val.status.toLowerCase() === "Rejected".toLowerCase()
+              )
               .map((application) => (
                 <MyApplicationCard
                   key={application.id}
