@@ -2,6 +2,7 @@ const JSendResponse = require("../utils/jsend-response").JSendResponse;
 const Gig = require("../models/gig.model");
 const Idea = require("../models/idea.model");
 const AppError = require("../utils/app-error");
+const Application = require("../models/application.model");
 
 exports.create = async (req, res, next) => {
     // Validate request
@@ -20,7 +21,7 @@ exports.create = async (req, res, next) => {
     // Save gig in the database
     try {
         const data = await gig.save();
-        res.send(data);
+        res.send(await data.populate('ideaModel'));
     }
     catch (err) {
         return next(new AppError(err.message || "Some error occurred while creating the gig.", 500, err.stack))
@@ -48,7 +49,7 @@ exports.update = async (req, res, next) => {
             description: req.body.description,
             tags: req.body.tags,
             idea: req.params.ideaId
-        }, { new: true });
+        }, { new: true }).populate('ideaModel');
         res.send(new JSendResponse().success(data = gig, message = "Gig updated successfully"));
     }
     catch (err) {
@@ -71,8 +72,20 @@ exports.deleteGig = async (req, res, next) => {
 
 exports.findAll = async (req, res, next) => {
     try {
-        const ideas = await Gig.find({ idea: req.params.ideaId });
-        res.send(new JSendResponse().success(data = ideas, message = "Gigs retrieved successfully"));
+        const gigs = await Gig.find({ idea: req.params.ideaId }).populate('ideaModel');
+        const myApps = (await Application.find({ applicant: req.user_id })).map(app => app.gig);
+
+        const filteredGigs = gigs.map(gig => {
+            if (myApps.includes(gig.id)) {
+                return { ...gig.toObject(), hasUserApplied: true };
+            }
+            else {
+                return { ...gig.toObject(), hasUserApplied: false };
+            }
+        }
+        );
+
+        res.send(new JSendResponse().success(data = filteredGigs, message = "Gigs retrieved successfully"));
     }
     catch (err) {
         return next(new AppError(err.message || "Some error occurred while retrieving gigs.", 500, err.stack));
@@ -82,7 +95,7 @@ exports.findAll = async (req, res, next) => {
 exports.getMyGigs = async (req, res, next) => {
     try {
         const ideas = await Idea.find({ author: req.user_id });
-        const gigs = await Gig.find({ idea: { $in: ideas } });
+        const gigs = await Gig.find({ idea: { $in: ideas } }).populate('ideaModel');
         res.send(new JSendResponse().success(data = gigs, message = "Gigs retrieved successfully"));
     }
     catch (err) {
