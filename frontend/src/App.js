@@ -4,11 +4,16 @@ import { SignIn } from "./pages/SignInPage/SignInPage";
 import { SignUp } from "./pages/SignUpPage/SignUpPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import HomePage from "./pages/HomePage/HomePage";
+import ApplicationApply from "./pages/ApplicationApplyForm.js/ApplicationApplyForm";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <LandingPage />,
+  },
+  {
+    path: "/apply/:id",
+    element: <ApplicationApply />,
   },
   {
     path: "/home",
