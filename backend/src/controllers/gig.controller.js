@@ -1,5 +1,6 @@
 const JSendResponse = require("../utils/jsend-response").JSendResponse;
 const Gig = require("../models/gig.model");
+const Idea = require("../models/idea.model");
 const AppError = require("../utils/app-error");
 
 exports.create = async (req, res, next) => {
@@ -77,3 +78,14 @@ exports.findAll = async (req, res, next) => {
         return next(new AppError(err.message || "Some error occurred while retrieving gigs.", 500, err.stack));
     }
 };
+
+exports.getMyGigs = async (req, res, next) => {
+    try {
+        const ideas = await Idea.find({ author: req.user_id });
+        const gigs = await Gig.find({ idea: { $in: ideas } });
+        res.send(new JSendResponse().success(data = gigs, message = "Gigs retrieved successfully"));
+    }
+    catch (err) {
+        return next(new AppError(err.message || "Some error occurred while retrieving gigs.", 500, err.stack));
+    }
+}

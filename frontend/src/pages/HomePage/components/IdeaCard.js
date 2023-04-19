@@ -18,7 +18,7 @@ const IdeaCard = ({ idea }) => {
         </div>
       </div>
       <div className="mb-4">{description}</div>
-      <div className="flex flex-wrap mb-4">
+      <div className="flex flex-wrap mb-4 gap-2">
         {tags.map((tag) => (
           <button
             key={tag}

@@ -28,7 +28,7 @@ const gigSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Application'
     }],
-});
+}, { timestamps: true });
 
 gigSchema.pre('remove', async function (next) {
     await this.model('Application').deleteMany({
