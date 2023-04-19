@@ -3,6 +3,7 @@ package com.leetgrind.projectfinder.data.model.response
 import com.google.gson.annotations.SerializedName
 
 data class ApplicationResponse(
+    val id: String,
     @SerializedName("gigModel")
     val gig: GigResponse,
     @SerializedName("applicantModel")
@@ -11,11 +12,11 @@ data class ApplicationResponse(
     val status: ApplicationStatus,
 )
 
-enum class ApplicationStatus {
+enum class ApplicationStatus(text: String) {
     @SerializedName("pending")
-    PENDING,
+    PENDING("pending"),
     @SerializedName("accepted")
-    ACCEPTED,
+    ACCEPTED("accepted"),
     @SerializedName("rejected")
-    REJECTED
+    REJECTED("rejected")
 }

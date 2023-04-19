@@ -18,4 +18,7 @@ class ApplicationsViewModel @Inject constructor(
     fun getMyApplications(): LiveData<Resource<List<ApplicationResponse>>> =
         repository.getMyApplications().asLiveData()
 
+    fun retractApplication(application: ApplicationResponse): LiveData<Resource<Void>> =
+        repository.cancelApplication(application.id).asLiveData()
+
 }

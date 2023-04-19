@@ -46,21 +46,29 @@ class HomeFragment : Fragment() {
                 is Resource.Loading -> {
                     binding.progressBar.show()
                     binding.ideasRecyclerview.gone()
+                    binding.errorText.gone()
+                    binding.noIdeasText.gone()
                 }
                 is Resource.Success -> {
                     binding.progressBar.gone()
                     binding.ideasRecyclerview.show()
+                    binding.errorText.gone()
                     binding.swipeRefresh.isRefreshing = false
                     if (it.value!!.isNotEmpty()) {
-                        adapter.setItems(it.value)
+                        binding.ideasRecyclerview.show()
                         binding.noIdeasText.gone()
+                        adapter.setItems(it.value)
                     } else {
+                        binding.ideasRecyclerview.gone()
                         binding.noIdeasText.show()
                     }
                 }
                 else -> {
                     binding.progressBar.gone()
                     binding.ideasRecyclerview.gone()
+                    binding.errorText.show()
+                    binding.noIdeasText.gone()
+                    binding.errorText.text = it.message
                     binding.swipeRefresh.isRefreshing = false
                 }
             }

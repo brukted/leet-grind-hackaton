@@ -16,4 +16,5 @@
     <string name="author_prefix">Author: %s</string>
     <string name="no_applications_yet">No applications yet</string>
     <string name="no_ideas_found">No ideas found</string>
+    <string name="my_notes">My Notes</string>
 </resources>
