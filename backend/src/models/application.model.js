@@ -34,5 +34,12 @@ applicationSchema.virtual("applicantModel", {
     justOne: true,
 });
 
+applicationSchema.virtual("gigModel", {
+    ref: "Gig",
+    localField: "gig",
+    foreignField: "_id",
+    justOne: true,
+});
+
 // Export the model
 module.exports = mongoose.model('Application', applicationSchema);
