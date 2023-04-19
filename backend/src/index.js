@@ -25,6 +25,9 @@ app.use(cors({
     origin: '*',
 }));
 
+// Serve static files
+app.use(express.static('public'));
+
 // Define routes
 
 // Public routes
@@ -33,12 +36,11 @@ app.get('/api/v1/health', (req, res) => {
 });
 app.use('/', require('./routes/auth.route.js'));
 
-// Protect all routes after this middleware
-app.use(protectRoute);
-app.use('/api/v1/', require('./routes/profile.route.js'));
-app.use('/api/v1/ideas', require('./routes/ideas.route.js'));
-app.use('/api/v1', require('./routes/gig.route.js'));
-app.use('/api/v1/application', require('./routes/application.route.js'));
+// Protected routes
+app.use('/api/v1/', protectRoute, require('./routes/profile.route.js'));
+app.use('/api/v1/ideas', protectRoute, require('./routes/ideas.route.js'));
+app.use('/api/v1', protectRoute, require('./routes/gig.route.js'));
+app.use('/api/v1/application', protectRoute, require('./routes/application.route.js'));
 
 // Global error handler middleware
 app.use((err, _, res, next) => {
