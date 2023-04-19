@@ -77,3 +77,13 @@ exports.findAll = async (req, res, next) => {
         return next(new AppError(err.message || "Some error occurred while retrieving gigs.", 500, err.stack));
     }
 };
+
+exports.getMyGigs = async (req, res, next) => {
+    try {
+        const gigs = await Gig.find({ idea: req.user._id });
+        res.send(new JSendResponse().success(data = gigs, message = "Gigs retrieved successfully"));
+    }
+    catch (err) {
+        return next(new AppError(err.message || "Some error occurred while retrieving gigs.", 500, err.stack));
+    }
+}
