@@ -15,17 +15,15 @@ class LocalPrefStore(private val prefsDataStore: DataStore<Preferences>) {
 
     suspend fun getAuthToken() = prefsDataStore.data.first()[JWT_TOKEN_PREF_KEY]
 
-    suspend fun getUserId() = prefsDataStore.data.first()[USER_ID_PREF_KEY]
-
     suspend fun setAuthToken(token: String) {
         prefsDataStore.edit { preferences ->
             preferences[JWT_TOKEN_PREF_KEY] = token
         }
     }
 
-    suspend fun setUserId(id: String) {
+    suspend fun removeToken() {
         prefsDataStore.edit { preferences ->
-            preferences[USER_ID_PREF_KEY] = id
+            preferences.remove(JWT_TOKEN_PREF_KEY)
         }
     }
 

@@ -1,8 +1,16 @@
+import { useNavigate } from "react-router-dom";
 import React from "react";
 import { Heart, Eye } from "phosphor-react";
+import ApplicationApply from "../../ApplicationApplyForm.js/ApplicationApplyForm";
 
 const IdeaCard = ({ idea }) => {
   const { author, tags, description, githubLink, id } = idea;
+
+  const navigate = useNavigate();
+
+  const handleApplyClick = () => {
+    navigate(`/apply/${idea.id}`);
+  };
 
   return (
     <div className="p-4 bg-white rounded-lg shadow-lg">
@@ -18,12 +26,12 @@ const IdeaCard = ({ idea }) => {
         </div>
       </div>
       <div className="mb-4">{description}</div>
-      <div className="flex flex-wrap mb-4 gap-2">
+      <div className="flex flex-wrap gap-2 mb-4">
         {tags.map((tag) => (
           <button
             key={tag}
             id={tag}
-            className="py-1 px-2 mr-2 rounded-lg border"
+            className="px-2 py-1 mr-2 border rounded-lg"
           >
             {tag}
           </button>
@@ -38,7 +46,10 @@ const IdeaCard = ({ idea }) => {
         >
           View on Github
         </a>
-        <button className="px-4 py-2 text-white transition-colors duration-200 rounded-lg bg-primary hover:bg-secondary">
+        <button
+          onClick={handleApplyClick}
+          className="px-4 py-2 text-white transition-colors duration-200 rounded-lg bg-primary hover:bg-secondary"
+        >
           Apply
         </button>
       </div>
