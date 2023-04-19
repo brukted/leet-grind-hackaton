@@ -1,11 +1,311 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_refresh"
+    android:paddingHorizontal="8dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Profile" />
+        android:fillViewport="true"
+        android:scrollbars="none">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/main_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/profile_picture"
+                    android:layout_width="170dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="32dp"
+                    android:padding="3dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/roundedProfilePictureShapeOverlay"
+                    app:srcCompat="@drawable/default_profile"
+                    app:strokeColor="?attr/colorSecondary"
+                    app:strokeWidth="2dp" />
+
+                <TextView
+                    android:id="@+id/full_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/profile_picture"
+                    tools:text="Default Name" />
+
+                <TextView
+                    android:id="@+id/details_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/profile_details"
+                    android:textSize="14.4sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/details_card"
+                    app:layout_constraintStart_toStartOf="@+id/details_card" />
+
+                <LinearLayout
+                    android:id="@+id/details_card"
+                    style="@style/BaseCustomCard"
+                    android:layout_marginTop="48dp"
+                    android:layout_marginHorizontal="18dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/full_name">
+
+                    <LinearLayout
+                        android:id="@+id/details_card_telegram"
+                        style="@style/BaseCustomCardChildren"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/profile_card_ripple_top"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/details_card_telegram_text"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:drawableLeftCompat="@drawable/ic_telegram"
+                            android:drawablePadding="14dp"
+                            android:gravity="center_vertical"
+                            tools:text="Telegram"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="12.6sp" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp" />
+
+                    <LinearLayout
+                        android:id="@+id/details_card_phone"
+                        style="@style/BaseCustomCardChildren"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <TextView
+                            android:id="@+id/details_card_phone_text"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            tools:text="Phone"
+                            app:drawableLeftCompat="@drawable/ic_phone"
+                            android:drawablePadding="14dp"
+                            android:gravity="center_vertical"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="12.6sp" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:id="@+id/details_card_phone_divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"/>
+
+                    <LinearLayout
+                        android:id="@+id/details_card_email"
+                        style="@style/BaseCustomCardChildren"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/profile_card_ripple_bottom"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/details_card_email_text"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            tools:text="Email"
+                            app:drawableLeftCompat="@drawable/ic_email"
+                            android:drawablePadding="14dp"
+                            android:gravity="center_vertical"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="12.6sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/links_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/profile_links"
+                    android:textSize="14.4sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/links_card"
+                    app:layout_constraintStart_toStartOf="@+id/links_card" />
+
+                <LinearLayout
+                    android:id="@+id/links_card"
+                    style="@style/BaseCustomCard"
+                    android:layout_marginHorizontal="18dp"
+                    android:layout_marginTop="58dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/details_card">
+
+                    <LinearLayout
+                        android:id="@+id/links_card_resume"
+                        style="@style/BaseCustomCardChildren"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/profile_card_ripple_top"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/links_card_resume_text"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:drawableLeftCompat="@drawable/ic_attachment"
+                            android:drawablePadding="14dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/profile_resume"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="12.6sp" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp" />
+
+                    <LinearLayout
+                        android:id="@+id/links_card_linkedin"
+                        style="@style/BaseCustomCardChildren"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/links_card_linkedin_text"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:drawableLeftCompat="@drawable/ic_linkedin"
+                            android:drawablePadding="14dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/profile_linkedin"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="12.6sp" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"/>
+
+                    <LinearLayout
+                        android:id="@+id/links_card_github"
+                        style="@style/BaseCustomCardChildren"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/profile_card_ripple_bottom"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/details_card_github_text"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:drawableLeftCompat="@drawable/ic_github"
+                            android:drawablePadding="14dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/profile_github"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="12.6sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/log_out_card"
+                    style="@style/BaseCustomCard"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginHorizontal="18dp"
+                    android:layout_marginBottom="18dp"
+                    android:background="@drawable/profile_card_ripple_single"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/links_card">
+
+                    <TextView
+                        android:id="@+id/profile_fragment_logout_text"
+                        style="@style/BaseCustomCardChildren"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawablePadding="14dp"
+                        android:gravity="center_vertical"
+                        android:importantForAccessibility="no"
+                        android:paddingVertical="18dp"
+                        android:text="@string/profile_log_out"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="12.6sp"
+                        app:drawableLeftCompat="@drawable/ic_logout" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

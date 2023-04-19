@@ -14,7 +14,7 @@ const fileSchema = new mongoose.Schema({
         maxlength: 255,
         unique: true
     },
-});
+}, { timestamps: true });
 
 
 // Export the model
