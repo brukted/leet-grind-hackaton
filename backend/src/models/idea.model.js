@@ -6,6 +6,12 @@ const ideaSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    title: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 255
+    },
     tags: {
         type: [String],
         required: true

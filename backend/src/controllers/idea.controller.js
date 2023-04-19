@@ -78,10 +78,9 @@ exports.deleteIdea = async (req, res, next) => {
 // get ideas
 exports.getIdea = async (req, res, next) => {
   try {
-    const getIdea = await Idea.findById(req.params.id);
+    const idea = await Idea.findById(req.params.id);
 
     // Respond
-
     res.send(new JSendResponse().success((data = idea)));
   } catch (error) {
     next(error);
@@ -89,9 +88,9 @@ exports.getIdea = async (req, res, next) => {
 };
 
 // get ideas
-exports.getIdeas = async (req, res, next) => {
+exports.getAllIdeas = async (_, res, next) => {
   try {
-    const getIdea = await Idea.find({ author: req.user_id });
+    const getIdea = await Idea.find();
 
     res.send(new JSendResponse().success((data = getIdea)));
   } catch (error) {
