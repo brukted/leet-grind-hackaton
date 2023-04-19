@@ -66,8 +66,19 @@
             android:name="idea"
             app:argType="com.leetgrind.projectfinder.domain.model.Idea" />
         <argument
-            android:name="shouldGoToApplicants"
+            android:name="isIdeaOwner"
             app:argType="boolean" />
+        <action
+            android:id="@+id/action_ideaDetail_to_applicantsFragment"
+            app:destination="@id/applicantsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/applicantsFragment"
+        android:name="com.leetgrind.projectfinder.ui.detail.applicants.ApplicantsFragment"
+        android:label="Applicants" >
+        <argument
+            android:name="gig"
+            app:argType="com.leetgrind.projectfinder.data.model.response.GigResponse" />
     </fragment>
 
 </navigation>

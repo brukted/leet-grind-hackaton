@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.leetgrind.projectfinder.data.model.response.GigResponse
 import com.leetgrind.projectfinder.databinding.TempGigItemBinding
 
-class GigsAdapter : RecyclerView.Adapter<GigsAdapter.ViewHolder>() {
+class GigsAdapter(
+    private val listener: GigListener
+) : RecyclerView.Adapter<GigsAdapter.ViewHolder>() {
 
     private var _allItems: List<GigResponse> = listOf()
 
@@ -24,6 +26,9 @@ class GigsAdapter : RecyclerView.Adapter<GigsAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.title.text = _allItems[position].title
+        holder.itemView.setOnClickListener {
+            listener.onGigClicked(_allItems[position])
+        }
     }
 
     override fun getItemCount(): Int {
@@ -34,4 +39,9 @@ class GigsAdapter : RecyclerView.Adapter<GigsAdapter.ViewHolder>() {
         _allItems = gigs
         notifyDataSetChanged()
     }
+
+    interface GigListener {
+        fun onGigClicked(gig: GigResponse)
+    }
+
 }

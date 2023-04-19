@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.leetgrind.projectfinder.R
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
     private val binding: ActivityMainBinding get() = _binding!!
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     @Inject
     lateinit var authRepository: DefaultAuthRepository
@@ -45,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.main_activity_nav_host) as NavHostFragment
         val navController = navHostFragment.navController
 
-        val appBarConfiguration = AppBarConfiguration(
+        appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.homeFragment,
                 R.id.ideasFragment,
@@ -57,4 +59,7 @@ class MainActivity : AppCompatActivity() {
         binding.mainActivityBottomNav.setupWithNavController(navController)
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
+
+    override fun onSupportNavigateUp(): Boolean =
+        findNavController(R.id.main_activity_nav_host).navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
 }
