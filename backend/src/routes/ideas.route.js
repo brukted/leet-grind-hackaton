@@ -2,7 +2,7 @@ const express = require("express");
 const ideaController = require("../controllers/idea.controller");
 const router = express.Router();
 
-router.route("/ideas").post(ideaController.createIdea).get(ideaController.getIdeas);
+router.route("/ideas").post(ideaController.createIdea).get(ideaController.getAllIdeas);
 
 router.get("/me/ideas", ideaController.getMyIdeas);
 
