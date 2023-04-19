@@ -35,8 +35,9 @@ const userSchema = new mongoose.Schema({
         maxlength: 255,
     },
     resume: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'File',
+        type: String,
+        minlength: 5,
+        maxlength: 255,
     },
     linkedin: {
         type: String,
