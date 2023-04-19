@@ -21,7 +21,7 @@ exports.createIdea = async (req, res, next) => {
 
     res.send(
       new JSendResponse().success(
-        (data = idea),
+        (data = await idea.populate('authorModel')),
         (message = "idea created successful")
       )
     );
@@ -78,7 +78,7 @@ exports.deleteIdea = async (req, res, next) => {
 // get ideas
 exports.getIdea = async (req, res, next) => {
   try {
-    const idea = await Idea.findById(req.params.id);
+    const idea = await Idea.findById(req.params.id).populate('authorModel');
 
     // Respond
     res.send(new JSendResponse().success((data = idea)));
@@ -90,8 +90,7 @@ exports.getIdea = async (req, res, next) => {
 // get ideas
 exports.getAllIdeas = async (_, res, next) => {
   try {
-    const getIdea = await Idea.find();
-
+    const getIdea = await Idea.find().populate('authorModel');
     res.send(new JSendResponse().success((data = getIdea)));
   } catch (error) {
     next(error);
@@ -100,7 +99,7 @@ exports.getAllIdeas = async (_, res, next) => {
 
 exports.getMyIdeas = async (req, res, next) => {
   try {
-    const getIdea = await Idea.find({ author: req.user_id });
+    const getIdea = await Idea.find({ author: req.user_id }).populate('authorModel');
 
     res.send(new JSendResponse().success((data = getIdea)));
   } catch (error) {

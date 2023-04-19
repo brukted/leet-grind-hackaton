@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { House, Clipboard, List, User, SignOut } from "phosphor-react";
 import Home from "./TabPages/Home";
 import { MyPostings } from "./TabPages/MyPostings";
+import { Profile } from "./TabPages/Profile";
 import Applications from "./TabPages/Application";
 import TabItem from "./components/TabItem";
 
@@ -17,11 +18,10 @@ const HomePage = () => {
 
     return (
       <button
-        className={`flex items-center justify-start w-full h-12 px-4 transition-colors duration-200 rounded-none focus:outline-none ${
-          isActive
-            ? "text-white bg-primary"
-            : "text-gray-500 hover:text-white hover:bg-secondary"
-        }`}
+        className={`flex items-center justify-start w-full h-12 px-4 transition-colors duration-200 rounded-none focus:outline-none ${isActive
+          ? "text-white bg-primary"
+          : "text-gray-500 hover:text-white hover:bg-secondary"
+          }`}
         onClick={() => handleTabClick(tabName)}
       >
         <Icon
@@ -73,10 +73,10 @@ const HomePage = () => {
       <main className="fixed top-0 bottom-0 right-0 overflow-auto left-60">
         {activeTab === "Home" && <Home />}
         {activeTab === "My Postings" && <MyPostings />}
+        {activeTab === "Profile" && <Profile />}
         {activeTab === "Applications" && <Applications />}
-        {/* {activeTab === "Profile" && <Profile />} */}
-      </main>
-    </div>
+      </main >
+    </div >
   );
 };
 

@@ -4,11 +4,11 @@ const userSchema = Joi.object({
     name: Joi.string().min(3).max(50).required(),
     lastname: Joi.string().min(3).max(50).required(),
     email: Joi.string().min(5).max(255).required().email(),
-    phone: Joi.string().min(5).max(255).required().regex(/^\+\d{12}$/).messages(
+    phone: Joi.string().min(5).max(255).regex(/^\+\d{12}$/).messages(
         { 'string.pattern.base': 'Phone number must be in international format (e.g. +251901234567)' }),
-    linkedin: Joi.string().min(5).max(255).required().regex(/^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9]+\/?$/).messages(
+    linkedin: Joi.string().min(5).max(255).regex(/^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9]+\/?$/).messages(
         { 'string.pattern.base': 'LinkedIn profile must be a valid URL (e.g. https://www.linkedin.com/in/username)' }),
-    github: Joi.string().min(5).max(255).required().regex(/^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9]+\/?$/).messages(
+    github: Joi.string().min(5).max(255).regex(/^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9]+\/?$/).messages(
         { 'string.pattern.base': 'GitHub profile must be a valid URL (e.g. https://www.github.com/username)' }),
     telegram: Joi.string().min(5).max(255).required().regex(/^(https?:\/\/)?(www\.)?t.me\/[a-zA-Z0-9]+\/?$/).messages(
         { 'string.pattern.base': 'Telegram profile must be a valid URL (e.g. https://t.me/username)' }),
@@ -45,7 +45,9 @@ const validateLogin = (req, res, next) => {
 };
 
 const validateUser = (req, res, next) => {
-    const { error } = userSchema.validate(req.body);
+    const { error } = userSchema.validate(req.body, options = {
+        allowUnknown: true
+    });
     if (error) {
         return res.status(400).json({ message: error.details[0].message });
     }
