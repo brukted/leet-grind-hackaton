@@ -38,39 +38,50 @@ import axios from "axios";
  */
 
 /**
- * 
+ *
  * @returns a list of gigs
  */
+
+export const getGigs = async () => {
+  return axios.get("/gigs").then((response) => {
+    return response.data.data;
+  });
+};
+
 export const getMyGigs = async () => {
-    return axios.get("/me/gigs").then((response) => {
-        return response.data.data;
-    });
+  return axios.get("/me/gigs").then((response) => {
+    return response.data.data;
+  });
 };
 
 // Return a list of gigs for this idea
 export const getIdeaGigs = async (ideaId) => {
-    return axios.get(`/ideas/${ideaId}/gigs`).then((response) => {
-        return response.data.data;
-    });
-}
+  return axios.get(`/ideas/${ideaId}/gigs`).then((response) => {
+    return response.data.data;
+  });
+};
 
 // Returns a single gig
 export const createGig = async (title, description, tags, ideaId) => {
-    return axios.post(`/ideas/${ideaId}/gigs`, { title, description, tags }).then((response) => {
-        return response.data.data;
+  return axios
+    .post(`/ideas/${ideaId}/gigs`, { title, description, tags })
+    .then((response) => {
+      return response.data.data;
     });
-}
+};
 
 // Returns a single gig
 export const updateGig = async (gigId, ideaId, title, description, tags) => {
-    return axios.put(`/ideas/${ideaId}/gigs/${gigId}`, { title, description, tags }).then((response) => {
-        return response.data.data;
+  return axios
+    .put(`/ideas/${ideaId}/gigs/${gigId}`, { title, description, tags })
+    .then((response) => {
+      return response.data.data;
     });
-}
+};
 
 // Returns a single gig
 export const deleteGig = async (gigId, ideaId) => {
-    return axios.delete(`/ideas/${ideaId}/gigs/${gigId}`).then((response) => {
-        return response.data.data;
-    });
-}
+  return axios.delete(`/ideas/${ideaId}/gigs/${gigId}`).then((response) => {
+    return response.data.data;
+  });
+};

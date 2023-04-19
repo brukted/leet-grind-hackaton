@@ -2,117 +2,38 @@ import React, { useEffect, useState } from "react";
 import IdeaCard from "../components/IdeaCard";
 import { ideasState } from "../../../recoil_state";
 import { useRecoilState } from "recoil";
+import { getGigs, getIdeaGigs } from "../../../services/gigService";
+import { getAllIdeas } from "../../../services/ideaService";
 
 const Home = () => {
   const [ideas, setIdeas] = useRecoilState(ideasState);
 
-  useEffect(()=>{
-    setIdeas([
-      {
-        id: 1,
-        author: { name: "John Doe", id: "1" },
-        tags: ["web development", "React"],
-        description:
-          "Looking for a developer to collaborate with on a web development project using React.",
-        githubLink: "https://github.com/johndoe/my-project",
-      },
-      {
-        id: 2,
-        author: { name: "Jane Smith", id: "2" },
-        tags: ["mobile app", "Flutter"],
-        description:
-          "I'm looking for a collaborator to help me build a mobile app using Flutter. Previous experience with the framework preferred.",
-        githubLink: "https://github.com/janesmith/my-app",
-      },
-      {
-        id: 3,
-        author: { name: "Tom Wilson", id: "3" },
-        tags: ["data analysis", "Python"],
-        description:
-          "Looking for a data analyst to help me analyze and visualize data using Python.",
-        githubLink: "https://github.com/tomwilson/data-analysis",
-      },
-      {
-        id: 4,
-        author: { name: "Emily Lee", id: "4" },
-        tags: ["game development", "Unity"],
-        description:
-          "I'm looking for a collaborator to help me create a game using Unity. Experience with game development preferred.",
-        githubLink: "https://github.com/emilylee/my-game",
-      },
-      {
-        id: 5,
-        author: { name: "Alex Brown", id: "5" },
-        tags: ["UI design", "Figma"],
-        description:
-          "Looking for a UI designer to help me design a web app using Figma.",
-        githubLink: "https://github.com/alexbrown/my-app",
-      },
-      {
-        id: 6,
-        author: { name: "David Kim", id: "6" },
-        tags: ["machine learning", "Python"],
-        description:
-          "Looking for a collaborator to help me build a machine learning model using Python.",
-        githubLink: "https://github.com/davidkim/my-model",
-      },
-      {
-        id: 7,
-        author: { name: "Olivia Lee", id: "7" },
-        tags: ["front-end development", "Vue.js"],
-        description:
-          "I'm looking for a collaborator to help me build a front-end using Vue.js. Previous experience with the framework preferred.",
-        githubLink: "https://github.com/oliviale/my-app",
-      },
-      {
-        id: 8,
-        author: { name: "Henry Park", id: "8" },
-        tags: ["back-end development", "Node.js"],
-        description:
-          "Looking for a collaborator to help me build a back-end using Node.js.",
-        githubLink: "https://github.com/henrypark/my-app",
-      },
-      {
-        id: 9,
-        author: { name: "Sarah Johnson", id: "9" },
-        tags: ["web development", "Ruby on Rails"],
-        description:
-          "I'm looking for a collaborator to help me build a web app using Ruby on Rails. Previous experience with the framework preferred.",
-        githubLink: "https://github.com/sarahj/my-app",
-      },
-      {
-        id: 10,
-        author: { name: "Michael Brown", id: "10" },
-        tags: ["mobile app", "React Native"],
-        description:
-          "Looking for a collaborator to help me build a mobile app using React Native. Previous experience with the framework preferred.",
-        githubLink: "https://github.com/michaelb/my-app",
-      },
+  useEffect(() => {
+    getGigs().then((response) => {
+      console.log("Response: ", response);
+      const tags = new Set();
+      const results = response.map((val) => {
+        val.tags.forEach((element) => {
+          tags.add(element);
+        });
 
-      // add more ideas here
-    ]);
-  },[]);
+        return {
+          id: val._id,
+          title: val.title,
+          author: val.title,
+          tags: val.tags,
+          description: val.description,
+          githubLink: val.ideaModel.github,
+        };
+      });
+      setIdeas(results || []);
+      setAvailableTags(Array.from(tags));
+    });
+  }, []);
 
   const [searchValue, setSearchValue] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
-  const [availableTags, setAvailableTags] = useState([
-    "mobile app",
-    "Flutter",
-    "data analysis",
-    "game development",
-    "Unity",
-    "UI design",
-    "Figma",
-    "machine learning",
-    "Python",
-    "front-end development",
-    "Vue.js",
-    "back-end development",
-    "Node.js",
-    "web development",
-    "Ruby on Rails",
-    "React Native",
-  ]);
+  const [availableTags, setAvailableTags] = useState([]);
 
   const handleTagSelect = (tag) => {
     if (!selectedTags.includes(tag)) {

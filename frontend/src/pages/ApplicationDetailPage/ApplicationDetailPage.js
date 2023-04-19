@@ -21,34 +21,32 @@ export default function ApplicationDetailPage() {
   }, [applications, id]);
 
   return (
-    <div class="max-w-2xl mx-auto mt-8">
-      <a
-        href="#"
-        class="flex items-center text-gray-500 hover:text-gray-700"
-        onClick={handleGoBack}
-      >
-        <svg
-          class="h-5 w-5 mr-1"
-          fill="none"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+    <div class="max-w-2xl mx-auto">
+      <div class="z-10 mt-8">
+        <a
+          href="#"
+          class="flex items-center text-gray-500 hover:text-gray-700"
+          onClick={handleGoBack}
         >
-          <path d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-        </svg>
-        Back
-      </a>
-      <div class="flex justify-center items-center h-screen">
+          <svg
+            class="h-5 w-5 mr-1"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Back
+        </a>
+      </div>
+      <div class="flex justify-center items-center h-screen mt-8">
         <div class="bg-white shadow-lg rounded-lg px-6 py-8 max-w-2xl">
           <h3 class="text-lg font-semibold leading-7 text-gray-900 mb-4">
             Application Details
           </h3>
-          <p class="text-sm leading-6 text-gray-500 mb-8">
-            Description, applied date, message used to apply, status, and author
-            of the application.
-          </p>
           <dl class="divide-y divide-gray-100">
             <div class="py-4">
               <dt class="text-sm font-medium leading-6 text-gray-900">
@@ -79,25 +77,44 @@ export default function ApplicationDetailPage() {
                 Status
               </dt>
               <dd class="mt-1 text-sm leading-6 text-gray-700 flex items-center">
-                {application.status === "Pending" && <Clock size={16} />}
-                {application.status === "Accepted" && (
-                  <CheckCircle size={16} weight="fill" color="#10B981" />
-                )}
-                {application.status === "Rejected" && (
-                  <XCircle size={16} weight="fill" color="#EF4444" />
-                )}
+                {application &&
+                  application.status &&
+                  application.status.toLowerCase() ===
+                    "Pending".toLowerCase() && <Clock size={16} />}
+                {application &&
+                  application.status &&
+                  application.status.toLowerCase() ===
+                    "Accepted".toLowerCase() && (
+                    <CheckCircle size={16} weight="fill" color="#10B981" />
+                  )}
+                {application &&
+                  application.status &&
+                  application.status.toLowerCase() ===
+                    "Rejected".toLowerCase() && (
+                    <XCircle size={16} weight="fill" color="#EF4444" />
+                  )}
                 <span class="ml-2">{application.status}</span>
               </dd>
             </div>
 
             <div class="py-4">
-              <dt class="text-sm font-medium leading-6 text-gray-900">
-                Author
-              </dt>
-              <dd class="mt-1 text-sm leading-6 text-gray-700">Someone</dd>
+              <dt class="text-sm font-medium leading-6 text-gray-900">Tags</dt>
+              <dd class="mt-1 text-sm leading-6 text-gray-700 flex items-center">
+                {application &&
+                  application.tags &&
+                  application.tags.map((tag) => (
+                    <button
+                      key={tag}
+                      id={tag}
+                      className="px-2 py-1 mr-2 border rounded-lg"
+                    >
+                      {tag}
+                    </button>
+                  ))}
+              </dd>
             </div>
 
-            <div class="py-4">
+            {/* <div class="py-4">
               <dt class="text-sm font-medium leading-6 text-gray-900">
                 Github Link
               </dt>
@@ -111,7 +128,7 @@ export default function ApplicationDetailPage() {
                   View on Github
                 </a>
               </dd>
-            </div>
+            </div> */}
           </dl>
         </div>
       </div>
