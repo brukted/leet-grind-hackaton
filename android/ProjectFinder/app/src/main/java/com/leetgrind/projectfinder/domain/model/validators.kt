@@ -65,3 +65,11 @@ fun validateCvLink(cvLink: String) = when {
     )
     else -> ValidationResult(isSuccessful = true)
 }
+
+fun validateTelegramHandle(telegramHandle: String) = when {
+    telegramHandle.isBlank() -> ValidationResult(
+        isSuccessful = false,
+        errorMessage = "Telegram handle cannot be blank"
+    )
+    else -> ValidationResult(isSuccessful = true)
+}

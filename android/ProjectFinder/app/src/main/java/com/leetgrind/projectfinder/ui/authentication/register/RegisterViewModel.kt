@@ -8,11 +8,14 @@ import com.leetgrind.projectfinder.common.Resource
 import com.leetgrind.projectfinder.data.repository.DefaultAuthRepository
 import com.leetgrind.projectfinder.domain.model.RegistrationForm
 import com.leetgrind.projectfinder.domain.model.ValidationResult
+import com.leetgrind.projectfinder.domain.model.validateConfirmPassword
 import com.leetgrind.projectfinder.domain.model.validateCvLink
 import com.leetgrind.projectfinder.domain.model.validateEmail
 import com.leetgrind.projectfinder.domain.model.validateGithub
 import com.leetgrind.projectfinder.domain.model.validateLinkedIn
 import com.leetgrind.projectfinder.domain.model.validateName
+import com.leetgrind.projectfinder.domain.model.validatePassword
+import com.leetgrind.projectfinder.domain.model.validateTelegramHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -31,6 +34,9 @@ class RegisterViewModel @Inject constructor(
     val github: MutableLiveData<String> = MutableLiveData("")
     val linkedIn: MutableLiveData<String> = MutableLiveData("")
     val cvLink: MutableLiveData<String> = MutableLiveData("")
+    val telegramHandle: MutableLiveData<String> = MutableLiveData("")
+    val password: MutableLiveData<String> = MutableLiveData("")
+    val confirmPassword: MutableLiveData<String> = MutableLiveData("")
 
     val firstNameError = MutableLiveData<ValidationResult>()
     val lastNameError = MutableLiveData<ValidationResult>()
@@ -38,6 +44,9 @@ class RegisterViewModel @Inject constructor(
     val githubError = MutableLiveData<ValidationResult>()
     val linkedInError = MutableLiveData<ValidationResult>()
     val cvLinkError = MutableLiveData<ValidationResult>()
+    val telegramHandleError = MutableLiveData<ValidationResult>()
+    val passwordError = MutableLiveData<ValidationResult>()
+    val confirmPasswordError = MutableLiveData<ValidationResult>()
 
     private val isFormValid = MediatorLiveData<Boolean>().apply {
         addSource(firstNameError) {
@@ -58,6 +67,15 @@ class RegisterViewModel @Inject constructor(
         addSource(cvLinkError) {
             value = it.isSuccessful
         }
+        addSource(telegramHandleError) {
+            value = it.isSuccessful
+        }
+        addSource(passwordError) {
+            value = it.isSuccessful
+        }
+        addSource(confirmPasswordError) {
+            value = it.isSuccessful
+        }
     }
 
     private fun getRegistrationForm() = RegistrationForm(
@@ -66,7 +84,9 @@ class RegisterViewModel @Inject constructor(
         email = email.value!!,
         github = github.value!!,
         linkedIn = linkedIn.value!!,
-        cvLink = cvLink.value!!
+        cvLink = cvLink.value!!,
+        telegramHandle = telegramHandle.value!!,
+        password = password.value!!,
     )
 
     private fun validateForm(): Boolean {
@@ -76,13 +96,22 @@ class RegisterViewModel @Inject constructor(
         githubError.value = validateGithub(github.value!!)
         linkedInError.value = validateLinkedIn(linkedIn.value!!)
         cvLinkError.value = validateCvLink(cvLink.value!!)
+        telegramHandleError.value = validateTelegramHandle(telegramHandle.value!!)
+        passwordError.value = validatePassword(password.value!!)
+        confirmPasswordError.value = validateConfirmPassword(
+            password.value!!,
+            confirmPassword.value!!
+        )
 
         return firstNameError.value!!.isSuccessful &&
                 lastNameError.value!!.isSuccessful &&
                 emailError.value!!.isSuccessful &&
                 githubError.value!!.isSuccessful &&
                 linkedInError.value!!.isSuccessful &&
-                cvLinkError.value!!.isSuccessful
+                cvLinkError.value!!.isSuccessful &&
+                telegramHandleError.value!!.isSuccessful &&
+                passwordError.value!!.isSuccessful &&
+                confirmPasswordError.value!!.isSuccessful
     }
 
     fun register(): Flow<Resource<Unit>> = flow {
