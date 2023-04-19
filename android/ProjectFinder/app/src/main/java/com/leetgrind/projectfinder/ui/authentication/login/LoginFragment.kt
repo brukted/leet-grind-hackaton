@@ -56,7 +56,7 @@ class LoginFragment : Fragment() {
                                 }
 
                                 is Resource.Success -> {
-                                    // TODO: Handle success
+                                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                                 }
 
                                 else -> {

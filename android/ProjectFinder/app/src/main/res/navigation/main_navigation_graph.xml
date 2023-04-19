@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation_graph"
-    app:startDestination="@id/register2">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -20,7 +20,13 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.leetgrind.projectfinder.ui.profile.ProfileFragment"
-        android:label="Profile" />
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@+id/main_navigation_graph"/>
+    </fragment>
     <fragment
         android:id="@+id/register2"
         android:name="com.leetgrind.projectfinder.ui.authentication.register.RegisterFragment"
@@ -38,6 +44,11 @@
         <action
             android:id="@+id/action_loginFragment_to_register2"
             app:destination="@id/register2" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@+id/main_navigation_graph"
+            app:popUpToInclusive="true"/>
     </fragment>
 
 </navigation>

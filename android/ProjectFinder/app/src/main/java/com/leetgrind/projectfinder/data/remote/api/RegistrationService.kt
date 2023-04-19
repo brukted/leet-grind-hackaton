@@ -10,9 +10,9 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface RegistrationService {
-    @POST("api/v1/signup")
+    @POST("signup")
     suspend fun signUp(@Body registrationRequest: RegistrationRequest): Response<JSendResponse<RegistrationResponse>>
 
-    @POST("api/v1/login")
+    @POST("login")
     suspend fun login(@Body loginRequest: LoginRequest ): Response<JSendResponse<LoginResponse>>
 }

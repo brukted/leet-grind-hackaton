@@ -48,4 +48,8 @@ class DefaultAuthRepository @Inject constructor(
             }
             emit(result)
         }.flowOn(ioDispatcher)
+
+    suspend fun getAuthToken() = localPrefStore.getAuthToken()
+
+    suspend fun logOut() = localPrefStore.removeToken()
 }
