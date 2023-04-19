@@ -15,6 +15,8 @@ import com.leetgrind.projectfinder.common.interceptors.AuthTokenInterceptor
 import com.leetgrind.projectfinder.common.interceptors.JSendInterceptor
 import com.leetgrind.projectfinder.common.interceptors.NetworkInterceptor
 import com.leetgrind.projectfinder.data.local.prefs.LocalPrefStore
+import com.leetgrind.projectfinder.data.remote.api.RegistrationService
+import com.leetgrind.projectfinder.data.repository.DefaultAuthRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -86,5 +88,24 @@ object AppModule {
     fun providesLocalPrefStore(prefsDataStore: DataStore<Preferences>): LocalPrefStore {
         return LocalPrefStore(prefsDataStore)
     }
+
+    @Provides
+    @Singleton
+    fun provideRegistrationApiService(retrofit: Retrofit): RegistrationService =
+        retrofit.create(RegistrationService::class.java)
+
+    @Provides
+    @Singleton
+    fun providesAuthRepository(
+        registrationService: RegistrationService,
+        localPrefStore: LocalPrefStore,
+        @ApplicationContext applicationContext: Context
+    ): DefaultAuthRepository =
+        DefaultAuthRepository(
+            applicationContext,
+            registrationService,
+            ioDispatcher = Dispatchers.IO,
+            localPrefStore,
+        )
 
 }

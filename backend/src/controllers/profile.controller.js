@@ -13,8 +13,16 @@ const getProfile = async (req, res) => {
     res.send(new JSendResponse().success(data = user, message = 'Profile retrieved successfully'));
 }
 
+const getUserById = async (req, res, next) => {
+    const user = await userModel.findById(req.params.userId);
+    if (!user) {
+        return next(new AppError('User not found', 404));
+    }
+    res.send(new JSendResponse().success(data = user, message = 'User retrieved successfully'));
+};
 
 module.exports = {
     editProfile,
-    getProfile
+    getProfile,
+    getUserById
 }
