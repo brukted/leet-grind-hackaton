@@ -10,6 +10,13 @@ export const myGigsState = atom({
   default: [], // default value (aka initial value)
 });
 
+
+export const myApplicationsState = atom({
+  key: "myApplicationsState", // unique ID (with respect to other atoms/selectors)
+  default: [], // default value (aka initial value)
+});
+
+
 export const ideasState = atom({
   key: "ideasState", // unique ID (with respect to other atoms/selectors)
   default: [], // default value (aka initial value)
