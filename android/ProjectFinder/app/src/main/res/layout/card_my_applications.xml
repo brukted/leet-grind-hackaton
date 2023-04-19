@@ -2,7 +2,8 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="6dp"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,18 +27,21 @@
             android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/button"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/chipGroup"
+            app:layout_constraintTop_toBottomOf="@id/chipGroup"
             tools:text="Pending" />
 
         <TextView
             android:id="@+id/authorName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/my_notes"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
             app:layout_constraintStart_toStartOf="@+id/ideaTitle"
-            app:layout_constraintTop_toBottomOf="@+id/ideaTitle"
-            tools:text="My Notes" />
+            app:layout_constraintTop_toBottomOf="@+id/ideaTitle" />
 
         <TextView
             android:id="@+id/ideaDescription"
@@ -72,10 +76,10 @@
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:text="Retract Application"
+            app:layout_constraintBottom_toBottomOf="@id/status"
             app:layout_constraintEnd_toEndOf="@+id/chipGroup"
-            app:layout_constraintTop_toBottomOf="@+id/chipGroup" />
+            app:layout_constraintTop_toTopOf="@+id/status" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
