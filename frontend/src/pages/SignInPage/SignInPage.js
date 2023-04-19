@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { login } from "../../services/authService";
 import { XCircle } from "@phosphor-icons/react";
-import { loggedInUser } from "../../recoil_state";
+import { loggedInUserState } from "../../recoil_state";
 import { useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ export const SignIn = () => {
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(false);
-    const setSignedInUser = useSetRecoilState(loggedInUser);
+    const setSignedInUser = useSetRecoilState(loggedInUserState);
     const navigate = useNavigate();
 
     useEffect(() => {
