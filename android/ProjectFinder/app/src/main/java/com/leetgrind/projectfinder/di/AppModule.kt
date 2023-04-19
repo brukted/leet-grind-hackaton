@@ -15,8 +15,10 @@ import com.leetgrind.projectfinder.common.interceptors.AuthTokenInterceptor
 import com.leetgrind.projectfinder.common.interceptors.JSendInterceptor
 import com.leetgrind.projectfinder.common.interceptors.NetworkInterceptor
 import com.leetgrind.projectfinder.data.local.prefs.LocalPrefStore
+import com.leetgrind.projectfinder.data.remote.api.ProfileService
 import com.leetgrind.projectfinder.data.remote.api.RegistrationService
 import com.leetgrind.projectfinder.data.repository.DefaultAuthRepository
+import com.leetgrind.projectfinder.data.repository.ProfileRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -107,5 +109,15 @@ object AppModule {
             ioDispatcher = Dispatchers.IO,
             localPrefStore,
         )
+
+    @Provides
+    @Singleton
+    fun provideProfileService(retrofit: Retrofit): ProfileService =
+        retrofit.create(ProfileService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideProfileRepository(profileService: ProfileService, ): ProfileRepository =
+        ProfileRepository(profileService)
 
 }
