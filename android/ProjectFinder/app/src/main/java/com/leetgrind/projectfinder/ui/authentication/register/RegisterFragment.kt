@@ -73,5 +73,11 @@ class RegisterFragment : Fragment() {
                     }
             }
         }
+
+        binding.apply {
+            binding.alreadyHaveAnAccountBtn.setOnClickListener{
+                findNavController().navigate(R.id.action_register2_to_loginFragment)
+            }
+        }
     }
 }

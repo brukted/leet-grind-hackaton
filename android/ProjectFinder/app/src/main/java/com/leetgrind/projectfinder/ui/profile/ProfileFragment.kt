@@ -59,7 +59,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun fillOutProfile(profile: ProfileResponse) {
-        binding.fullName.text = getString(R.string.full_name, profile.name, profile.lastName)
+        binding.fullName.text = getString(R.string.full_name, profile.firstName, profile.lastName)
         binding.detailsCardEmailText.text = profile.email
         binding.detailsCardTelegramText.text = profile.telegram
         if (profile.phone != null) {

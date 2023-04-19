@@ -43,8 +43,6 @@ class DefaultAuthRepository @Inject constructor(
 
                 response.body()!!.apply {
                     localPrefStore.setAuthToken(this.data!!.token)
-//                    localPrefStore.setUserId(data.user.id)
-//                    localPrefStore.setMyProfile(this.data.user.toProfile())
                 }
                 return@buildResource
             }
