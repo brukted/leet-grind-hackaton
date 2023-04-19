@@ -33,6 +33,9 @@ class IdeaDetailFragment : Fragment() {
 
         binding.apply {
             gigsRecyclerView.adapter = adapter
+            swipeRefresh.setOnRefreshListener {
+                getGigs(navArgs.idea)
+            }
         }
 
         populateData(navArgs.idea)
@@ -61,11 +64,13 @@ class IdeaDetailFragment : Fragment() {
                 is Resource.Success -> {
                     binding.gigsProgressBar.gone()
                     binding.gigsRecyclerView.show()
+                    binding.swipeRefresh.isRefreshing = false
                     adapter.setItems(it.value!!)
                 }
                 is Resource.Error -> {
                     binding.gigsProgressBar.gone()
                     binding.gigsRecyclerView.gone()
+                    binding.swipeRefresh.isRefreshing = false
                 }
             }
         }

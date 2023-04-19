@@ -10,6 +10,6 @@ data class IdeaResponse(
     val tags: List<String>,
     val description: String,
     val github: String,
-    val gigs: List<Any>?,
+    val gigs: List<String>?,
     val attachments: List<String>?,
 )

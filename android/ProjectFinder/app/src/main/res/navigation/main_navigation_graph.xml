@@ -61,7 +61,7 @@
     <fragment
         android:id="@+id/ideaDetail"
         android:name="com.leetgrind.projectfinder.ui.detail.IdeaDetailFragment"
-        android:label="IdeaDetail" >
+        android:label="Details">
         <argument
             android:name="idea"
             app:argType="com.leetgrind.projectfinder.domain.model.Idea" />
