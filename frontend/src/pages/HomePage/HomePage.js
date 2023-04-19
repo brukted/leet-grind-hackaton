@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { House, Clipboard, List, User, SignOut } from "phosphor-react";
 import Home from "./TabPages/Home";
 import { MyPostings } from "./TabPages/MyPostings";
+import { Profile } from "./TabPages/Profile";
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState("Home");
@@ -50,8 +51,8 @@ const HomePage = () => {
       <main className="fixed top-0 left-60 right-0 bottom-0 overflow-auto">
         {activeTab === "Home" && <Home />}
         {activeTab === "My Postings" && <MyPostings />}
-        {/* {activeTab === "Applications" && <Applications />}
-        {activeTab === "Profile" && <Profile />} */}
+        {activeTab === "Profile" && <Profile />}
+        {/* {activeTab === "Applications" && <Applications />*/}
       </main>
     </div>
   );
