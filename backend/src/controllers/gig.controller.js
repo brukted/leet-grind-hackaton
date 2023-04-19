@@ -80,7 +80,7 @@ exports.findAll = async (req, res, next) => {
 
 exports.getMyGigs = async (req, res, next) => {
     try {
-        const gigs = await Gig.find({ idea: req.user._id });
+        const gigs = await Gig.find({ idea: req.user_id });
         res.send(new JSendResponse().success(data = gigs, message = "Gigs retrieved successfully"));
     }
     catch (err) {
