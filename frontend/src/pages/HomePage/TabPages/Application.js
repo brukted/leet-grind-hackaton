@@ -1,53 +1,98 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Clipboard, Clock, CheckCircle, XCircle } from "phosphor-react";
 import TabItem from "../components/TabItem";
 import ApplicationTableRow from "../components/ApplicationTableRow.js";
+import { MyApplicationCard } from "../../../  components/MyApplicationCard";
+import axios from "axios";
 
 const Applications = () => {
   const [activeTab, setActiveTab] = useState("Pending");
-
   const [applications, setApplications] = useState([
     {
-      name: "John Doe",
-      date: "April 17, 2023",
+      title: "Software Engineer",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
+      createdAt: "April 17, 2023",
       status: "Pending",
+      applications: [],
     },
     {
-      name: "Jane Smith",
-      date: "April 15, 2023",
+      title: "Product Manager",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
+      createdAt: "April 15, 2023",
       status: "Pending",
+      applications: [],
     },
     {
-      name: "Alex Johnson",
-      date: "April 12, 2023",
+      title: "Data Analyst",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
+      createdAt: "April 12, 2023",
       status: "Accepted",
+      applications: [],
     },
     {
-      name: "Sarah Lee",
-      date: "April 10, 2023",
+      title: "UX Designer",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
+      createdAt: "April 10, 2023",
       status: "Accepted",
+      applications: [],
     },
     {
-      name: "David Kim",
-      date: "April 7, 2023",
+      title: "Marketing Specialist",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
+      createdAt: "April 7, 2023",
       status: "Accepted",
+      applications: [],
     },
     {
-      name: "Olivia Brown",
-      date: "April 5, 2023",
+      title: "Business Development Manager",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
+      createdAt: "April 5, 2023",
       status: "Accepted",
+      applications: [],
     },
     {
-      name: "Emily Wilson",
-      date: "April 2, 2023",
+      title: "Graphic Designer",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
+      createdAt: "April 2, 2023",
       status: "Accepted",
+      applications: [],
     },
     {
-      name: "Peter Parker",
-      date: "March 30, 2023",
+      title: "Customer Support Representative",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.",
+      createdAt: "March 30, 2023",
       status: "Rejected",
+      applications: [],
     },
   ]);
+
+  // useEffect(() => {
+  //   axios
+  //     .get("/me/applications")
+  //     .then((response) => {
+  //       console.log("Response Applications: ", response);
+  //       const result = response.data.data.map((val) => {
+  //         return {
+  //           title: val.gig.title,
+  //           description: val.gig.description,
+  //           createdAt: val.gig.createdAt,
+  //           status: val.status,
+  //         };
+  //       });
+  //       setApplications(result);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, []);
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
@@ -79,28 +124,49 @@ const Applications = () => {
   return (
     <div className="flex flex-col h-full">
       <div className="px-4 pt-8">
-        <h2 className="text-xl font-bold">Applications</h2>
+        <h2 className="text-xl font-bold">My Applications </h2>
       </div>
       <nav className="flex mt-8 border-b border-gray-300">
-        <SubNavItem tabName="Pending" Icon={Clock} count={2} />
-        <SubNavItem tabName="Accepted" Icon={CheckCircle} count={5} />
-        <SubNavItem tabName="Rejected" Icon={XCircle} count={1} />
+        <SubNavItem tabName="Pending" Icon={Clock} count={""} />
+        <SubNavItem tabName="Accepted" Icon={CheckCircle} count={""} />
+        <SubNavItem tabName="Rejected" Icon={XCircle} count={""} />
       </nav>
       <div className="flex-1 px-4 py-8 overflow-auto">
         {activeTab === "Pending" && (
-          <ApplicationTableRow
-            rows={applications.filter((val) => val.status === "Pending")}
-          />
+          <div class="grid grid-cols-1 gap-4">
+            {applications
+              .filter((val) => val.status === "Pending")
+              .map((application) => (
+                <MyApplicationCard
+                  key={application.id}
+                  application={application}
+                />
+              ))}
+          </div>
         )}
         {activeTab === "Accepted" && (
-          <ApplicationTableRow
-            rows={applications.filter((val) => val.status === "Accepted")}
-          />
+          <div class="grid grid-cols-1 gap-4">
+            {applications
+              .filter((val) => val.status === "Accepted")
+              .map((application) => (
+                <MyApplicationCard
+                  key={application.id}
+                  application={application}
+                />
+              ))}
+          </div>
         )}
         {activeTab === "Rejected" && (
-          <ApplicationTableRow
-            rows={applications.filter((val) => val.status === "Rejected")}
-          />
+          <div class="grid grid-cols-1 gap-4">
+            {applications
+              .filter((val) => val.status === "Rejected")
+              .map((application) => (
+                <MyApplicationCard
+                  key={application.id}
+                  application={application}
+                />
+              ))}
+          </div>
         )}
       </div>
     </div>

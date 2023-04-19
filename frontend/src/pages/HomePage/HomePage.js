@@ -73,8 +73,8 @@ const HomePage = () => {
       <main className="fixed top-0 bottom-0 right-0 overflow-auto left-60">
         {activeTab === "Home" && <Home />}
         {activeTab === "My Postings" && <MyPostings />}
-        {/* {activeTab === "Applications" && <Applications />}
-        {activeTab === "Profile" && <Profile />} */}
+        {activeTab === "Applications" && <Applications />}
+        {/* {activeTab === "Profile" && <Profile />} */}
       </main>
     </div>
   );
