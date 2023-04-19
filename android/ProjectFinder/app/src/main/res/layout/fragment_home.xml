@@ -34,7 +34,7 @@
             android:id="@+id/no_ideas_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No ideas found"
+            android:text="@string/no_ideas_found"
             android:textSize="30sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
