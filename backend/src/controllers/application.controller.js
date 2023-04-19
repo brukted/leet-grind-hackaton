@@ -123,7 +123,7 @@ exports.getMyApplications = async (req, res, next) => {
 
 exports.getGigApplications = async (req, res, next) => {
   try {
-    const getApplications_ = await Application.find({ gig: req.params.id }).populate('applicantModel').populate('gigModel');
+    const getApplications_ = await Application.find({ gig: req.params.gigId }).populate('applicantModel').populate('gigModel');
 
     res.send(new JSendResponse().success((data = getApplications_)));
   } catch (error) {
