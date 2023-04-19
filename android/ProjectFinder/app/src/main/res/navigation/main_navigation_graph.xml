@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/register2">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -20,5 +21,23 @@
         android:id="@+id/profileFragment"
         android:name="com.leetgrind.projectfinder.ui.profile.ProfileFragment"
         android:label="Profile" />
+    <fragment
+        android:id="@+id/register2"
+        android:name="com.leetgrind.projectfinder.ui.authentication.register.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_register2_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.leetgrind.projectfinder.ui.authentication.login.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_register2"
+            app:destination="@id/register2" />
+    </fragment>
 
 </navigation>
