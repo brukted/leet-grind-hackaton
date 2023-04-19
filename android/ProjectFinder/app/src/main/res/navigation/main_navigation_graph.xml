@@ -8,7 +8,11 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.leetgrind.projectfinder.ui.home.HomeFragment"
-        android:label="Home" />
+        android:label="Home" >
+        <action
+            android:id="@+id/action_homeFragment_to_ideaDetail"
+            app:destination="@id/ideaDetail" />
+    </fragment>
     <fragment
         android:id="@+id/applicationsFragment"
         android:name="com.leetgrind.projectfinder.ui.applications.ApplicationsFragment"
@@ -16,7 +20,11 @@
     <fragment
         android:id="@+id/ideasFragment"
         android:name="com.leetgrind.projectfinder.ui.ideas.IdeasFragment"
-        android:label="Ideas" />
+        android:label="Ideas" >
+        <action
+            android:id="@+id/action_ideasFragment_to_ideaDetail"
+            app:destination="@id/ideaDetail" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.leetgrind.projectfinder.ui.profile.ProfileFragment"
@@ -49,6 +57,17 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@+id/main_navigation_graph"
             app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/ideaDetail"
+        android:name="com.leetgrind.projectfinder.ui.detail.IdeaDetailFragment"
+        android:label="IdeaDetail" >
+        <argument
+            android:name="idea"
+            app:argType="com.leetgrind.projectfinder.domain.model.Idea" />
+        <argument
+            android:name="shouldGoToApplicants"
+            app:argType="boolean" />
     </fragment>
 
 </navigation>
