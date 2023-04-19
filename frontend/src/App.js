@@ -5,6 +5,7 @@ import { SignUp } from "./pages/SignUpPage/SignUpPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import HomePage from "./pages/HomePage/HomePage";
 import ApplicationApply from "./pages/ApplicationApplyForm.js/ApplicationApplyForm";
+import ApplicationDetailPage from "./pages/ApplicationDetailPage/ApplicationDetailPage";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
   {
     path: "/apply/:id",
     element: <ApplicationApply />,
+  },
+  {
+    path: "/applications/:id",
+    element: <ApplicationDetailPage />,
   },
   {
     path: "/home",

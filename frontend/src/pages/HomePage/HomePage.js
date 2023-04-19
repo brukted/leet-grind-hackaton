@@ -5,9 +5,11 @@ import { MyPostings } from "./TabPages/MyPostings";
 import { Profile } from "./TabPages/Profile";
 import Applications from "./TabPages/Application";
 import TabItem from "./components/TabItem";
+import { useRecoilState } from "recoil";
+import { activeTabState } from "../../recoil_state";
 
 const HomePage = () => {
-  const [activeTab, setActiveTab] = useState("Home");
+  const [activeTab, setActiveTab] = useRecoilState(activeTabState);
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
