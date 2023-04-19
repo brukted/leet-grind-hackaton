@@ -36,7 +36,7 @@ const ideaSchema = new mongoose.Schema({
     }],
     // Array of refs to files
     attachments: [String]
-})
+}, { timestamps: true })
 
 
 ideaSchema.pre('remove', async function (next) {

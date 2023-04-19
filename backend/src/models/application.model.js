@@ -25,7 +25,7 @@ const applicationSchema = new mongoose.Schema({
         minlength: 0,
         maxlength: 10
     }
-});
+}, { timestamps: true });
 
 // Export the model
 module.exports = mongoose.model('Application', applicationSchema);
