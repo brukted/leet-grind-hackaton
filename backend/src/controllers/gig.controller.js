@@ -102,3 +102,26 @@ exports.getMyGigs = async (req, res, next) => {
         return next(new AppError(err.message || "Some error occurred while retrieving gigs.", 500, err.stack));
     }
 }
+
+exports.findOne = async (req, res, next) => {
+    try {
+        const gig = await Gig.findById(req.params.gigId).populate('ideaModel');
+        if (!gig) {
+            return res.status(404).send(new JSendResponse().fail(message = "Gig not found with id " + req.params.gigId));
+        }
+        res.send(new JSendResponse().success(data = gig, message = "Gig retrieved successfully"));
+    }
+    catch (err) {
+        return next(new AppError(err.message || "Error retrieving gig with id " + req.params.gigId, 500, err.stack));
+    }
+}
+
+exports.getAllGigs = async (req, res, next) => {
+    try {
+        const gigs = await Gig.find().populate('ideaModel');
+        res.send(new JSendResponse().success(data = gigs, message = "Gigs retrieved successfully"));
+    }
+    catch (err) {
+        return next(new AppError(err.message || "Some error occurred while retrieving gigs.", 500, err.stack));
+    }
+};
