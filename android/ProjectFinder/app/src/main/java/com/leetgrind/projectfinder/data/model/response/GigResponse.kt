@@ -6,4 +6,5 @@ data class GigResponse(
     val tags: List<String>,
     val idea: Any?,
     val applications: List<Any>?,
+    val hasUserApplied: Boolean?,
 )
