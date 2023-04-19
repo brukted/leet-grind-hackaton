@@ -1,12 +1,13 @@
 const express = require("express");
 const applicationController = require("../controllers/application.controller");
-const { route } = require("./auth.route");
 const router = express.Router();
 
-router.route("/").post(applicationController.createApplication).get(applicationController.getApplications);
+router.route("/applications/").post(applicationController.createApplication).get(applicationController.getApplications);
+
+router.get("/me/applications", applicationController.getMyApplications);
 
 router
-  .route("/:id")
+  .route("/applications/:id")
   .delete(applicationController.deleteApplication)
   .get(applicationController.getApplication)
   .patch(applicationController.updateApplication);
