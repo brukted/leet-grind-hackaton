@@ -3,7 +3,6 @@ import { Clipboard, Clock, CheckCircle, XCircle } from "phosphor-react";
 import TabItem from "../components/TabItem";
 import ApplicationTableRow from "../components/ApplicationTableRow.js";
 import { MyApplicationCard } from "../../../  components/MyApplicationCard";
-import axios from "axios";
 import { useRecoilState } from "recoil";
 import { myApplicationsState } from "../../../recoil_state";
 import { getMyApplications } from "../../../services/applicationService";

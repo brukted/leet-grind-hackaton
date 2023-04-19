@@ -47,6 +47,9 @@ export default function ApplicationDetailPage() {
           <h3 class="text-lg font-semibold leading-7 text-gray-900 mb-4">
             Application Details
           </h3>
+          <div>
+            <h1 class="font-bold text-green-400">Please check your email for this application</h1>
+          </div>
           <dl class="divide-y divide-gray-100">
             <div class="py-4">
               <dt class="text-sm font-medium leading-6 text-gray-900">
