@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.leetgrind.projectfinder.R
 import com.leetgrind.projectfinder.common.Resource
 import com.leetgrind.projectfinder.databinding.FragmentRegisterBinding
 import com.leetgrind.projectfinder.utils.gone
@@ -53,7 +55,7 @@ class RegisterFragment : Fragment() {
                                 binding.progressBar.show()
                             }
                             is Resource.Success -> {
-                                // TODO: Navigate to login fragment
+                                findNavController().navigate(R.id.action_register2_to_loginFragment)
                             }
                             else -> {
                                 binding.progressBar.gone()

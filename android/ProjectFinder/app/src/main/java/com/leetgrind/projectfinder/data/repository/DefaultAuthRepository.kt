@@ -42,7 +42,7 @@ class DefaultAuthRepository @Inject constructor(
                 val response = registrationService.login(loginRequest)
 
                 response.body()!!.apply {
-                    localPrefStore.setAuthToken(token)
+                    localPrefStore.setAuthToken(this.data!!.token)
 //                    localPrefStore.setUserId(data.user.id)
 //                    localPrefStore.setMyProfile(this.data.user.toProfile())
                 }
