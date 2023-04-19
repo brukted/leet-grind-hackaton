@@ -31,7 +31,6 @@ const userSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: true,
         minlength: 5,
         maxlength: 255,
     },
@@ -41,13 +40,11 @@ const userSchema = new mongoose.Schema({
     },
     linkedin: {
         type: String,
-        required: true,
         minlength: 5,
         maxlength: 255,
     },
     github: {
         type: String,
-        required: true,
         minlength: 5,
         maxlength: 255,
     },
@@ -67,7 +64,7 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Application'
     }]
-});
+}, { timestamps: true });
 
 userSchema.pre('save', async function (next) {
     const user = this;

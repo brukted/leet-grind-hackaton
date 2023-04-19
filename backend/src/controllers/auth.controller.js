@@ -19,10 +19,7 @@ const signup = async (req, res, next) => {
         name: req.body.name,
         lastname: req.body.lastname,
         email: req.body.email,
-        phone: req.body.phone,
         password: req.body.password,
-        linkedin: req.body.linkedin,
-        github: req.body.github,
         telegram: req.body.telegram
     });
 

@@ -7,11 +7,12 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const protectRoute = require('./middlewares/auth.middleware.js');
 const JSendResponse = require('./utils/jsend-response.js').JSendResponse;
-var cors = require('cors')
+var cors = require('cors');
+const { mongoDbConnectionString } = require('./config.js');
 
 
 // Connect to MongoDB
-mongoose.connect('mongodb://127.0.0.1:27017/', { dbName: 'projectFinder' })
+mongoose.connect(mongoDbConnectionString, { dbName: 'projectFinder' })
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('Could not connect to MongoDB', err));
 
@@ -24,6 +25,9 @@ app.use(cors({
     origin: '*',
 }));
 
+// Serve static files
+app.use(express.static('public'));
+
 // Define routes
 
 // Public routes
@@ -32,12 +36,11 @@ app.get('/api/v1/health', (req, res) => {
 });
 app.use('/', require('./routes/auth.route.js'));
 
-// Protect all routes after this middleware
-app.use(protectRoute);
-app.use('/api/v1/', require('./routes/profile.route.js'));
-app.use('/api/v1/ideas', require('./routes/ideas.route.js'));
-app.use('/api/v1', require('./routes/gig.route.js'));
-app.use('/api/v1/application', require('./routes/application.route.js'));
+// Protected routes
+app.use('/api/v1/', protectRoute, require('./routes/profile.route.js'));
+app.use('/api/v1/', protectRoute, require('./routes/ideas.route.js'));
+app.use('/api/v1', protectRoute, require('./routes/gig.route.js'));
+app.use('/api/v1', protectRoute, require('./routes/application.route.js'));
 
 // Global error handler middleware
 app.use((err, _, res, next) => {
