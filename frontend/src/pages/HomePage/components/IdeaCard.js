@@ -1,9 +1,8 @@
 import React from "react";
 import { Heart, Eye } from "phosphor-react";
-import { v4 as uuid } from "uuid";
 
 const IdeaCard = ({ idea }) => {
-  const { author, tags, description, githubLink } = idea;
+  const { author, tags, description, githubLink, id } = idea;
 
   return (
     <div className="p-4 bg-white rounded-lg shadow-lg">
@@ -21,7 +20,11 @@ const IdeaCard = ({ idea }) => {
       <div className="mb-4">{description}</div>
       <div className="flex flex-wrap mb-4">
         {tags.map((tag) => (
-          <button key={uuid()} className={`py-1 px-2 rounded-lg border`}>
+          <button
+            key={tag}
+            id={tag}
+            className="py-1 px-2 mr-2 rounded-lg border"
+          >
             {tag}
           </button>
         ))}

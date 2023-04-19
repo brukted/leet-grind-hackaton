@@ -32,7 +32,7 @@ const HomePage = () => {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <div className="flex flex-col h-screen py-4 bg-white border-r border-gray-200 w-60">
+      <div className="fixed top-0 left-0 flex flex-col h-screen py-4 bg-white border-r border-gray-200 w-60">
         <div className="px-4">
           <h1 className="text-lg font-bold">Project Partner Platform</h1>
         </div>
@@ -47,7 +47,7 @@ const HomePage = () => {
           <span className="ml-4 text-sm font-medium">Sign Out</span>
         </button>
       </div>
-      <main className="flex-1">
+      <main className="fixed top-0 left-60 right-0 bottom-0 overflow-auto">
         {activeTab === "Home" && <Home />}
         {/* {activeTab === "Applications" && <Applications />}
         {activeTab === "My Postings" && <MyPostings />}
