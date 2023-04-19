@@ -7,4 +7,6 @@ data class RegistrationForm(
     val github: String,
     val linkedIn: String,
     val cvLink: String,
+    val telegramHandle: String,
+    val password: String,
 )

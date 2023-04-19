@@ -1,7 +1,6 @@
-package com.leetgrind.projectfinder.ui.authentication
+package com.leetgrind.projectfinder.domain.model
 
 import android.util.Patterns
-import com.leetgrind.projectfinder.domain.model.ValidationResult
 
 fun validateEmail(email: String) = when {
     email.isBlank() -> ValidationResult(
@@ -63,6 +62,14 @@ fun validateCvLink(cvLink: String) = when {
     cvLink.isBlank() -> ValidationResult(
         isSuccessful = false,
         errorMessage = "CV Link cannot be blank"
+    )
+    else -> ValidationResult(isSuccessful = true)
+}
+
+fun validateTelegramHandle(telegramHandle: String) = when {
+    telegramHandle.isBlank() -> ValidationResult(
+        isSuccessful = false,
+        errorMessage = "Telegram handle cannot be blank"
     )
     else -> ValidationResult(isSuccessful = true)
 }
