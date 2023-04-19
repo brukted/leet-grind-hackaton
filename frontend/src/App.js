@@ -1,15 +1,19 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import {
-  RecoilRoot,
-} from 'recoil';
-import { SignIn } from './pages/SignInPage/SignInPage';
-import { SignUp } from './pages/SignUpPage/SignUpPage';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { RecoilRoot } from "recoil";
+import { SignIn } from "./pages/SignInPage/SignInPage";
+import { SignUp } from "./pages/SignUpPage/SignUpPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
+import HomePage from "./pages/HomePage/HomePage";
 
 const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <LandingPage />,
+  },
+  {
+    path: "/home",
+    element: <HomePage />,
+  },
   {
     path: "/sign-in",
     element: <SignIn />,
@@ -23,7 +27,6 @@ const router = createBrowserRouter([
     element: <SignUp />,
   },
 ]);
-
 
 function App() {
   return (
