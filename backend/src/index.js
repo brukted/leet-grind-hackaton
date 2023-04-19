@@ -38,7 +38,7 @@ app.use('/', require('./routes/auth.route.js'));
 
 // Protected routes
 app.use('/api/v1/', protectRoute, require('./routes/profile.route.js'));
-app.use('/api/v1/ideas', protectRoute, require('./routes/ideas.route.js'));
+app.use('/api/v1/', protectRoute, require('./routes/ideas.route.js'));
 app.use('/api/v1', protectRoute, require('./routes/gig.route.js'));
 app.use('/api/v1/application', protectRoute, require('./routes/application.route.js'));
 

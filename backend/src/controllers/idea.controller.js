@@ -98,3 +98,13 @@ exports.getIdeas = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getMyIdeas = async (req, res, next) => {
+  try {
+    const getIdea = await Idea.find({ author: req.user_id });
+
+    res.send(new JSendResponse().success((data = getIdea)));
+  } catch (error) {
+    next(error);
+  }
+};

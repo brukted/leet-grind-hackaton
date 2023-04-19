@@ -2,10 +2,12 @@ const express = require("express");
 const ideaController = require("../controllers/idea.controller");
 const router = express.Router();
 
-router.route("/").post(ideaController.createIdea).get(ideaController.getIdeas);
+router.route("/ideas").post(ideaController.createIdea).get(ideaController.getIdeas);
+
+router.get("/me/ideas", ideaController.getMyIdeas);
 
 router
-  .route("/:id")
+  .route("/ideas/:id")
   .delete(ideaController.deleteIdea)
   .get(ideaController.getIdea)
   .patch(ideaController.updateIdea);
