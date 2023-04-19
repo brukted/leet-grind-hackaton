@@ -85,7 +85,7 @@ exports.deleteApplication = async (req, res, next) => {
 exports.getApplication = async (req, res, next) => {
 
   try {
-    const getApplication_ = await Application.findById(req.params.id);
+    const getApplication_ = await Application.findById(req.params.id).populate('applicantModel');
 
     res.send(new JSendResponse().success((data = getApplication_)));
   } catch (error) {
@@ -97,7 +97,7 @@ exports.getApplication = async (req, res, next) => {
 exports.getApplications = async (req, res, next) => {
 
   try {
-    const getApplications_ = await Application.find({ applicant: req.user_id });
+    const getApplications_ = await Application.find({ applicant: req.user_id }).populate('applicantModel');
 
     res.send(new JSendResponse().success((data = getApplications_)));
   } catch (error) {
@@ -107,7 +107,7 @@ exports.getApplications = async (req, res, next) => {
 
 exports.getMyApplications = async (req, res, next) => {
   try {
-    const getApplications_ = await Application.find({ applicant: req.user_id });
+    const getApplications_ = await Application.find({ applicant: req.user_id }).populate('applicantModel');
 
     res.send(new JSendResponse().success((data = getApplications_)));
   } catch (error) {
@@ -117,7 +117,7 @@ exports.getMyApplications = async (req, res, next) => {
 
 exports.getGigApplications = async (req, res, next) => {
   try {
-    const getApplications_ = await Application.find({ gig: req.params.id });
+    const getApplications_ = await Application.find({ gig: req.params.id }).populate('applicantModel');
 
     res.send(new JSendResponse().success((data = getApplications_)));
   } catch (error) {
