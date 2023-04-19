@@ -15,9 +15,15 @@ import com.leetgrind.projectfinder.common.interceptors.AuthTokenInterceptor
 import com.leetgrind.projectfinder.common.interceptors.JSendInterceptor
 import com.leetgrind.projectfinder.common.interceptors.NetworkInterceptor
 import com.leetgrind.projectfinder.data.local.prefs.LocalPrefStore
+import com.leetgrind.projectfinder.data.remote.api.ApplicationService
+import com.leetgrind.projectfinder.data.remote.api.GigService
+import com.leetgrind.projectfinder.data.remote.api.IdeaService
 import com.leetgrind.projectfinder.data.remote.api.ProfileService
 import com.leetgrind.projectfinder.data.remote.api.RegistrationService
+import com.leetgrind.projectfinder.data.repository.ApplicationRepository
 import com.leetgrind.projectfinder.data.repository.DefaultAuthRepository
+import com.leetgrind.projectfinder.data.repository.GigRepository
+import com.leetgrind.projectfinder.data.repository.IdeaRepository
 import com.leetgrind.projectfinder.data.repository.ProfileRepository
 import dagger.Module
 import dagger.Provides
@@ -117,7 +123,37 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideProfileRepository(profileService: ProfileService, ): ProfileRepository =
+    fun provideProfileRepository(profileService: ProfileService): ProfileRepository =
         ProfileRepository(profileService)
+
+    @Provides
+    @Singleton
+    fun provideIdeaService(retrofit: Retrofit): IdeaService =
+        retrofit.create(IdeaService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideIdeaRepository(ideaService: IdeaService): IdeaRepository =
+        IdeaRepository(ideaService)
+
+    @Provides
+    @Singleton
+    fun provideGigService(retrofit: Retrofit): GigService =
+        retrofit.create(GigService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideGigRepository(gigService: GigService): GigRepository =
+        GigRepository(gigService)
+
+    @Provides
+    @Singleton
+    fun provideApplicationService(retrofit: Retrofit): ApplicationService =
+        retrofit.create(ApplicationService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideApplicationRepository(applicationService: ApplicationService): ApplicationRepository =
+        ApplicationRepository(applicationService)
 
 }
