@@ -1,5 +1,6 @@
 const JSendResponse = require("../utils/jsend-response").JSendResponse;
 const Gig = require("../models/gig.model");
+const Idea = require("../models/idea.model");
 const AppError = require("../utils/app-error");
 
 exports.create = async (req, res, next) => {
@@ -80,7 +81,8 @@ exports.findAll = async (req, res, next) => {
 
 exports.getMyGigs = async (req, res, next) => {
     try {
-        const gigs = await Gig.find({ idea: req.user_id });
+        const ideas = await Idea.find({ author: req.user_id });
+        const gigs = await Gig.find({ idea: { $in: ideas } });
         res.send(new JSendResponse().success(data = gigs, message = "Gigs retrieved successfully"));
     }
     catch (err) {
