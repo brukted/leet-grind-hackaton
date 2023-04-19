@@ -1,7 +1,6 @@
-package com.leetgrind.projectfinder.ui.authentication
+package com.leetgrind.projectfinder.domain.model
 
 import android.util.Patterns
-import com.leetgrind.projectfinder.domain.model.ValidationResult
 
 fun validateEmail(email: String) = when {
     email.isBlank() -> ValidationResult(

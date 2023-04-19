@@ -8,11 +8,11 @@ import com.leetgrind.projectfinder.common.Resource
 import com.leetgrind.projectfinder.data.repository.DefaultAuthRepository
 import com.leetgrind.projectfinder.domain.model.RegistrationForm
 import com.leetgrind.projectfinder.domain.model.ValidationResult
-import com.leetgrind.projectfinder.ui.authentication.validateCvLink
-import com.leetgrind.projectfinder.ui.authentication.validateEmail
-import com.leetgrind.projectfinder.ui.authentication.validateGithub
-import com.leetgrind.projectfinder.ui.authentication.validateLinkedIn
-import com.leetgrind.projectfinder.ui.authentication.validateName
+import com.leetgrind.projectfinder.domain.model.validateCvLink
+import com.leetgrind.projectfinder.domain.model.validateEmail
+import com.leetgrind.projectfinder.domain.model.validateGithub
+import com.leetgrind.projectfinder.domain.model.validateLinkedIn
+import com.leetgrind.projectfinder.domain.model.validateName
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -32,43 +32,14 @@ class RegisterViewModel @Inject constructor(
     val linkedIn: MutableLiveData<String> = MutableLiveData("")
     val cvLink: MutableLiveData<String> = MutableLiveData("")
 
-    val firstNameError = MediatorLiveData<ValidationResult>().apply {
-        addSource(firstName) {
-            value = validateName(it)
-        }
-    }
+    val firstNameError = MutableLiveData<ValidationResult>()
+    val lastNameError = MutableLiveData<ValidationResult>()
+    val emailError = MutableLiveData<ValidationResult>()
+    val githubError = MutableLiveData<ValidationResult>()
+    val linkedInError = MutableLiveData<ValidationResult>()
+    val cvLinkError = MutableLiveData<ValidationResult>()
 
-    val lastNameError = MediatorLiveData<ValidationResult>().apply {
-        addSource(lastName) {
-            value = validateName(it)
-        }
-    }
-
-    val emailError = MediatorLiveData<ValidationResult>().apply {
-        addSource(email) {
-            value = validateEmail(it)
-        }
-    }
-
-    val githubError = MediatorLiveData<ValidationResult>().apply {
-        addSource(github) {
-            value = validateGithub(it)
-        }
-    }
-
-    val linkedInError = MediatorLiveData<ValidationResult>().apply {
-        addSource(linkedIn) {
-            value = validateLinkedIn(it)
-        }
-    }
-
-    val cvLinkError = MediatorLiveData<ValidationResult>().apply {
-        addSource(cvLink) {
-            value = validateCvLink(it)
-        }
-    }
-
-    val isFormValid = MediatorLiveData<Boolean>().apply {
+    private val isFormValid = MediatorLiveData<Boolean>().apply {
         addSource(firstNameError) {
             value = it.isSuccessful
         }
@@ -98,7 +69,28 @@ class RegisterViewModel @Inject constructor(
         cvLink = cvLink.value!!
     )
 
+    private fun validateForm(): Boolean {
+        firstNameError.value = validateName(firstName.value!!)
+        lastNameError.value = validateName(lastName.value!!)
+        emailError.value = validateEmail(email.value!!)
+        githubError.value = validateGithub(github.value!!)
+        linkedInError.value = validateLinkedIn(linkedIn.value!!)
+        cvLinkError.value = validateCvLink(cvLink.value!!)
+
+        return firstNameError.value!!.isSuccessful &&
+                lastNameError.value!!.isSuccessful &&
+                emailError.value!!.isSuccessful &&
+                githubError.value!!.isSuccessful &&
+                linkedInError.value!!.isSuccessful &&
+                cvLinkError.value!!.isSuccessful
+    }
+
     fun register(): Flow<Resource<Unit>> = flow {
+        if (!validateForm()) {
+            emit(Resource.Error(null))
+            return@flow
+        }
+
         val registrationForm = getRegistrationForm()
         authRepository.register(registrationForm)
             .transform<Resource<Unit>, Resource<Unit>> { resource ->
@@ -106,12 +98,15 @@ class RegisterViewModel @Inject constructor(
                     is Resource.Loading -> this@flow.emit(Resource.Loading())
                     is Resource.Success -> this@flow.emit(Resource.Success(data = Unit))
                     is Resource.Error -> {
-                        this@flow.emit(Resource.Error(message = resource.message ?: "Unknown error"))
+                        this@flow.emit(
+                            Resource.Error(
+                                message = resource.message ?: "Unknown error"
+                            )
+                        )
                     }
                 }
             }.collect()
     }
-
 
 
 }
