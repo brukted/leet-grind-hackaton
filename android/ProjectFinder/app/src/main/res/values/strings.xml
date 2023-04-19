@@ -6,4 +6,11 @@
     <string name="applications">Applications</string>
     <string name="ideas">Ideas</string>
     <string name="profile">Profile</string>
+    <string name="profile_details">Details</string>
+    <string name="profile_links">Links</string>
+    <string name="profile_linkedin">LinkedIn</string>
+    <string name="profile_github">Github</string>
+    <string name="profile_resume">Resume</string>
+    <string name="profile_log_out">Log Out</string>
+    <string name="full_name">%s %s</string>
 </resources>
