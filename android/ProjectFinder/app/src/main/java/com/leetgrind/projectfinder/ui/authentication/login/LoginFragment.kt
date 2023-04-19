@@ -8,6 +8,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.leetgrind.projectfinder.R
 import com.leetgrind.projectfinder.common.Resource
 import com.leetgrind.projectfinder.databinding.FragmentLoginBinding
 import com.leetgrind.projectfinder.utils.gone
@@ -54,7 +56,7 @@ class LoginFragment : Fragment() {
                                 }
 
                                 is Resource.Success -> {
-                                    // TODO: Handle success
+                                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                                 }
 
                                 else -> {
@@ -71,6 +73,10 @@ class LoginFragment : Fragment() {
                             }
                         }
                 }
+            }
+
+            binding.dontHaveAccountBtn.setOnClickListener {
+                findNavController().navigate(R.id.action_loginFragment_to_register2)
             }
         }
     }
