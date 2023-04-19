@@ -25,7 +25,14 @@ const applicationSchema = new mongoose.Schema({
         minlength: 0,
         maxlength: 10
     }
-}, { timestamps: true });
+}, { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } });
+
+applicationSchema.virtual("applicantModel", {
+    ref: "User",
+    localField: "applicant",
+    foreignField: "_id",
+    justOne: true,
+});
 
 // Export the model
 module.exports = mongoose.model('Application', applicationSchema);

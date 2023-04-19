@@ -28,13 +28,20 @@ const gigSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Application'
     }],
-}, { timestamps: true });
+}, { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } });
 
 gigSchema.pre('remove', async function (next) {
     await this.model('Application').deleteMany({
         gig: this._id
     });
     next();
+});
+
+gigSchema.virtual("ideaModel", {
+    ref: "Idea",
+    localField: "idea",
+    foreignField: "_id",
+    justOne: true,
 });
 
 // Export the model

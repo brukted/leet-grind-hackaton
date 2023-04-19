@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.leetgrind.projectfinder.R
 import com.leetgrind.projectfinder.common.Resource
 import com.leetgrind.projectfinder.data.model.response.ProfileResponse
@@ -32,6 +33,7 @@ class ProfileFragment : Fragment() {
         }
 
         getProfile()
+        setupListeners()
 
         return binding.root
     }
@@ -59,7 +61,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun fillOutProfile(profile: ProfileResponse) {
-        binding.fullName.text = getString(R.string.full_name, profile.name, profile.lastName)
+        binding.fullName.text = getString(R.string.full_name, profile.firstName, profile.lastName)
         binding.detailsCardEmailText.text = profile.email
         binding.detailsCardTelegramText.text = profile.telegram
         if (profile.phone != null) {
@@ -73,5 +75,12 @@ class ProfileFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setupListeners() {
+        binding.logOutCard.setOnClickListener {
+            profileViewModel.logOut()
+            findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
+        }
     }
 }

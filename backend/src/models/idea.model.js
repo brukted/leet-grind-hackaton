@@ -36,7 +36,7 @@ const ideaSchema = new mongoose.Schema({
     }],
     // Array of refs to files
     attachments: [String]
-}, { timestamps: true })
+}, { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } })
 
 
 ideaSchema.pre('remove', async function (next) {
@@ -45,6 +45,13 @@ ideaSchema.pre('remove', async function (next) {
     });
 
     next();
+});
+
+ideaSchema.virtual("authorModel", {
+    ref: "User",
+    localField: "author",
+    foreignField: "_id",
+    justOne: true,
 });
 
 
