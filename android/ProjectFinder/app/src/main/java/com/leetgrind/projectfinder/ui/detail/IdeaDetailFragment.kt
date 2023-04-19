@@ -82,7 +82,7 @@ class IdeaDetailFragment : Fragment(), GigsAdapter.GigListener {
             val action = IdeaDetailFragmentDirections.actionIdeaDetailToApplicantsFragment(gig)
             findNavController().navigate(action)
         } else {
-            // todo: pull up a bottomsheet to show gig details
+            // todo: pull up a bottomsheet to apply to gig
         }
     }
 
