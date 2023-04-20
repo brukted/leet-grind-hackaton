@@ -7,6 +7,8 @@ import { getAllIdeas } from "../../../services/ideaService";
 
 const Home = () => {
   const [ideas, setIdeas] = useRecoilState(ideasState);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(6);
 
   useEffect(() => {
     getGigs().then((response) => {
@@ -61,6 +63,12 @@ const Home = () => {
     return false;
   });
 
+  const totalIdeas = filteredIdeas.length;
+  const totalPages = Math.ceil(totalIdeas / pageSize);
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const visibleIdeas = filteredIdeas.slice(startIndex, endIndex);
+
   return (
     <div class="p-4 space-y-4">
       <h2 class="text-2xl font-bold">Browse Ideas</h2>
@@ -107,10 +115,73 @@ const Home = () => {
           ))}
         </div>
       </div>
+
+      <div class="flex justify-center items-center flex-col md:flex-row space-y-4 md:space-x-4">
+        <div class="flex justify-center items-center space-x-2">
+          <div class="flex items-center">
+            <span class="mr-2">Page</span>
+            <input
+              type="number"
+              value={page}
+              onChange={(e) => setPage(Number(e.target.value))}
+              min="1"
+              max={totalPages}
+              class="w-16 p-2 border-2 border-gray-200 rounded-lg"
+            />
+            <span class="ml-2">of {totalPages}</span>
+          </div>
+          <button
+            class="ml-4 px-4 py-2 text-white bg-primary rounded-lg shadow-lg hover:bg-primary-dark transition-colors duration-300"
+            onClick={() => setPage(page - 1)}
+            disabled={page === 1}
+          >
+            Prev
+          </button>
+          <button
+            class="ml-2 px-4 py-2 text-white bg-primary rounded-lg shadow-lg hover:bg-primary-dark transition-colors duration-300"
+            onClick={() => setPage(page + 1)}
+            disabled={page === totalPages}
+          >
+            Next
+          </button>
+        </div>
+      </div>
+
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {filteredIdeas.map((idea) => (
+        {visibleIdeas.map((idea) => (
           <IdeaCard key={idea.id} idea={idea} />
         ))}
+      </div>
+
+      <div class="flex justify-center items-center flex-col md:flex-row space-y-4 md:space-x-4">
+        <div class="flex justify-center items-center space-x-2">
+          <div class="flex items-center">
+            <span class="mr-2">Page</span>
+            <input
+              type="number"
+              value={page}
+              onChange={(e) => setPage(Number(e.target.value))}
+              min="1"
+              max={totalPages}
+              class="w-16 p-2 border-2 border-gray-200 rounded-lg"
+            />
+            <span class="ml-2">of {totalPages}</span>
+          </div>
+          <button
+            class="ml-4 px-4 py-2 text-white bg-primary rounded-lg shadow-lg hover:bg-primary-dark transition-colors duration-300"
+            onClick={() => setPage(page - 1)}
+            disabled={page === 1}
+          >
+            Prev
+          </button>
+          <button
+            class="ml-2 px-4 py-2 text-white bg-primary rounded-lg shadow-lg hover:bg-primary-dark transition-colors duration-300"
+            onClick={() => setPage(page + 1)}
+            disabled={page === totalPages}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );
