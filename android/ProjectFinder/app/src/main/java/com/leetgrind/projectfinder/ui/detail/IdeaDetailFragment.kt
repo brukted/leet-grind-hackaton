@@ -37,6 +37,14 @@ class IdeaDetailFragment : Fragment(), GigsAdapter.GigListener {
             swipeRefresh.setOnRefreshListener {
                 getGigs(navArgs.idea)
             }
+            if (navArgs.isIdeaOwner) {
+                addGigButton.show()
+                addGigButton.setOnClickListener {
+                    openCreateGigBottomSheet()
+                }
+            } else {
+                addGigButton.gone()
+            }
         }
 
         populateData(navArgs.idea)
@@ -84,6 +92,12 @@ class IdeaDetailFragment : Fragment(), GigsAdapter.GigListener {
         } else {
             // todo: pull up a bottomsheet to apply to gig
         }
+    }
+
+    private fun openCreateGigBottomSheet() {
+        findNavController().navigate(
+            IdeaDetailFragmentDirections.actionIdeaDetailToCreateGigBottomSheet(navArgs.idea)
+        )
     }
 
     override fun onDestroyView() {
