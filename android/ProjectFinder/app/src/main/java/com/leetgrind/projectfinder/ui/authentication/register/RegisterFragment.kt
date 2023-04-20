@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.leetgrind.projectfinder.R
 import com.leetgrind.projectfinder.common.Resource
 import com.leetgrind.projectfinder.databinding.FragmentRegisterBinding
 import com.leetgrind.projectfinder.utils.gone
@@ -55,7 +54,9 @@ class RegisterFragment : Fragment() {
                                 binding.progressBar.show()
                             }
                             is Resource.Success -> {
-                                findNavController().navigate(R.id.action_register2_to_loginFragment)
+                                findNavController().navigate(
+                                    RegisterFragmentDirections.actionRegisterFragmentToLoginFragment2()
+                                )
                             }
                             else -> {
                                 binding.progressBar.gone()
@@ -76,7 +77,9 @@ class RegisterFragment : Fragment() {
 
         binding.apply {
             binding.alreadyHaveAnAccountBtn.setOnClickListener{
-                findNavController().navigate(R.id.action_register2_to_loginFragment)
+                findNavController().navigate(
+                    RegisterFragmentDirections.actionRegisterFragmentToLoginFragment2()
+                )
             }
         }
     }

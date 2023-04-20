@@ -7,7 +7,6 @@ import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -16,7 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.leetgrind.projectfinder.R
 import com.leetgrind.projectfinder.data.repository.DefaultAuthRepository
 import com.leetgrind.projectfinder.databinding.ActivityMainBinding
-import com.leetgrind.projectfinder.ui.authentication.login.LoginFragment
+import com.leetgrind.projectfinder.ui.authentication.AuthActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
@@ -38,13 +37,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.mainActivityToolbar)
 
-//        runBlocking {
-//            if (authRepository.getAuthToken() == null) {
-//                supportFragmentManager.beginTransaction()
-//                    .replace(R.id.main_activity_nav_host, LoginFragment())
-//                    .commit()
-//            }
-//        }
+        runBlocking {
+            if (authRepository.getAuthToken() == null) {
+                val i = Intent(baseContext, AuthActivity::class.java)
+                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(i)
+                finish()
+            }
+        }
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.main_activity_nav_host) as NavHostFragment
@@ -63,18 +63,13 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         val fragmentsWithoutBottomNav = setOf(
-            R.id.loginFragment,
-            R.id.register2,
             R.id.ideaDetail,
             R.id.applicantsFragment,
             R.id.applyGigBottomSheet,
             R.id.createGigBottomSheet,
         )
 
-        val fragmentsWithoutAppbar = setOf(
-            R.id.loginFragment,
-            R.id.register2,
-        )
+        val fragmentsWithoutAppbar = emptySet<Int>()
 
         navController.addOnDestinationChangedListener { _: NavController, destination: NavDestination, _: Bundle? ->
             if (fragmentsWithoutAppbar.contains(destination.id)) binding.mainActivityToolbar.visibility =

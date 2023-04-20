@@ -1,5 +1,6 @@
 package com.leetgrind.projectfinder.ui.profile
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -78,8 +79,15 @@ class ProfileFragment : Fragment() {
 
     private fun setupListeners() {
         binding.logOutCard.setOnClickListener {
-            profileViewModel.logOut()
-            findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
+            AlertDialog.Builder(context)
+                .setTitle("Confirm Logout")
+                .setMessage("Are you sure you want to log out?")
+                .setPositiveButton("Log Out") { _, _ ->
+                    profileViewModel.logOut()
+                    findNavController().navigate(R.id.authActivity)
+                    requireActivity().finish()
+                }.setNegativeButton("Cancel", null)
+                .setIcon(0).show()
         }
     }
 }
