@@ -21,9 +21,6 @@ const HomePage = () => {
     // remove authToken and loggedInUser from local storage
     localStorage.removeItem("authToken");
     localStorage.removeItem("loggedInUser");
-
-    // redirect user to login page
-    // replace this with your own logic
     navigate("/");
   };
 
