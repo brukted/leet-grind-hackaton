@@ -1,29 +1,14 @@
-import { useState, Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getIdea } from "../../services/ideaService";
+import ReactTimeAgo from "react-time-ago";
+import { createGig, getIdeaGigs } from "../../services/gigService";
 import { Dialog, Transition } from '@headlessui/react'
 import { Plus, XCircle, X } from "phosphor-react";
-import { createIdea, getMyIdeas } from "../../../services/ideaService";
-import { useRecoilState } from "recoil";
-import { myIdeasState } from "../../../recoil_state";
-import { useNavigate } from "react-router-dom";
 
 
-const MyIdeaCard = ({ idea }) => {
-    const navigate = useNavigate();
 
-    const handleTapClick = () => {
-        navigate(`/ideas/${idea.id}`);
-    };
-
-    return (
-        <button onClick={handleTapClick} class="flex flex-col w-full  bg-white rounded-lg shadow-md">
-            <div class="flex flex-row justify-between items-center w-full h-12 px-4">
-                <span>{idea.title}</span>
-            </div>
-        </button>
-    );
-};
-
-const CreateIdeaForm = ({ onCreated }) => {
+const CreateGigForm = ({ onCreated, ideaId }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         title: "",
@@ -44,7 +29,7 @@ const CreateIdeaForm = ({ onCreated }) => {
         e.preventDefault();
         console.log(formData);
         if (isLoading) return;
-        createIdea(formData.title, formData.description, formData.tags, formData.github).then((res) => {
+        createGig(formData.title, formData.description, formData.tags, ideaId).then((res) => {
             console.log(res);
             onCreated(res);
         }
@@ -66,7 +51,7 @@ const CreateIdeaForm = ({ onCreated }) => {
                         <input
                             value={formData.title}
                             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                            placeholder="Atrons: A new way to learn"
+                            placeholder="Backend Developer with React.js experience"
                             type="text"
                             name="description"
                             id="title"
@@ -94,23 +79,6 @@ const CreateIdeaForm = ({ onCreated }) => {
                     </div>
                 </div>
 
-                <div className="sm:col-span-3">
-                    <label htmlFor="region" className="block text-sm font-medium leading-6 text-neutral-900">
-                        Github
-                    </label>
-                    <div className="mt-2">
-                        <input
-                            value={formData.github}
-                            onChange={(e) => setFormData({ ...formData, github: e.target.value })}
-                            placeholder="https://www.github.com/yourusername"
-                            type="text"
-                            name="region"
-                            id="region"
-                            autoComplete="address-level1"
-                            className="block w-full rounded-md border-0 py-1.5 text-neutral-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-neutral-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6"
-                        />
-                    </div>
-                </div>
                 <div className="sm:col-span-3">
                     <label htmlFor="region" className="block text-sm font-medium leading-6 text-neutral-900">
                         Tags
@@ -158,85 +126,121 @@ const CreateIdeaForm = ({ onCreated }) => {
 };
 
 
-export const MyIdeas = () => {
-    const [open, setOpen] = useState(false)
-    const [myIdeas, setMyIdeas] = useRecoilState(myIdeasState);
-    const [myIdeasLoading, setMyIdeasLoading] = useState(false);
+export const IdeaDetailPage = () => {
+    const [showCreateGigModal, setShowCreateGigModal] = useState(false);
+    const { ideaId } = useParams();
+    const [idea, setIdea] = useState({});
+    const [gigs, setGigs] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isGigsLoading, setIsGigsLoading] = useState(true);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
-        setMyIdeasLoading(true);
-        getMyIdeas().then((res) => {
-            setMyIdeas(res);
-        }).catch((err) => {
-            console.log(err);
+        getIdea(ideaId).then((response) => {
+            setIdea(response);
+        }).catch((error) => {
+            console.log(error);
         }).finally(() => {
-            setMyIdeasLoading(false);
+            setIsLoading(false);
         });
-    }, []);
+        getIdeaGigs(ideaId).then((response) => {
+            setGigs(response);
+            console.log(response);
+        }).catch((error) => {
+            console.log(error);
+        }).finally(() => {
+            setIsGigsLoading(false);
+        });
+    }, [ideaId]);
 
-    const navigateToCreateIdea = () => {
-        setOpen(true);
+    const onGigCreated = (gig) => {
+        setGigs([...gigs, gig]);
+        setShowCreateGigModal(false);
     };
 
-    const onCreated = (newIdea) => {
-        setMyIdeas([...myIdeas, newIdea]);
-        setOpen(false);
-    };
 
     return (
-        <div class="p-4 space-y-4 min-h-screen flex flex-col w-full">
+        <div className="flex flex-col w-full h-full  p-20 pt-10 overflow-scroll">
             {
-                (myIdeas.length && !myIdeasLoading) ?
-                    <button className="absolute gap-2 btn bottom-10 right-10" onClick={() => setOpen(true)}>
-                        <Plus size={32} />
-                        Add Idea
-                    </button> : ""
-            }
-            <h2 class="text-2xl font-bold text-neutral">My Ideas</h2>
-
-            {(myIdeasLoading ? <div className="flex flex-col items-center justify-center flex-grow">
-                <div role="status">
-                    <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
-                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
-                    </svg>
-                    <span class="sr-only">Loading...</span>
-                </div>
-            </div> :
-                <Fragment>
-                    {
-                        myIdeas.length ? "" :
-                            <div className="flex flex-col items-center justify-center flex-grow">
-                                <div class="flex flex-col justify-center items-center w-96 h-56 border-2 border-dashed text-neutral-400 rounded-lg"
-                                    role="button"
-                                    onClick={() => navigateToCreateIdea()}
-                                >
-                                    <div class="text-neutral-400">
-                                        <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
-                                            <path
-                                                fill-rule="evenodd"
-                                                d="M10 3a1 1 0 011 1v4h4a1 1 0 110 2h-4v4a1 1 0 11-2 0v-4H5a1 1 0 110-2h4V4a1 1 0 011-1z"
-                                                clip-rule="evenodd"
-                                            />
-                                        </svg>
-
-                                    </div>
-                                    <p class="text-neutral font-bold pt-5">
-                                        Add a new idea
-                                    </p>
+                isLoading ? (
+                    <div role="status">
+                        <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
+                        </svg>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                ) : (
+                    <Fragment>
+                        <div className="flex items-end justify-between">
+                            <div className="min-w-0 flex-1 flex flex-col">
+                                <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+                                    {idea.title}
+                                </h2>
+                                <div className='flex items-center pt-3'>
+                                    {
+                                        idea.tags.map((tag, index) => (
+                                            <span key={index} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 mr-2">
+                                                {tag}
+                                            </span>
+                                        ))
+                                    }
                                 </div>
                             </div>
-                    }
+                            <span>
+                                Posted <ReactTimeAgo date={idea.createdAt} locale="en-US" />
+                            </span>
+                        </div>
+                        <p className='pt-8'>
+                            {idea.description}
+                        </p>
+                    </Fragment>
+                )
+            }
+            <h2 className="text-2xl leading-7 text-gray-400 sm:truncate sm:tracking-tight pt-10">
+                Gigs
+            </h2>
 
-                    <div class="grid grid-cols-1 gap-4">
-                        {myIdeas.map((idea) => (
-                            <MyIdeaCard key={idea.id} idea={idea} />
-                        ))}
+            {
+                isGigsLoading ? (
+                    <div role="status">
+                        <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
+                        </svg>
+                        <span class="sr-only">Loading...</span>
                     </div>
-                </Fragment>)}
+                ) : (
+                    <ul className="divide-y divide-gray-100 pt-4 gap-3 flex flex-col px-2">
+                        <li key="create" className="btn btn-ghost flex justify-center items-center gap-x-6 p-3" onClick={() => {
+                            setShowCreateGigModal(true);
+                        }}>
+                            <Plus weight="bold"></Plus>
+                            <span>Create Gig</span>
+                        </li>
+                        {gigs.map((gig) => (
+                            <li key={gig.id} className="flex justify-between gap-x-6 p-5 shadow-sm rounded-sm" onClick={() => {
+                                navigate(`/gigs/${gig.id}`);
+                            }}>
+                                <div className="flex gap-x-4 flex-col">
+                                    <p className="text-sm font-semibold leading-6 text-gray-900">{gig.title}</p>
+                                    <p className="mt-1 text-xs leading-5 text-gray-500 max-w-4xl">{gig.description}</p>
+                                </div>
+                                <div className="hidden sm:flex sm:flex-col sm:items-end">
+                                    <p className="text-sm leading-6 text-gray-900 capitalize">{gig.applications.length} applicants</p>
+                                    <p className="mt-1 text-xs leading-5 text-gray-500">
+                                        Posted <ReactTimeAgo date={gig.createdAt} locale="en-US" />
+                                    </p>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                )
+            }
 
-            <Transition.Root show={open} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={setOpen}>
+            <Transition.Root show={showCreateGigModal} as={Fragment}>
+                <Dialog as="div" className="relative z-10" onClose={setShowCreateGigModal}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-in-out duration-500"
@@ -275,7 +279,7 @@ export const MyIdeas = () => {
                                                 <button
                                                     type="button"
                                                     className="text-gray-500 rounded-md hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-                                                    onClick={() => setOpen(false)}
+                                                    onClick={() => setShowCreateGigModal(false)}
                                                 >
                                                     <span className="sr-only">Close panel</span>
                                                     <XCircle className="w-6 h-6" aria-hidden="true" />
@@ -285,11 +289,11 @@ export const MyIdeas = () => {
                                         <div className="flex flex-col h-full py-6 overflow-y-scroll bg-white shadow-xl">
                                             <div className="px-4 sm:px-6">
                                                 <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
-                                                    Add an idea
+                                                    Create Gig
                                                 </Dialog.Title>
                                             </div>
                                             <div className="relative flex-1 px-4 mt-6 sm:px-6">
-                                                <CreateIdeaForm onCreated={onCreated} />
+                                                <CreateGigForm onCreated={onGigCreated} ideaId={ideaId} />
                                             </div>
                                         </div>
                                     </Dialog.Panel>

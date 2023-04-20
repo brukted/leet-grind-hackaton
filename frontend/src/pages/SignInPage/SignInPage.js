@@ -18,8 +18,7 @@ export const SignIn = () => {
     document.title = "Sign In";
     const token = localStorage.getItem("authToken");
     if (token !== null) {
-        navigate("/home");
-        navigate(0)
+      navigate("/home");
     }
   }, [navigate]);
 

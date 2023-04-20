@@ -1,7 +1,6 @@
+import { CheckCircle, Clock, XCircle } from "phosphor-react";
 import { useEffect, useState } from "react";
-import { Paperclip, CheckCircle, Check, Clock, XCircle } from "phosphor-react";
-import Applications from "../HomePage/TabPages/Application";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { myApplicationsState } from "../../recoil_state";
 
@@ -89,17 +88,17 @@ export default function ApplicationDetailPage() {
                 {application &&
                   application.status &&
                   application.status.toLowerCase() ===
-                    "Pending".toLowerCase() && <Clock size={16} />}
+                  "Pending".toLowerCase() && <Clock size={16} />}
                 {application &&
                   application.status &&
                   application.status.toLowerCase() ===
-                    "Accepted".toLowerCase() && (
+                  "Accepted".toLowerCase() && (
                     <CheckCircle size={16} weight="fill" color="#10B981" />
                   )}
                 {application &&
                   application.status &&
                   application.status.toLowerCase() ===
-                    "Rejected".toLowerCase() && (
+                  "Rejected".toLowerCase() && (
                     <XCircle size={16} weight="fill" color="#EF4444" />
                   )}
                 <span class="ml-2">{application.status}</span>

@@ -9,6 +9,7 @@ import ApplicationDetailPage from "./pages/ApplicationDetailPage/ApplicationDeta
 import { GigDetailPage } from "./pages/GigDetailPage/GigDetailPage";
 import { ApplicantInfoPage } from "./pages/ApplicantInfoPage/ApplicantInfoPage";
 import { RecoilRoot } from "recoil";
+import { IdeaDetailPage } from "./pages/IdeaDetailPage/IdeaDetailPage";
 
 const isAuthenticated = () => {
   console.log("is logged in: ", localStorage.getItem("authToken") !== null);
@@ -23,6 +24,16 @@ function App() {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/" element={<LandingPage />} />
+          <Route
+            path="/ideas/:ideaId"
+            element={
+              isAuthenticated() ? (
+                <IdeaDetailPage />
+              ) : (
+                <Navigate to="/" replace={true} />
+              )
+            }
+          />
           <Route
             path="/apply/:id"
             element={

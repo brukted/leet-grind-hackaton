@@ -70,7 +70,7 @@ export const getIdeaGigs = async (ideaId) => {
 // Returns a single gig
 export const createGig = async (title, description, tags, ideaId) => {
   return axios
-    .post(`/ideas/${ideaId}/gigs`, { title, description, tags })
+    .post(`/ideas/${ideaId}/gigs`, { title: title, description: description, tags: tags, idea: ideaId })
     .then((response) => {
       return response.data.data;
     });
