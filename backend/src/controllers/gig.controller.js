@@ -21,7 +21,7 @@ exports.create = async (req, res, next) => {
     // Save gig in the database
     try {
         const data = await gig.save();
-        res.send(await data.populate('ideaModel'));
+        res.send(new JSendResponse().success(await data.populate('ideaModel'), message = "Gig created successfully"));
     }
     catch (err) {
         return next(new AppError(err.message || "Some error occurred while creating the gig.", 500, err.stack))
