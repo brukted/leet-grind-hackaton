@@ -36,6 +36,7 @@ const CreateIdeaForm = ({ onCreated }) => {
 
     const submitForm = (e) => {
         e.preventDefault();
+        console.log(formData);
         if (isLoading) return;
         createIdea(formData.title, formData.description, formData.tags, formData.github).then((res) => {
             console.log(res);
@@ -57,6 +58,8 @@ const CreateIdeaForm = ({ onCreated }) => {
                     </label>
                     <div className="mt-2">
                         <input
+                            value={formData.title}
+                            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                             placeholder="Atrons: A new way to learn"
                             type="text"
                             name="description"
@@ -73,6 +76,8 @@ const CreateIdeaForm = ({ onCreated }) => {
                     </label>
                     <div className="mt-2">
                         <textarea
+                            value={formData.description}
+                            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                             placeholder="Lorem ipsum dolor sit amet...."
                             type="text"
                             name="description"
@@ -89,6 +94,8 @@ const CreateIdeaForm = ({ onCreated }) => {
                     </label>
                     <div className="mt-2">
                         <input
+                            value={formData.github}
+                            onChange={(e) => setFormData({ ...formData, github: e.target.value })}
                             placeholder="https://www.github.com/yourusername"
                             type="text"
                             name="region"
