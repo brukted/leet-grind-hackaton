@@ -68,16 +68,16 @@ exports.updateApplication = async (req, res, next) => {
 // Delete application
 exports.deleteApplication = async (req, res, next) => {
   try {
-    const getApplication = await Application.findById(req.params.id);
-    if (!getApplication)
+    const application = await Application.findById(req.params.id);
+    if (!application)
       return next(new AppError("There is no application with the specified id", 400));
 
     await Application.findByIdAndDelete(req.params.id);
-    await Gig.findByIdAndUpdate(req.body.gig, { $pull: { applications: application_._id } });
+    await Gig.findByIdAndUpdate(req.body.gig, { $pull: { applications: application._id } });
 
     res.send(
       new JSendResponse().success(
-        data = undefined,
+        data = application,
         message = "Application deleted successfully"
       )
     );
