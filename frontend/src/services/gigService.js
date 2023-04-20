@@ -48,6 +48,12 @@ export const getGigs = async () => {
   });
 };
 
+export const getGig = async (gigId) => {
+  return axios.get(`/gigs/${gigId}`).then((response) => {
+    return response.data.data;
+  });
+};
+
 export const getMyGigs = async () => {
   return axios.get("/me/gigs").then((response) => {
     return response.data.data;
