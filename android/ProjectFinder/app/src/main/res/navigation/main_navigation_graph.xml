@@ -74,6 +74,9 @@
         <action
             android:id="@+id/action_ideaDetail_to_createGigBottomSheet"
             app:destination="@id/createGigBottomSheet" />
+        <action
+            android:id="@+id/action_ideaDetail_to_applyGigBottomSheet"
+            app:destination="@id/applyGigBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/applicantsFragment"
@@ -92,6 +95,15 @@
         <argument
             android:name="idea"
             app:argType="com.leetgrind.projectfinder.domain.model.Idea" />
+    </dialog>
+    <dialog
+        android:id="@+id/applyGigBottomSheet"
+        android:name="com.leetgrind.projectfinder.ui.detail.apply.ApplyGigBottomSheet"
+        android:label="ApplyGigBottomSheet"
+        tools:layout="@layout/bottom_sheet_apply_gig">
+        <argument
+            android:name="gig"
+            app:argType="com.leetgrind.projectfinder.data.model.response.GigResponse" />
     </dialog>
 
 </navigation>

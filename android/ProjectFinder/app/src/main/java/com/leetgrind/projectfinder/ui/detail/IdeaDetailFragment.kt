@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.leetgrind.projectfinder.R
 import com.leetgrind.projectfinder.common.Resource
 import com.leetgrind.projectfinder.data.model.response.GigResponse
 import com.leetgrind.projectfinder.databinding.FragmentIdeaDetailBinding
@@ -86,18 +87,25 @@ class IdeaDetailFragment : Fragment(), GigsAdapter.GigListener {
     }
 
     override fun onGigClicked(gig: GigResponse) {
+        if (findNavController().currentDestination!!.id != R.id.ideaDetail)
+            return
+
         if (navArgs.isIdeaOwner) {
-            val action = IdeaDetailFragmentDirections.actionIdeaDetailToApplicantsFragment(gig)
-            findNavController().navigate(action)
+            findNavController().navigate(
+                IdeaDetailFragmentDirections.actionIdeaDetailToApplicantsFragment(gig)
+            )
         } else {
-            // todo: pull up a bottomsheet to apply to gig
+            findNavController().navigate(
+                IdeaDetailFragmentDirections.actionIdeaDetailToApplyGigBottomSheet(gig)
+            )
         }
     }
 
     private fun openCreateGigBottomSheet() {
-        findNavController().navigate(
-            IdeaDetailFragmentDirections.actionIdeaDetailToCreateGigBottomSheet(navArgs.idea)
-        )
+        if (findNavController().currentDestination!!.id == R.id.ideaDetail)
+            findNavController().navigate(
+                IdeaDetailFragmentDirections.actionIdeaDetailToCreateGigBottomSheet(navArgs.idea)
+            )
     }
 
     override fun onDestroyView() {

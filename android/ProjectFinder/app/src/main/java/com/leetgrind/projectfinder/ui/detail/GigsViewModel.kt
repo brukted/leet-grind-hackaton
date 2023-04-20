@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.leetgrind.projectfinder.common.Resource
+import com.leetgrind.projectfinder.data.model.request.ApplicationForm
 import com.leetgrind.projectfinder.data.model.request.CreateGigForm
 import com.leetgrind.projectfinder.data.model.response.ApplicationResponse
 import com.leetgrind.projectfinder.data.model.response.GigResponse
@@ -26,5 +27,8 @@ class GigsViewModel @Inject constructor(
 
     fun createGig(ideaId: String, form: CreateGigForm): LiveData<Resource<GigResponse>> =
         gigRepository.createGig(ideaId, form).asLiveData()
+
+    fun createApplication(form: ApplicationForm): LiveData<Resource<ApplicationResponse>> =
+        applicationRepository.createApplication(form).asLiveData()
 
 }
