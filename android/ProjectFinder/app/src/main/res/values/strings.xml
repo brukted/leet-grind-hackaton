@@ -13,4 +13,22 @@
     <string name="profile_resume">Resume</string>
     <string name="profile_log_out">Log Out</string>
     <string name="full_name">%s %s</string>
+    <string name="author_prefix">Author: %s</string>
+    <string name="no_applications_yet">No applications yet</string>
+    <string name="no_ideas_found">No ideas found</string>
+    <string name="my_notes">My Notes</string>
+    <string name="view_on_github">View on Github</string>
+    <string name="note_to_the_owner">Note to the Owner</string>
+    <string name="email">Email</string>
+    <string name="telegram">Telegram</string>
+    <string name="no_applicants_yet">No applicants yet</string>
+    <string name="create">Create</string>
+    <string name="create_a_gig">Create a gig</string>
+    <string name="apply">Apply</string>
+    <string name="apply_for_this_gig">Apply for this gig</string>
+    <string name="description">Description</string>
+    <string name="title">Title</string>
+    <string name="add_tags">Add tags</string>
+    <string name="note_to_the_idea_owner">Note to the idea owner</string>
+    <string name="view">View</string>
 </resources>

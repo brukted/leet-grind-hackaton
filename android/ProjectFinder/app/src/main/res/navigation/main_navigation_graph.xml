@@ -3,12 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.leetgrind.projectfinder.ui.home.HomeFragment"
-        android:label="Home" />
+        android:label="Home" >
+        <action
+            android:id="@+id/action_homeFragment_to_ideaDetail"
+            app:destination="@id/ideaDetail" />
+    </fragment>
     <fragment
         android:id="@+id/applicationsFragment"
         android:name="com.leetgrind.projectfinder.ui.applications.ApplicationsFragment"
@@ -16,7 +20,11 @@
     <fragment
         android:id="@+id/ideasFragment"
         android:name="com.leetgrind.projectfinder.ui.ideas.IdeasFragment"
-        android:label="Ideas" />
+        android:label="Ideas" >
+        <action
+            android:id="@+id/action_ideasFragment_to_ideaDetail"
+            app:destination="@id/ideaDetail" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.leetgrind.projectfinder.ui.profile.ProfileFragment"
@@ -50,5 +58,52 @@
             app:popUpTo="@+id/main_navigation_graph"
             app:popUpToInclusive="true"/>
     </fragment>
+    <fragment
+        android:id="@+id/ideaDetail"
+        android:name="com.leetgrind.projectfinder.ui.detail.IdeaDetailFragment"
+        android:label="Details">
+        <argument
+            android:name="idea"
+            app:argType="com.leetgrind.projectfinder.domain.model.Idea" />
+        <argument
+            android:name="isIdeaOwner"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_ideaDetail_to_applicantsFragment"
+            app:destination="@id/applicantsFragment" />
+        <action
+            android:id="@+id/action_ideaDetail_to_createGigBottomSheet"
+            app:destination="@id/createGigBottomSheet" />
+        <action
+            android:id="@+id/action_ideaDetail_to_applyGigBottomSheet"
+            app:destination="@id/applyGigBottomSheet" />
+    </fragment>
+    <fragment
+        android:id="@+id/applicantsFragment"
+        android:name="com.leetgrind.projectfinder.ui.detail.applicants.ApplicantsFragment"
+        android:label="Applicants" >
+        <argument
+            android:name="gig"
+            app:argType="com.leetgrind.projectfinder.data.model.response.GigResponse" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/createGigBottomSheet"
+        android:name="com.leetgrind.projectfinder.ui.detail.create.GigBottomSheet"
+        android:label="LocationPickerBottomSheet"
+        tools:layout="@layout/bottom_sheet_create_gig">
+        <argument
+            android:name="idea"
+            app:argType="com.leetgrind.projectfinder.domain.model.Idea" />
+    </dialog>
+    <dialog
+        android:id="@+id/applyGigBottomSheet"
+        android:name="com.leetgrind.projectfinder.ui.detail.apply.ApplyGigBottomSheet"
+        android:label="ApplyGigBottomSheet"
+        tools:layout="@layout/bottom_sheet_apply_gig">
+        <argument
+            android:name="gig"
+            app:argType="com.leetgrind.projectfinder.data.model.response.GigResponse" />
+    </dialog>
 
 </navigation>

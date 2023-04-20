@@ -28,7 +28,6 @@ import axios from "axios";
         }
  */
 
-
 // Returns the list of applications for the current user
 export const getMyApplications = async () => {
     return axios.get("/me/applications").then((response) => {
@@ -43,38 +42,42 @@ export const getAllApplications = async () => {
     });
 };
 
-
 // Return the application model
 export const getApplication = async (applicationId) => {
-    return axios.get("/applications/applicationId").then((response) => {
+    return axios.get(`/applications/${applicationId}`).then((response) => {
         return response.data.data;
     });
 };
 
 // Returns the deleted application model
 export const deleteApplication = async (applicationId) => {
-    return axios.delete("/applications/applicationId").then((response) => {
+    return axios.delete(`/applications/${applicationId}`).then((response) => {
         return response.data.data;
     });
-}
+};
 
 // Returns the updated application model
 export const updateApplication = async (applicationId, note, status) => {
-    return axios.put("/applications/applicationId", { note, status }).then((response) => {
-        return response.data.data;
-    });
-}
+    return axios
+        .patch(`/applications/${applicationId}`, { note, status })
+        .then((response) => {
+            return response.data.data;
+        });
+};
 
 // Return the application model
 export const createApplication = async (gigId, note) => {
-    return axios.post("/applications", { gigId, note }).then((response) => {
-        return response.data.data;
-    });
-}
+    console.log("note: ", note);
+    return axios
+        .post("/applications", { gig: gigId, note: note })
+        .then((response) => {
+            return response.data.data;
+        });
+};
 
 // Returns a list of applications for this gig
 export const getGigApplications = async (gigId) => {
     return axios.get(`/gigs/${gigId}/applications`).then((response) => {
         return response.data.data;
     });
-}
+};

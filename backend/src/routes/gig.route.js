@@ -8,6 +8,8 @@ router.route('/ideas/:ideaId/gigs/').post(validateCreateGig, gigController.creat
 router.route('/ideas/:ideaId/gigs/:gigId').put(validateCreateGig, gigController.update).delete(gigController.deleteGig);
 router.route('/gigs/:gigId/applications').get(applicationController.getGigApplications);
 router.get('/me/gigs', gigController.getMyGigs);
+router.get('/gigs', gigController.getAllGigs);
+router.get('/gigs/:gigId', gigController.findOne);
 
 // export the router
 module.exports = router;

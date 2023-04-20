@@ -18,6 +18,12 @@ exports.createApplication = async (req, res, next) => {
 
     // create application
     const application_ = await Application.create(req.body);
+    const gig_ = await Gig.findById(req.body.gig);
+
+    if (!gig_) {
+      return next(new AppError("There is no gig with this id", 400));
+    }
+
     await Gig.findByIdAndUpdate(req.body.gig, { $push: { applications: application_._id } });
 
     res.send(
@@ -26,7 +32,7 @@ exports.createApplication = async (req, res, next) => {
         message = "application posted successfully")
     );
   } catch (error) {
-    next(new AppError("Server Error", 500));
+    next(new AppError(error.message || "Server Error", 500, error.stack));
   }
 };
 
@@ -44,7 +50,7 @@ exports.updateApplication = async (req, res, next) => {
     const applicant_ = await Application.findByIdAndUpdate(req.params.id, req.body, {
       runValidators: true,
       new: true,
-    });
+    }).populate('applicantModel').populate('gigModel');
 
     res.send(
       new JSendResponse().success(
@@ -53,7 +59,7 @@ exports.updateApplication = async (req, res, next) => {
       )
     );
   } catch (error) {
-    next(new AppError("Server Error", 500));
+    next(new AppError(error.message || "Server Error", 500, error.stack));
   }
 };
 
@@ -76,7 +82,7 @@ exports.deleteApplication = async (req, res, next) => {
       )
     );
   } catch (error) {
-    next(error);
+    next(new AppError(error.message || "Server Error", 500, error.stack));
   }
 };
 
@@ -85,11 +91,11 @@ exports.deleteApplication = async (req, res, next) => {
 exports.getApplication = async (req, res, next) => {
 
   try {
-    const getApplication_ = await Application.findById(req.params.id).populate('applicantModel');
+    const getApplication_ = await Application.findById(req.params.id).populate('applicantModel').populate('gigModel');
 
     res.send(new JSendResponse().success((data = getApplication_)));
   } catch (error) {
-    next(error);
+    next(new AppError(error.message || "Server Error", 500, error.stack));
   }
 };
 
@@ -97,30 +103,30 @@ exports.getApplication = async (req, res, next) => {
 exports.getApplications = async (req, res, next) => {
 
   try {
-    const getApplications_ = await Application.find({ applicant: req.user_id }).populate('applicantModel');
+    const getApplications_ = await Application.find({ applicant: req.user_id }).populate('applicantModel').populate('gigModel');
 
     res.send(new JSendResponse().success((data = getApplications_)));
   } catch (error) {
-    next(error);
+    next(new AppError(error.message || "Server Error", 500, error.stack));
   }
 };
 
 exports.getMyApplications = async (req, res, next) => {
   try {
-    const getApplications_ = await Application.find({ applicant: req.user_id }).populate('applicantModel');
+    const getApplications_ = await Application.find({ applicant: req.user_id }).populate('applicantModel').populate('gigModel');
 
     res.send(new JSendResponse().success((data = getApplications_)));
   } catch (error) {
-    next(error);
+    next(new AppError(error.message || "Server Error", 500, error.stack));
   }
 };
 
 exports.getGigApplications = async (req, res, next) => {
   try {
-    const getApplications_ = await Application.find({ gig: req.params.id }).populate('applicantModel');
+    const getApplications_ = await Application.find({ gig: req.params.gigId }).populate('applicantModel').populate('gigModel');
 
     res.send(new JSendResponse().success((data = getApplications_)));
   } catch (error) {
-    next(error);
+    next(new AppError(error.message || "Server Error", 500, error.stack));
   }
 };
