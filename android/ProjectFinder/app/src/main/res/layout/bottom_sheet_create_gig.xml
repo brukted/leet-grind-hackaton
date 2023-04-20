@@ -66,7 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="26dp"
-        android:hint="Title"
+        android:hint="@string/title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/create_gig_button">
@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="26dp"
-        android:hint="Description"
+        android:hint="@string/description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_input">
@@ -95,12 +95,12 @@
             android:id="@+id/description_input_inner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="10dp"
+            android:padding="12dp"
             android:lines="5"
             android:minLines="5"
             android:overScrollMode="always"
             android:scrollbarStyle="insideInset"
-            android:gravity="top|left"
+            android:gravity="top|start"
             android:scrollbars="vertical" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -131,7 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="5dp"
-            android:hint="Add tags"
+            android:hint="@string/add_tags"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/add_tag_button"
             app:layout_constraintBottom_toBottomOf="parent"

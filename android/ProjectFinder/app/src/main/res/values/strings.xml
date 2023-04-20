@@ -24,4 +24,10 @@
     <string name="no_applicants_yet">No applicants yet</string>
     <string name="create">Create</string>
     <string name="create_a_gig">Create a gig</string>
+    <string name="apply">Apply</string>
+    <string name="apply_for_this_gig">Apply for this gig</string>
+    <string name="description">Description</string>
+    <string name="title">Title</string>
+    <string name="add_tags">Add tags</string>
+    <string name="note_to_the_idea_owner">Note to the idea owner</string>
 </resources>
