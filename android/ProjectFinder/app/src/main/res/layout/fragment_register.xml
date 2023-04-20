@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="80dp"
                 android:text="Sign Up"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textStyle="bold"
@@ -102,78 +102,6 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/github"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:hint="Github"
-                app:errorEnabled="true"
-                app:error="@{!registerViewModel.githubError.successful ? registerViewModel.githubError.errorMessage : null}"
-                app:layout_constraintEnd_toEndOf="@+id/email"
-                app:layout_constraintStart_toStartOf="@+id/email"
-                app:layout_constraintTop_toBottomOf="@+id/email"
-                app:startIconDrawable="@drawable/ic_github">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@={registerViewModel.github}"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/linkedIn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:hint="LinkedIn"
-                app:errorEnabled="true"
-                app:error="@{!registerViewModel.linkedInError.successful ? registerViewModel.linkedInError.errorMessage : null}"
-                app:layout_constraintEnd_toEndOf="@+id/github"
-                app:layout_constraintStart_toStartOf="@+id/github"
-                app:layout_constraintTop_toBottomOf="@+id/github"
-                app:startIconDrawable="@drawable/ic_linkedin">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@={registerViewModel.linkedIn}"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/cvLink"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:hint="CV Link"
-                app:errorEnabled="true"
-                app:error="@{!registerViewModel.cvLinkError.successful ? registerViewModel.cvLinkError.errorMessage : null}"
-                app:layout_constraintEnd_toEndOf="@+id/linkedIn"
-                app:layout_constraintStart_toStartOf="@+id/linkedIn"
-                app:layout_constraintTop_toBottomOf="@+id/linkedIn"
-                app:startIconDrawable="@drawable/ic_link">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@={registerViewModel.cvLink}"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/telegramHandle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -182,16 +110,16 @@
                 android:layout_marginEnd="20dp"
                 android:hint="Telegram Handle"
                 app:errorEnabled="true"
-                app:error="@{!registerViewModel.cvLinkError.successful ? registerViewModel.cvLinkError.errorMessage : null}"
-                app:layout_constraintEnd_toEndOf="@+id/cvLink"
-                app:layout_constraintStart_toStartOf="@+id/cvLink"
-                app:layout_constraintTop_toBottomOf="@+id/cvLink"
+                app:error="@{!registerViewModel.telegramHandleError.successful ? registerViewModel.telegramHandleError.errorMessage : null}"
+                app:layout_constraintEnd_toEndOf="@+id/email"
+                app:layout_constraintStart_toStartOf="@+id/email"
+                app:layout_constraintTop_toBottomOf="@+id/email"
                 app:startIconDrawable="@drawable/ic_telegram">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={registerViewModel.cvLink}"
+                    android:text="@={registerViewModel.telegramHandle}"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -206,7 +134,7 @@
                 android:layout_marginEnd="20dp"
                 android:hint="Password"
                 app:errorEnabled="true"
-                app:error="@{!registerViewModel.cvLinkError.successful ? registerViewModel.cvLinkError.errorMessage : null}"
+                app:error="@{!registerViewModel.passwordError.successful ? registerViewModel.passwordError.errorMessage : null}"
                 app:layout_constraintEnd_toEndOf="@+id/telegramHandle"
                 app:layout_constraintStart_toStartOf="@+id/telegramHandle"
                 app:layout_constraintTop_toBottomOf="@+id/telegramHandle"
@@ -215,32 +143,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={registerViewModel.cvLink}"
+                    android:text="@={registerViewModel.password}"
                     />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/confirmPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:hint="Confirm Password"
-                app:error="@{!registerViewModel.cvLinkError.successful ? registerViewModel.cvLinkError.errorMessage : null}"
-                app:errorEnabled="true"
-                app:layout_constraintEnd_toEndOf="@+id/password"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/password"
-                app:layout_constraintTop_toBottomOf="@+id/password"
-                app:startIconDrawable="@drawable/ic_lock">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@={registerViewModel.cvLink}" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -254,8 +158,8 @@
                 android:layout_marginBottom="50dp"
                 android:text="Register"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/confirmPassword"
-                app:layout_constraintTop_toBottomOf="@+id/confirmPassword" />
+                app:layout_constraintEnd_toEndOf="@+id/password"
+                app:layout_constraintTop_toBottomOf="@+id/password" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -266,7 +170,7 @@
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@+id/registerBtn"
                 app:layout_constraintStart_toStartOf="@+id/registerBtn"
-                app:layout_constraintTop_toBottomOf="@+id/cvLink" />
+                app:layout_constraintTop_toBottomOf="@+id/password" />
 
             <Button
                 android:id="@+id/alreadyHaveAnAccountBtn"
@@ -279,7 +183,7 @@
                 android:text="Already have an account?"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/confirmPassword" />
+                app:layout_constraintTop_toBottomOf="@+id/password" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -31,22 +31,14 @@ class RegisterViewModel @Inject constructor(
     val firstName: MutableLiveData<String> = MutableLiveData("")
     val lastName: MutableLiveData<String> = MutableLiveData("")
     val email: MutableLiveData<String> = MutableLiveData("")
-    val github: MutableLiveData<String> = MutableLiveData("")
-    val linkedIn: MutableLiveData<String> = MutableLiveData("")
-    val cvLink: MutableLiveData<String> = MutableLiveData("")
     val telegramHandle: MutableLiveData<String> = MutableLiveData("")
     val password: MutableLiveData<String> = MutableLiveData("")
-    val confirmPassword: MutableLiveData<String> = MutableLiveData("")
 
     val firstNameError = MutableLiveData<ValidationResult>()
     val lastNameError = MutableLiveData<ValidationResult>()
     val emailError = MutableLiveData<ValidationResult>()
-    val githubError = MutableLiveData<ValidationResult>()
-    val linkedInError = MutableLiveData<ValidationResult>()
-    val cvLinkError = MutableLiveData<ValidationResult>()
     val telegramHandleError = MutableLiveData<ValidationResult>()
     val passwordError = MutableLiveData<ValidationResult>()
-    val confirmPasswordError = MutableLiveData<ValidationResult>()
 
     private val isFormValid = MediatorLiveData<Boolean>().apply {
         addSource(firstNameError) {
@@ -58,22 +50,10 @@ class RegisterViewModel @Inject constructor(
         addSource(emailError) {
             value = it.isSuccessful
         }
-        addSource(githubError) {
-            value = it.isSuccessful
-        }
-        addSource(linkedInError) {
-            value = it.isSuccessful
-        }
-        addSource(cvLinkError) {
-            value = it.isSuccessful
-        }
         addSource(telegramHandleError) {
             value = it.isSuccessful
         }
         addSource(passwordError) {
-            value = it.isSuccessful
-        }
-        addSource(confirmPasswordError) {
             value = it.isSuccessful
         }
     }
@@ -82,9 +62,6 @@ class RegisterViewModel @Inject constructor(
         firstName = firstName.value!!,
         lastName = lastName.value!!,
         email = email.value!!,
-        github = github.value!!,
-        linkedIn = linkedIn.value!!,
-        cvLink = cvLink.value!!,
         telegramHandle = telegramHandle.value!!,
         password = password.value!!,
     )
@@ -93,25 +70,14 @@ class RegisterViewModel @Inject constructor(
         firstNameError.value = validateName(firstName.value!!)
         lastNameError.value = validateName(lastName.value!!)
         emailError.value = validateEmail(email.value!!)
-        githubError.value = validateGithub(github.value!!)
-        linkedInError.value = validateLinkedIn(linkedIn.value!!)
-        cvLinkError.value = validateCvLink(cvLink.value!!)
         telegramHandleError.value = validateTelegramHandle(telegramHandle.value!!)
         passwordError.value = validatePassword(password.value!!)
-        confirmPasswordError.value = validateConfirmPassword(
-            password.value!!,
-            confirmPassword.value!!
-        )
 
         return firstNameError.value!!.isSuccessful &&
                 lastNameError.value!!.isSuccessful &&
                 emailError.value!!.isSuccessful &&
-                githubError.value!!.isSuccessful &&
-                linkedInError.value!!.isSuccessful &&
-                cvLinkError.value!!.isSuccessful &&
                 telegramHandleError.value!!.isSuccessful &&
-                passwordError.value!!.isSuccessful &&
-                confirmPasswordError.value!!.isSuccessful
+                passwordError.value!!.isSuccessful
     }
 
     fun register(): Flow<Resource<Unit>> = flow {
@@ -136,6 +102,4 @@ class RegisterViewModel @Inject constructor(
                 }
             }.collect()
     }
-
-
 }
