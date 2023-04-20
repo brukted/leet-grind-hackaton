@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_ideasFragment_to_ideaDetail"
             app:destination="@id/ideaDetail" />
+        <action
+            android:id="@+id/action_ideasFragment_to_createIdeaBottomSheet"
+            app:destination="@id/createIdeaBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -105,5 +108,9 @@
             android:name="gig"
             app:argType="com.leetgrind.projectfinder.data.model.response.GigResponse" />
     </dialog>
+    <dialog
+        android:id="@+id/createIdeaBottomSheet"
+        android:name="com.leetgrind.projectfinder.ui.ideas.create.CreateIdeaBottomSheet"
+        android:label="CreateIdeaBottomSheet" />
 
 </navigation>
