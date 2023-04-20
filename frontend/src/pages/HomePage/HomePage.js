@@ -7,12 +7,24 @@ import Applications from "./TabPages/Application";
 import TabItem from "./components/TabItem";
 import { useRecoilState } from "recoil";
 import { activeTabState } from "../../recoil_state";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useRecoilState(activeTabState);
+  const navigate = useNavigate();
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
+  };
+
+  const handleSignOut = () => {
+    // remove authToken and loggedInUser from local storage
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("loggedInUser");
+
+    // redirect user to login page
+    // replace this with your own logic
+    navigate("/");
   };
 
   const TabItem = ({ tabName, Icon }) => {
@@ -20,10 +32,11 @@ const HomePage = () => {
 
     return (
       <button
-        className={`flex items-center justify-start w-full h-12 px-4 transition-colors duration-200 rounded-none focus:outline-none ${isActive
-          ? "text-white bg-primary"
-          : "text-gray-500 hover:text-white hover:bg-secondary"
-          }`}
+        className={`flex items-center justify-start w-full h-12 px-4 transition-colors duration-200 rounded-none focus:outline-none ${
+          isActive
+            ? "text-white bg-primary"
+            : "text-gray-500 hover:text-white hover:bg-secondary"
+        }`}
         onClick={() => handleTabClick(tabName)}
       >
         <Icon
@@ -67,7 +80,10 @@ const HomePage = () => {
             isActive={activeTab === "Profile"}
           />
         </nav>
-        <button className="flex items-center justify-start w-full h-12 px-4 mt-4 text-red-500 rounded-none hover:text-white hover:bg-red-500 focus:outline-none">
+        <button
+          onClick={handleSignOut}
+          className="flex items-center justify-start w-full h-12 px-4 mt-4 text-red-500 rounded-none hover:text-white hover:bg-red-500 focus:outline-none"
+        >
           <SignOut size={20} />
           <span className="ml-4 text-sm font-medium">Sign Out</span>
         </button>
@@ -77,8 +93,8 @@ const HomePage = () => {
         {activeTab === "My Postings" && <MyPostings />}
         {activeTab === "Profile" && <Profile />}
         {activeTab === "Applications" && <Applications />}
-      </main >
-    </div >
+      </main>
+    </div>
   );
 };
 

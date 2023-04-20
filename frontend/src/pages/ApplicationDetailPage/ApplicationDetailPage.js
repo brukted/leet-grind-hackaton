@@ -48,7 +48,13 @@ export default function ApplicationDetailPage() {
             Application Details
           </h3>
           <div>
-            <h1 class="font-bold text-green-400">Please check your email for this application</h1>
+            {application &&
+              application.status &&
+              application.status.toLowerCase() === "Accepted".toLowerCase() && (
+                <h1 class="font-bold text-green-400">
+                  Please check your email for this application
+                </h1>
+              )}
           </div>
           <dl class="divide-y divide-gray-100">
             <div class="py-4">
