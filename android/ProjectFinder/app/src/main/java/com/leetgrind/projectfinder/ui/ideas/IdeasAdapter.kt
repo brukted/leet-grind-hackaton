@@ -8,7 +8,9 @@ import com.leetgrind.projectfinder.data.model.response.IdeaResponse
 import com.leetgrind.projectfinder.databinding.CardIdeaBinding
 import com.leetgrind.projectfinder.utils.addChip
 
-class IdeasAdapter : RecyclerView.Adapter<IdeasAdapter.ViewHolder>() {
+class IdeasAdapter(
+    private val listener: IdeaListener
+) : RecyclerView.Adapter<IdeasAdapter.ViewHolder>() {
 
     private var _allItems: List<IdeaResponse> = listOf()
 
@@ -38,6 +40,9 @@ class IdeasAdapter : RecyclerView.Adapter<IdeasAdapter.ViewHolder>() {
         _allItems[position].tags.forEach {
             holder.tags.addChip(holder.itemView.context, it)
         }
+        holder.itemView.setOnClickListener {
+            listener.onIdeaClicked(_allItems[position])
+        }
     }
 
     override fun getItemCount(): Int {
@@ -47,5 +52,9 @@ class IdeasAdapter : RecyclerView.Adapter<IdeasAdapter.ViewHolder>() {
     fun setItems(ideas: List<IdeaResponse>) {
         _allItems = ideas
         notifyDataSetChanged()
+    }
+
+    interface IdeaListener {
+        fun onIdeaClicked(idea: IdeaResponse)
     }
 }

@@ -7,15 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.leetgrind.projectfinder.common.Resource
+import com.leetgrind.projectfinder.data.mapper.toIdea
+import com.leetgrind.projectfinder.data.model.response.IdeaResponse
 import com.leetgrind.projectfinder.databinding.FragmentHomeBinding
+import com.leetgrind.projectfinder.ui.ideas.IdeasAdapter
+import com.leetgrind.projectfinder.ui.ideas.IdeasFragmentDirections
 import com.leetgrind.projectfinder.ui.profile.ProfileViewModel
 import com.leetgrind.projectfinder.utils.gone
 import com.leetgrind.projectfinder.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), IdeasAdapter.IdeaListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: HomeAdapter
@@ -26,7 +31,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        adapter = HomeAdapter()
+        adapter = HomeAdapter(this)
 
         binding.apply {
             ideasRecyclerview.adapter = adapter
@@ -73,6 +78,12 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onIdeaClicked(idea: IdeaResponse) {
+        findNavController().navigate(
+            HomeFragmentDirections.actionHomeFragmentToIdeaDetail(idea.toIdea(), false)
+        )
     }
     
     override fun onDestroyView() {

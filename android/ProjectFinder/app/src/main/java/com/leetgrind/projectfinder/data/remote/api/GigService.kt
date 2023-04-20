@@ -15,13 +15,11 @@ interface GigService {
     suspend fun createGig(
         @Path("ideaId") ideaId: String,
         @Body form: CreateGigForm
-    ): Response<JSendResponse<Void>>
+    ): Response<JSendResponse<GigResponse>>
 
     @GET("ideas/{ideaId}/gigs")
     suspend fun getGigsByIdea(
         @Path("ideaId") ideaId: String
     ): Response<JSendResponse<List<GigResponse>>>
-
-
 
 }

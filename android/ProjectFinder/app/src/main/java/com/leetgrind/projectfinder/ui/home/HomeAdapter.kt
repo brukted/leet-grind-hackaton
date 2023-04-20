@@ -6,9 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.leetgrind.projectfinder.R
 import com.leetgrind.projectfinder.data.model.response.IdeaResponse
 import com.leetgrind.projectfinder.databinding.CardIdeaBinding
+import com.leetgrind.projectfinder.ui.ideas.IdeasAdapter
 import com.leetgrind.projectfinder.utils.addChip
 
-class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+class HomeAdapter(
+    private val listener: IdeasAdapter.IdeaListener
+) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
     private var _allItems: List<IdeaResponse> = listOf()
 
@@ -37,6 +40,9 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
         )
         _allItems[position].tags.forEach {
             holder.tags.addChip(holder.itemView.context, it)
+        }
+        holder.itemView.setOnClickListener {
+            listener.onIdeaClicked(_allItems[position])
         }
     }
 
