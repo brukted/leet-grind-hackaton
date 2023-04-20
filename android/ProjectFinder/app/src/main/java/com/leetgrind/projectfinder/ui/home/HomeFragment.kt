@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.leetgrind.projectfinder.R
 import com.leetgrind.projectfinder.common.Resource
 import com.leetgrind.projectfinder.data.mapper.toIdea
 import com.leetgrind.projectfinder.data.model.response.IdeaResponse
@@ -81,9 +82,10 @@ class HomeFragment : Fragment(), IdeasAdapter.IdeaListener {
     }
 
     override fun onIdeaClicked(idea: IdeaResponse) {
-        findNavController().navigate(
-            HomeFragmentDirections.actionHomeFragmentToIdeaDetail(idea.toIdea(), false)
-        )
+        if (findNavController().currentDestination!!.id == R.id.homeFragment)
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToIdeaDetail(idea.toIdea(), false)
+            )
     }
     
     override fun onDestroyView() {
