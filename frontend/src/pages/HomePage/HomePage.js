@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { House, Clipboard, List, User, SignOut } from "phosphor-react";
-import Home from "./TabPages/Home";
-import { MyPostings } from "./TabPages/MyPostings";
-import { Profile } from "./TabPages/Profile";
-import Applications from "./TabPages/Application";
-import TabItem from "./components/TabItem";
+import { Clipboard, House, List, SignOut, User, Lightbulb } from "phosphor-react";
+import React from "react";
 import { useRecoilState } from "recoil";
 import { activeTabState } from "../../recoil_state";
+import Applications from "./TabPages/Application";
+import Home from "./TabPages/Home";
+import { MyIdeas } from "./TabPages/MyIdeas";
+import { MyPostings } from "./TabPages/MyPostings";
+import { Profile } from "./TabPages/Profile";
 import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
@@ -32,11 +32,10 @@ const HomePage = () => {
 
     return (
       <button
-        className={`flex items-center justify-start w-full h-12 px-4 transition-colors duration-200 rounded-none focus:outline-none ${
-          isActive
-            ? "text-white bg-primary"
-            : "text-gray-500 hover:text-white hover:bg-secondary"
-        }`}
+        className={`flex items-center justify-start w-full h-12 px-4 transition-colors duration-200 rounded-none focus:outline-none ${isActive
+          ? "text-white bg-primary"
+          : "text-gray-500 hover:text-white hover:bg-secondary"
+          }`}
         onClick={() => handleTabClick(tabName)}
       >
         <Icon
@@ -74,6 +73,12 @@ const HomePage = () => {
             isActive={activeTab === "My Postings"}
           />
           <TabItem
+            tabName="My Ideas"
+            Icon={Lightbulb}
+            onClick={handleTabClick}
+            isActive={activeTab === "My Ideas"}
+          />
+          <TabItem
             tabName="Profile"
             Icon={User}
             onClick={handleTabClick}
@@ -93,8 +98,9 @@ const HomePage = () => {
         {activeTab === "My Postings" && <MyPostings />}
         {activeTab === "Profile" && <Profile />}
         {activeTab === "Applications" && <Applications />}
-      </main>
-    </div>
+        {activeTab === "My Ideas" && <MyIdeas />}
+      </main >
+    </div >
   );
 };
 
