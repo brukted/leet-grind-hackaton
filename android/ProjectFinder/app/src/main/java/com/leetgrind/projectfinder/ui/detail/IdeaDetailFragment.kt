@@ -1,5 +1,7 @@
 package com.leetgrind.projectfinder.ui.detail
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -45,6 +47,11 @@ class IdeaDetailFragment : Fragment(), GigsAdapter.GigListener {
                 }
             } else {
                 addGigButton.gone()
+            }
+            githubLink.setOnClickListener {
+                startActivity(
+                    Intent(Intent.ACTION_VIEW, Uri.parse(navArgs.idea.github))
+                )
             }
         }
 

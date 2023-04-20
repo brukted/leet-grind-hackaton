@@ -11,7 +11,7 @@ data class ProfileResponse(
     val password: String?,
     val phone: String?,
     val resume: String?,
-    val linkedin: String,
+    val linkedin: String?,
     val github: String?,
     val telegram: String,
     val gigs: List<Any>?,
