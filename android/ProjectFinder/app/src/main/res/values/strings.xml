@@ -30,4 +30,5 @@
     <string name="title">Title</string>
     <string name="add_tags">Add tags</string>
     <string name="note_to_the_idea_owner">Note to the idea owner</string>
+    <string name="view">View</string>
 </resources>

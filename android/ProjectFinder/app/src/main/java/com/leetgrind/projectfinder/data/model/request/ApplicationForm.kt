@@ -1,6 +1,6 @@
 package com.leetgrind.projectfinder.data.model.request
 
 data class ApplicationForm(
-    val gigId: String,
+    val gig: String,
     val note: String,
 )

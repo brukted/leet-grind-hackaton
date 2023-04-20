@@ -3,12 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe_refresh"
+    android:paddingBottom="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="10dp"
         android:fillViewport="true"
         android:scrollbars="none">
 
@@ -93,7 +95,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/githubLink"
-                tools:listitem="@layout/temp_gig_item"
+                tools:listitem="@layout/card_gig"
                 tools:itemCount="3" />
 
             <ProgressBar
