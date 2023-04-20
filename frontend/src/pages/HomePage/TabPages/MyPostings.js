@@ -31,46 +31,53 @@ export const MyPostings = () => {
     }, []);
 
     return (
-        <div class="p-4 space-y-4 min-h-screen flex flex-col">
-            <h2 class="text-2xl font-bold text-neutral">My Postings</h2>
-            <div class="w-full max-w-md">
-                <input
-                    type="text"
-                    value={searchValue}
-                    onChange={handleSearchChange}
-                    placeholder="Search by title or description"
-                    class="w-full p-2 mb-4 border-2 border-gray-200 rounded-lg"
-                />
-            </div>
-            {
-                myGigs.length ? "" :
-                    <div className="flex flex-col flex-grow justify-center items-center">
-                        <div class="flex flex-col justify-center items-center w-96 h-56 border-2 border-dashed text-neutral-400 rounded-lg"
-                            role="button"
-                            onClick={() => navigateToCreateGig()}
-                        >
-                            <div class="text-neutral-400">
-                                <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M10 3a1 1 0 011 1v4h4a1 1 0 110 2h-4v4a1 1 0 11-2 0v-4H5a1 1 0 110-2h4V4a1 1 0 011-1z"
-                                        clip-rule="evenodd"
-                                    />
-                                </svg>
-
-                            </div>
-                            <p class="text-neutral font-bold pt-5">
-                                Create a new gig
-                            </p>
-                        </div>
-                    </div>
-            }
-
-            <div class="grid grid-cols-1 gap-4">
-                {myGigs.map((gig) => (
-                    <MyGigCard key={gig.id} gig={gig} />
-                ))}
-            </div>
+      <div class="p-4 space-y-4 min-h-screen flex flex-col">
+        <div class="flex justify-between items-center">
+          <h2 class="text-2xl font-bold text-neutral">My Postings</h2>
+          <button
+            onClick={() => navigateToCreateGig()}
+            class="px-4 py-2 rounded-lg bg-primary text-white font-semibold"
+          >
+            Create Gig
+          </button>
         </div>
+        <div class="w-full max-w-md">
+          <input
+            type="text"
+            value={searchValue}
+            onChange={handleSearchChange}
+            placeholder="Search by title or description"
+            class="w-full p-2 mb-4 border-2 border-gray-200 rounded-lg"
+          />
+        </div>
+        {myGigs.length ? (
+          ""
+        ) : (
+          <div className="flex flex-col items-center justify-center flex-grow">
+            <div
+              class="flex flex-col justify-center items-center w-96 h-56 border-2 border-dashed text-neutral-400 rounded-lg"
+              role="button"
+              onClick={() => navigateToCreateGig()}
+            >
+              <div class="text-neutral-400">
+                <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 3a1 1 0 011 1v4h4a1 1 0 110 2h-4v4a1 1 0 11-2 0v-4H5a1 1 0 110-2h4V4a1 1 0 011-1z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
+              <p class="text-neutral font-bold pt-5">Create a new gig</p>
+            </div>
+          </div>
+        )}
+
+        <div class="grid grid-cols-1 gap-4">
+          {myGigs.map((gig) => (
+            <MyGigCard key={gig.id} gig={gig} />
+          ))}
+        </div>
+      </div>
     );
 };

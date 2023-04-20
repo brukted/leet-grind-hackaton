@@ -6,15 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.leetgrind.projectfinder.R
 import com.leetgrind.projectfinder.common.Resource
+import com.leetgrind.projectfinder.data.mapper.toIdea
+import com.leetgrind.projectfinder.data.model.response.IdeaResponse
 import com.leetgrind.projectfinder.databinding.FragmentIdeasBinding
-import com.leetgrind.projectfinder.ui.home.HomeViewModel
 import com.leetgrind.projectfinder.utils.gone
 import com.leetgrind.projectfinder.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class IdeasFragment : Fragment() {
+class IdeasFragment : Fragment(), IdeasAdapter.IdeaListener {
     private var _binding: FragmentIdeasBinding? = null
     private val binding get() = _binding!!
     private val ideaViewModel by viewModels<IdeasViewModel>()
@@ -25,12 +28,16 @@ class IdeasFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentIdeasBinding.inflate(inflater, container, false)
-        adapter = IdeasAdapter()
+        adapter = IdeasAdapter(this)
 
         binding.apply {
             ideasRecyclerview.adapter = adapter
             swipeRefresh.setOnRefreshListener {
                 getIdeas()
+            }
+            createIdeaFab.setOnClickListener {
+                if (findNavController().currentDestination?.id == R.id.ideasFragment)
+                    findNavController().navigate(IdeasFragmentDirections.actionIdeasFragmentToCreateIdeaBottomSheet())
             }
         }
 
@@ -72,6 +79,12 @@ class IdeasFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onIdeaClicked(idea: IdeaResponse) {
+        findNavController().navigate(
+            IdeasFragmentDirections.actionIdeasFragmentToIdeaDetail(idea.toIdea(), true)
+        )
     }
     
     override fun onDestroyView() {
