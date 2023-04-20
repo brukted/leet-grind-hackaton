@@ -34,7 +34,7 @@ export const SignIn = () => {
             setSignedInUser(data.user);
             localStorage.setItem("authToken", data.token);
             localStorage.setItem("loggedInUser", JSON.stringify(data.user));
-            navigate("/");
+            navigate("/home");
         }).catch((error) => {
             const random = Math.random().toString(36).substring(7);
             console.error(`Error logging in user: ${error.response.data.message}`);
