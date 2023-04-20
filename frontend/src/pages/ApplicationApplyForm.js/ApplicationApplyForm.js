@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { ideasState } from "../../recoil_state";
-import { useNavigate, useParams } from "react-router-dom";
-import IdeaCard from "../HomePage/components/IdeaCard";
 import { createApplication } from "../../services/applicationService";
 
 const ApplicationApply = () => {
