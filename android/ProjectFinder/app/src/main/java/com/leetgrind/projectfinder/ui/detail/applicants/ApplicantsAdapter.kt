@@ -1,13 +1,18 @@
 package com.leetgrind.projectfinder.ui.detail.applicants
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.leetgrind.projectfinder.R
 import com.leetgrind.projectfinder.data.model.response.ApplicationResponse
 import com.leetgrind.projectfinder.databinding.CardApplicantBinding
 
-class ApplicantsAdapter : RecyclerView.Adapter<ApplicantsAdapter.ViewHolder>() {
+class ApplicantsAdapter(
+    private val onLinkClickListener: OnLinkClickListener
+) : RecyclerView.Adapter<ApplicantsAdapter.ViewHolder>() {
 
     private var _allItems: List<ApplicationResponse> = listOf()
 
@@ -34,6 +39,13 @@ class ApplicantsAdapter : RecyclerView.Adapter<ApplicantsAdapter.ViewHolder>() {
             _allItems[position].applicant.lastName
         )
         holder.gigName.text = _allItems[position].gig.title
+        holder.note.text = _allItems[position].note
+        holder.emailButton.setOnClickListener {
+            onLinkClickListener.onLinkClick(_allItems[position].applicant.email, true)
+        }
+        holder.telegramButton.setOnClickListener {
+            onLinkClickListener.onLinkClick(_allItems[position].applicant.telegram, false)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -43,5 +55,9 @@ class ApplicantsAdapter : RecyclerView.Adapter<ApplicantsAdapter.ViewHolder>() {
     fun setItems(applications: List<ApplicationResponse>) {
         _allItems = applications
         notifyDataSetChanged()
+    }
+
+    interface OnLinkClickListener {
+        fun onLinkClick(url: String, isMail: Boolean)
     }
 }

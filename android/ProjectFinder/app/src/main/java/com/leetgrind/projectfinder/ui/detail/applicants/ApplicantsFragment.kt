@@ -1,5 +1,7 @@
 package com.leetgrind.projectfinder.ui.detail.applicants
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +17,7 @@ import com.leetgrind.projectfinder.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ApplicantsFragment : Fragment() {
+class ApplicantsFragment : Fragment(), ApplicantsAdapter.OnLinkClickListener {
     private var _binding: FragmentApplicantsBinding? = null
     private val binding get() = _binding!!
     private val gigsViewModel by viewModels<GigsViewModel>()
@@ -27,7 +29,7 @@ class ApplicantsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentApplicantsBinding.inflate(inflater, container, false)
-        adapter = ApplicantsAdapter()
+        adapter = ApplicantsAdapter(this)
 
         binding.apply {
             applicantsRecyclerView.adapter = adapter
@@ -69,6 +71,21 @@ class ApplicantsFragment : Fragment() {
                     binding.swipeRefresh.isRefreshing = false
                 }
             }
+        }
+    }
+
+    override fun onLinkClick(link: String, isMail: Boolean) {
+        if (isMail) {
+            val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("mailto:")
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(link))
+            }
+            startActivity(emailIntent)
+        } else {
+            val telegramIntent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse(link)
+            }
+            startActivity(telegramIntent)
         }
     }
 
