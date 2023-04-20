@@ -2,6 +2,8 @@ const Idea = require("../models/idea.model");
 const AppError = require("../utils/app-error");
 const { JSendResponse } = require("../utils/jsend-response");
 
+const advancedResults = require('../middlewares/advancedResults')
+
 exports.createIdea = async (req, res, next) => {
   // Validate the request body
 
@@ -90,8 +92,10 @@ exports.getIdea = async (req, res, next) => {
 // get ideas
 exports.getAllIdeas = async (_, res, next) => {
   try {
-    const getIdea = await Idea.find().populate('authorModel');
-    res.send(new JSendResponse().success((data = getIdea)));
+    
+    
+    res.send(new JSendResponse().success((data = advancedResults(Idea, 'authorModel'))));
+
   } catch (error) {
     next(error);
   }
