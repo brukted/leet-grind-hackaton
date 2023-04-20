@@ -4,4 +4,5 @@ data class CreateGigForm(
     val title: String,
     val description: String,
     val tags: List<String>,
+    val idea: String
 )

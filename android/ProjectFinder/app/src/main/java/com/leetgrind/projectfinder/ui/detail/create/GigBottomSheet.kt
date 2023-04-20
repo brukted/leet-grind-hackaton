@@ -53,7 +53,8 @@ class GigBottomSheet : BottomSheetDialogFragment() {
                 val form = CreateGigForm(
                     title = binding.titleInputInner.text.toString(),
                     description = binding.descriptionInputInner.text.toString(),
-                    tags = tags
+                    tags = tags,
+                    idea = navArgs.idea.id
                 )
                 createGig(form)
             }
