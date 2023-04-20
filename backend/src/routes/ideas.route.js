@@ -1,8 +1,11 @@
 const express = require("express");
 const ideaController = require("../controllers/idea.controller");
 const router = express.Router();
+const advancedResults = require('../middlewares/advancedResults')
+const Idea = require("../models/idea.model");
 
-router.route("/ideas").post(ideaController.createIdea).get(ideaController.getAllIdeas);
+
+router.route("/ideas").post(ideaController.createIdea).get(advancedResults(Idea, {path :'authorModel'}), ideaController.getAllIdeas);
 
 router.get("/me/ideas", ideaController.getMyIdeas);
 

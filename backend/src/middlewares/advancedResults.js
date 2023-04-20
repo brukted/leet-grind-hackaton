@@ -1,12 +1,8 @@
 
 const advancedResults = (model, populate) => async (req, res, next) =>{
-
+    
     let query;
-
     const reqQuery = {...req.query};
-    console.log("aa")
-    console.log(req.query);
-    console.log("aa");
     // copy req query
     const removeFields = ['select', 'sort'];
 
@@ -17,39 +13,60 @@ const advancedResults = (model, populate) => async (req, res, next) =>{
     queryString = queryString.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
 
     // find resource
+    queryString = JSON.parse(queryString)
+    if (queryString.tags){
+        queryString.tags =  queryString.tags.split(',')
+    }
+//   filter tags and description condition
+    const finalQueryString = {
+        $or: [
+            {tags: {$exists: true}},
+            { $or: [
+                {description:{$exists: true}}, 
+                {description: {$regex: ''}}
+            ]},  
+        ],
+    };
 
-    console.log("sad", queryString)
-    
-    query = await model.find(JSON.parse(queryString)).populate(
+    if (queryString.tags) {
+        finalQueryString.tags = {$in:  queryString.tags};
+    }
+
+    if (queryString.description) {
+        finalQueryString.description = {$regex: queryString.description};
+    }
+
+ 
+    query = await model.find(finalQueryString).populate(
         populate
     );
-    // select fields
-
+    
 
     if (req.query.select){
-        console.log("fields")
         const fields = req.query.select.split(',').join(' ');
-        console.log(fields);
-        console.log("fields")
         query = query.select(fields);
     }
     if(req.query.sort){
         const sortBy = req.query.sort.split(',').join(' ');
         query = query.sort(sortBy);
-    } else {
-        query = query.sort('-createdAt');
+    }
+     else {
+        // console.log(typeof(query))
+        // query = query.sort({ createdAt: -1 }).toArray(function(err, docs) {
+        //     if (err) {
+        //       console.log(err);
+        //       return;
+        //     }
+        //     console.log(docs);
+        //   });
+          
+          
     }
 
     // Executing query
     const results = await query;
-
     
-
-    res.advancedResults = {
-        success: true,
-        count: results.length,
-        data: results
-    };
+    res.data = results
 
     next();
 }
