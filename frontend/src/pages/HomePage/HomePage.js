@@ -1,18 +1,27 @@
-import React, { useState } from "react";
-import { House, Clipboard, List, User, SignOut } from "phosphor-react";
-import Home from "./TabPages/Home";
-import { MyPostings } from "./TabPages/MyPostings";
-import { Profile } from "./TabPages/Profile";
-import Applications from "./TabPages/Application";
-import TabItem from "./components/TabItem";
+import { Clipboard, House, List, SignOut, User, Lightbulb } from "phosphor-react";
+import React from "react";
 import { useRecoilState } from "recoil";
 import { activeTabState } from "../../recoil_state";
+import Applications from "./TabPages/Application";
+import Home from "./TabPages/Home";
+import { MyIdeas } from "./TabPages/MyIdeas";
+import { MyPostings } from "./TabPages/MyPostings";
+import { Profile } from "./TabPages/Profile";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useRecoilState(activeTabState);
+  const navigate = useNavigate();
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
+  };
+
+  const handleSignOut = () => {
+    // remove authToken and loggedInUser from local storage
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("loggedInUser");
+    navigate("/");
   };
 
   const TabItem = ({ tabName, Icon }) => {
@@ -61,13 +70,22 @@ const HomePage = () => {
             isActive={activeTab === "My Postings"}
           />
           <TabItem
+            tabName="My Ideas"
+            Icon={Lightbulb}
+            onClick={handleTabClick}
+            isActive={activeTab === "My Ideas"}
+          />
+          <TabItem
             tabName="Profile"
             Icon={User}
             onClick={handleTabClick}
             isActive={activeTab === "Profile"}
           />
         </nav>
-        <button className="flex items-center justify-start w-full h-12 px-4 mt-4 text-red-500 rounded-none hover:text-white hover:bg-red-500 focus:outline-none">
+        <button
+          onClick={handleSignOut}
+          className="flex items-center justify-start w-full h-12 px-4 mt-4 text-red-500 rounded-none hover:text-white hover:bg-red-500 focus:outline-none"
+        >
           <SignOut size={20} />
           <span className="ml-4 text-sm font-medium">Sign Out</span>
         </button>
@@ -77,6 +95,7 @@ const HomePage = () => {
         {activeTab === "My Postings" && <MyPostings />}
         {activeTab === "Profile" && <Profile />}
         {activeTab === "Applications" && <Applications />}
+        {activeTab === "My Ideas" && <MyIdeas />}
       </main >
     </div >
   );

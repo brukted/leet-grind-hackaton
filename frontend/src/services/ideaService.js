@@ -43,7 +43,7 @@ export const getAllIdeas = async () => {
 
 // Returns the created idea
 export const createIdea = async (title, description, tags, github) => {
-    return axios.post("/ideas", { title, description, tags, github }).then((response) => {
+    return axios.post("/ideas", { title: title, description: description, tags: tags, github: github }).then((response) => {
         return response.data.data;
     });
 }
