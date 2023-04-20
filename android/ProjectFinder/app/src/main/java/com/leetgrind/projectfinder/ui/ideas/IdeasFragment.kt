@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.leetgrind.projectfinder.R
 import com.leetgrind.projectfinder.common.Resource
 import com.leetgrind.projectfinder.data.mapper.toIdea
 import com.leetgrind.projectfinder.data.model.response.IdeaResponse
@@ -33,6 +34,10 @@ class IdeasFragment : Fragment(), IdeasAdapter.IdeaListener {
             ideasRecyclerview.adapter = adapter
             swipeRefresh.setOnRefreshListener {
                 getIdeas()
+            }
+            createIdeaFab.setOnClickListener {
+                if (findNavController().currentDestination?.id == R.id.ideasFragment)
+                    findNavController().navigate(IdeasFragmentDirections.actionIdeasFragmentToCreateIdeaBottomSheet())
             }
         }
 

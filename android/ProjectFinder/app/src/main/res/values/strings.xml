@@ -31,4 +31,7 @@
     <string name="add_tags">Add tags</string>
     <string name="note_to_the_idea_owner">Note to the idea owner</string>
     <string name="view">View</string>
+    <string name="create_a_project_idea">Create a project idea</string>
+    <string name="github_link">Github link</string>
+    <string name="create_idea">Create Idea</string>
 </resources>

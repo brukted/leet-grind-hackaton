@@ -19,6 +19,17 @@
             tools:listitem="@layout/card_idea"
             tools:itemCount="3" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/create_idea_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginEnd="24dp"
+            android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/create_idea" />
+
         <ProgressBar
             android:id="@+id/progress_bar"
             style="?android:attr/progressBarStyle"
