@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.leetgrind.projectfinder.common.Resource
+import com.leetgrind.projectfinder.data.model.request.CreateIdeaForm
 import com.leetgrind.projectfinder.data.model.response.ApplicationResponse
 import com.leetgrind.projectfinder.data.model.response.IdeaResponse
 import com.leetgrind.projectfinder.data.repository.ApplicationRepository
@@ -18,5 +19,8 @@ class IdeasViewModel @Inject constructor(
 
     fun getMyIdeas(): LiveData<Resource<List<IdeaResponse>>> =
         repository.getMyIdeas().asLiveData()
+
+    fun createIdea(form: CreateIdeaForm): LiveData<Resource<Void>> =
+        repository.createIdea(form).asLiveData()
 
 }
