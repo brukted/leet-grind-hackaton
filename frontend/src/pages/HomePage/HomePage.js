@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { House, Clipboard, List, User, SignOut } from "phosphor-react";
-import Home from "./TabPages/Home";
-import { MyPostings } from "./TabPages/MyPostings";
-import { Profile } from "./TabPages/Profile";
-import Applications from "./TabPages/Application";
-import TabItem from "./components/TabItem";
+import { Clipboard, House, List, SignOut, User, Lightbulb } from "phosphor-react";
+import React from "react";
 import { useRecoilState } from "recoil";
 import { activeTabState } from "../../recoil_state";
+import Applications from "./TabPages/Application";
+import Home from "./TabPages/Home";
+import { MyIdeas } from "./TabPages/MyIdeas";
+import { MyPostings } from "./TabPages/MyPostings";
+import { Profile } from "./TabPages/Profile";
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useRecoilState(activeTabState);
@@ -61,6 +61,12 @@ const HomePage = () => {
             isActive={activeTab === "My Postings"}
           />
           <TabItem
+            tabName="My Ideas"
+            Icon={Lightbulb}
+            onClick={handleTabClick}
+            isActive={activeTab === "My Ideas"}
+          />
+          <TabItem
             tabName="Profile"
             Icon={User}
             onClick={handleTabClick}
@@ -77,6 +83,7 @@ const HomePage = () => {
         {activeTab === "My Postings" && <MyPostings />}
         {activeTab === "Profile" && <Profile />}
         {activeTab === "Applications" && <Applications />}
+        {activeTab === "My Ideas" && <MyIdeas />}
       </main >
     </div >
   );

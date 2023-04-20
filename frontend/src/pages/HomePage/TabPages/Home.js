@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import IdeaCard from "../components/IdeaCard";
-import { ideasState } from "../../../recoil_state";
 import { useRecoilState } from "recoil";
-import { getGigs, getIdeaGigs } from "../../../services/gigService";
-import { getAllIdeas } from "../../../services/ideaService";
+import { ideasState, loggedInUserState } from "../../../recoil_state";
+import { getGigs } from "../../../services/gigService";
+import IdeaCard from "../components/IdeaCard";
 
 const Home = () => {
   const [ideas, setIdeas] = useRecoilState(ideasState);
+  const [user, setUser] = useRecoilState(loggedInUserState);
 
   useEffect(() => {
     getGigs().then((response) => {
@@ -63,7 +63,7 @@ const Home = () => {
 
   return (
     <div class="p-4 space-y-4">
-      <h2 class="text-2xl font-bold">Browse Ideas</h2>
+      <h2 class="text-3xl font-bold text-neutral">Wellcome {user.name}</h2>
       <div class="w-full">
         <input
           type="text"
@@ -76,11 +76,10 @@ const Home = () => {
           {availableTags.map((tag) => (
             <div
               key={tag}
-              class={`bg-gray-200 px-2 py-1 rounded-full mr-2 mb-2 cursor-pointer ${
-                selectedTags.includes(tag)
-                  ? "bg-primary text-white"
-                  : "text-gray-700"
-              }`}
+              class={`bg-gray-200 px-2 py-1 rounded-full mr-2 mb-2 cursor-pointer ${selectedTags.includes(tag)
+                ? "bg-primary text-white"
+                : "text-gray-700"
+                }`}
               onClick={() => handleTagSelect(tag)}
             >
               <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium">

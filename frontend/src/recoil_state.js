@@ -24,3 +24,8 @@ export const activeTabState = atom({
   key: "activeTabState",
   default: "Home",
 });
+
+export const myIdeasState = atom({
+  key: "myIdeasState", // unique ID (with respect to other atoms/selectors)
+  default: [], // default value (aka initial value)
+});
