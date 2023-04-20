@@ -4,16 +4,22 @@ import { Plus, XCircle, X } from "phosphor-react";
 import { createIdea, getMyIdeas } from "../../../services/ideaService";
 import { useRecoilState } from "recoil";
 import { myIdeasState } from "../../../recoil_state";
+import { useNavigate } from "react-router-dom";
+
 
 const MyIdeaCard = ({ idea }) => {
+      const navigate = useNavigate();
 
-
+  const handleTapClick = () => {
+    navigate(`/idea/${idea.id}`);
+  };
+  
     return (
-        <div class="flex flex-col w-full  bg-white rounded-lg shadow-md">
+        <button onClick={handleTapClick} class="flex flex-col w-full  bg-white rounded-lg shadow-md">
             <div class="flex flex-row justify-between items-center w-full h-12 px-4">
                 <span>{idea.title}</span>
             </div>
-        </div>
+        </button>
     );
 };
 
@@ -109,10 +115,10 @@ const CreateIdeaForm = ({ onCreated }) => {
                     <label htmlFor="region" className="block text-sm font-medium leading-6 text-neutral-900">
                         Tags
                     </label>
-                    <div className="mt-2 flex gap-2 flex-wrap">
+                    <div className="flex flex-wrap gap-2 mt-2">
                         {
                             formData.tags.map((tag, index) => (
-                                <div key={index} className="inline-flex items-center px-3 py-1 rounded-md text-md font-medium bg-gray-100 text-gray-800">
+                                <div key={index} className="inline-flex items-center px-3 py-1 font-medium text-gray-800 bg-gray-100 rounded-md text-md">
                                     <span  >
                                         {tag}
                                     </span>
@@ -139,7 +145,7 @@ const CreateIdeaForm = ({ onCreated }) => {
                         />
                     </div>
                 </div>
-                <div className="sm:col-span-3 flex justify-end pt-4">
+                <div className="flex justify-end pt-4 sm:col-span-3">
                     <button className={"btn btn-primary" + (isLoading ? " loading" : "")}
                         onClick={submitForm}
                     >Create</button>
@@ -181,14 +187,14 @@ export const MyIdeas = () => {
         <div class="p-4 space-y-4 min-h-screen flex flex-col w-full">
             {
                 (myIdeas.length && !myIdeasLoading) ?
-                    <button className="btn gap-2 absolute bottom-10 right-10" onClick={() => setOpen(true)}>
+                    <button className="absolute gap-2 btn bottom-10 right-10" onClick={() => setOpen(true)}>
                         <Plus size={32} />
                         Add Idea
                     </button> : ""
             }
             <h2 class="text-2xl font-bold text-neutral">My Ideas</h2>
 
-            {(myIdeasLoading ? <div className="flex flex-col flex-grow justify-center items-center">
+            {(myIdeasLoading ? <div className="flex flex-col items-center justify-center flex-grow">
                 <div role="status">
                     <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
@@ -200,7 +206,7 @@ export const MyIdeas = () => {
                 <Fragment>
                     {
                         myIdeas.length ? "" :
-                            <div className="flex flex-col flex-grow justify-center items-center">
+                            <div className="flex flex-col items-center justify-center flex-grow">
                                 <div class="flex flex-col justify-center items-center w-96 h-56 border-2 border-dashed text-neutral-400 rounded-lg"
                                     role="button"
                                     onClick={() => navigateToCreateIdea()}
@@ -240,12 +246,12 @@ export const MyIdeas = () => {
                         leaveFrom="opacity-50"
                         leaveTo="opacity-0"
                     >
-                        <div className="fixed inset-0 bg-gray-500 bg-opacity-50 transition-opacity" />
+                        <div className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-50" />
                     </Transition.Child>
 
                     <div className="fixed inset-0 overflow-hidden">
                         <div className="absolute inset-0 overflow-hidden">
-                            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+                            <div className="fixed inset-y-0 right-0 flex max-w-full pl-10 pointer-events-none">
                                 <Transition.Child
                                     as={Fragment}
                                     enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -255,7 +261,7 @@ export const MyIdeas = () => {
                                     leaveFrom="translate-x-0"
                                     leaveTo="translate-x-full"
                                 >
-                                    <Dialog.Panel className="pointer-events-auto relative w-screen max-w-md">
+                                    <Dialog.Panel className="relative w-screen max-w-md pointer-events-auto">
                                         <Transition.Child
                                             as={Fragment}
                                             enter="ease-in-out duration-500"
@@ -265,24 +271,24 @@ export const MyIdeas = () => {
                                             leaveFrom="opacity-100"
                                             leaveTo="opacity-0"
                                         >
-                                            <div className="absolute left-0 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4">
+                                            <div className="absolute top-0 left-0 flex pt-4 pr-2 -ml-8 sm:-ml-10 sm:pr-4">
                                                 <button
                                                     type="button"
-                                                    className="rounded-md text-gray-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
+                                                    className="text-gray-500 rounded-md hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
                                                     onClick={() => setOpen(false)}
                                                 >
                                                     <span className="sr-only">Close panel</span>
-                                                    <XCircle className="h-6 w-6" aria-hidden="true" />
+                                                    <XCircle className="w-6 h-6" aria-hidden="true" />
                                                 </button>
                                             </div>
                                         </Transition.Child>
-                                        <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
+                                        <div className="flex flex-col h-full py-6 overflow-y-scroll bg-white shadow-xl">
                                             <div className="px-4 sm:px-6">
                                                 <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
                                                     Add an idea
                                                 </Dialog.Title>
                                             </div>
-                                            <div className="relative mt-6 flex-1 px-4 sm:px-6">
+                                            <div className="relative flex-1 px-4 mt-6 sm:px-6">
                                                 <CreateIdeaForm onCreated={onCreated} />
                                             </div>
                                         </div>
