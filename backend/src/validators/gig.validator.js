@@ -4,6 +4,7 @@ const createGigSchema = Joi.object({
     title: Joi.string().min(3).max(50).required(),
     description: Joi.string().min(5).max(255).required(),
     tags: Joi.array().items(Joi.string()).required(),
+    idea: Joi.string().required()
 });
 
 
