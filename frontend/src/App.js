@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import ApplicationApply from "./pages/ApplicationApplyForm.js/ApplicationApplyForm";
 import ApplicationDetailPage from "./pages/ApplicationDetailPage/ApplicationDetailPage";
 import { GigDetailPage } from "./pages/GigDetailPage/GigDetailPage";
+import { ApplicantInfoPage } from "./pages/ApplicantInfoPage/ApplicantInfoPage";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/applications/:id",
     element: <ApplicationDetailPage />,
+  },
+  {
+    path: "/applicantInfo/:applicationId",
+    element: <ApplicantInfoPage />,
   },
   {
     path: "/gigs/:id",

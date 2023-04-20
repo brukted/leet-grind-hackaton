@@ -88,7 +88,7 @@ export const GigDetailPage = () => {
                     <ul className="divide-y divide-gray-100 pt-4 gap-3 flex flex-col px-2">
                         {applications.map((app) => (
                             <li key={app.applicantModel.email} className="flex justify-between gap-x-6 p-5 shadow-sm rounded-sm" onClick={() => {
-                                navigate(`/applications/${app._id}`);
+                                navigate(`/applicantInfo/${app._id}`);
                             }}>
                                 <div className="flex gap-x-4">
                                     <div className="min-w-0 flex-auto">
