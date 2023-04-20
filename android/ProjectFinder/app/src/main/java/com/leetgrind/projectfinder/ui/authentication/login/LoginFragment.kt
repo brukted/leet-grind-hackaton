@@ -54,11 +54,10 @@ class LoginFragment : Fragment() {
                                     binding.loginBtn.hideAndDisable()
                                     binding.progressBar.show()
                                 }
-
                                 is Resource.Success -> {
-                                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                                    findNavController().navigate(R.id.mainActivity)
+                                    requireActivity().finish()
                                 }
-
                                 else -> {
                                     binding.progressBar.gone()
                                     binding.loginBtn.showAndEnable()
@@ -76,7 +75,9 @@ class LoginFragment : Fragment() {
             }
 
             binding.dontHaveAccountBtn.setOnClickListener {
-                findNavController().navigate(R.id.action_loginFragment_to_register2)
+                findNavController().navigate(
+                    LoginFragmentDirections.actionLoginFragment2ToRegisterFragment()
+                )
             }
         }
     }
