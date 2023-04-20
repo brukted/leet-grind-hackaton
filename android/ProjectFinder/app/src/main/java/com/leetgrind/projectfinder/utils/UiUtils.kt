@@ -29,7 +29,7 @@ fun View.showAndEnable() {
     isEnabled = true
 }
 
-fun ChipGroup.addChip(context: Context, label: String) {
+fun ChipGroup.addChip(context: Context, label: String, closable: Boolean = false) {
     Chip(context).apply {
         id = View.generateViewId()
         text = label
@@ -37,6 +37,10 @@ fun ChipGroup.addChip(context: Context, label: String) {
         isCheckable = false
         isCheckedIconVisible = false
         isFocusable = false
+        if (closable) {
+            isCloseIconVisible = true
+            setOnCloseIconClickListener { removeView(this) }
+        }
         addView(this)
     }
 }

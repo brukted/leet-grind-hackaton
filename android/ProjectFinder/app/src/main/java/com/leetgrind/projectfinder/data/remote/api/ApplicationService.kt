@@ -16,7 +16,7 @@ interface ApplicationService {
     suspend fun getMyApplications(): Response<JSendResponse<List<ApplicationResponse>>>
 
     @POST("applications")
-    suspend fun createApplication(@Body form: ApplicationForm): Response<JSendResponse<Void>>
+    suspend fun createApplication(@Body form: ApplicationForm): Response<JSendResponse<ApplicationResponse>>
 
     @GET("gigs/{gigId}/applications")
     suspend fun getApplicationsByGig(

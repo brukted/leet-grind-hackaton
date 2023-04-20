@@ -50,7 +50,7 @@ exports.updateApplication = async (req, res, next) => {
     const applicant_ = await Application.findByIdAndUpdate(req.params.id, req.body, {
       runValidators: true,
       new: true,
-    });
+    }).populate('applicantModel').populate('gigModel');
 
     res.send(
       new JSendResponse().success(
