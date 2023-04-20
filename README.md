@@ -2,6 +2,8 @@
 
 Welcome to our hackathon project, Idea Collaboration Platform! The goal of our project is to address the problem of a mismatch between individuals with great project ideas and those with the necessary skills, resources, or connections to bring those ideas to fruition. Our platform aims to connect these two groups and facilitate collaboration, so that innovative ideas can be transformed into real-world projects.
 
+Demo Website [https://projectfinder-website.onrender.com/]
+
 ## Problem Statement
 There are many talented individuals with great project ideas, but they may not have the necessary skills, resources, or connections to bring their ideas to fruition. On the other hand, there are also many skilled individuals who are looking for interesting projects to work on, but may not have the time or opportunity to generate their own ideas. This mismatch creates a gap in the market for a platform that connects these two groups and facilitates collaboration.
 
