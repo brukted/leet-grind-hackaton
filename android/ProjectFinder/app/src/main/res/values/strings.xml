@@ -15,7 +15,7 @@
     <string name="full_name">%s %s</string>
     <string name="author_prefix">Author: %s</string>
     <string name="no_applications_yet">No applications yet</string>
-    <string name="no_ideas_found">No ideas found</string>
+    <string name="no_ideas_found">No ideas yet</string>
     <string name="my_notes">My Notes</string>
     <string name="view_on_github">View on Github</string>
     <string name="note_to_the_owner">Note to the Owner</string>

@@ -38,7 +38,7 @@ class HomeAdapter(
             _allItems[position].author.firstName,
             _allItems[position].author.lastName
         )
-        _allItems[position].tags.forEach {
+        _allItems[position].tags.take(3).forEach {
             holder.tags.addChip(holder.itemView.context, it)
         }
         holder.itemView.setOnClickListener {

@@ -8,7 +8,6 @@ fun RegistrationForm.toRegistrationRequest(): RegistrationRequest =
         firstName,
         lastName,
         email,
-        github,
-        linkedIn,
-        cvLink
+        password,
+        telegramHandle
     )

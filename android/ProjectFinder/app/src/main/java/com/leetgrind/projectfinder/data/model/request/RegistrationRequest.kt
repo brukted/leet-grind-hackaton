@@ -1,10 +1,9 @@
 package com.leetgrind.projectfinder.data.model.request
 
 data class RegistrationRequest(
-    val firstName: String,
-    val lastName: String,
+    val name: String,
+    val lastname: String,
     val email: String,
-    val github: String,
-    val linkedIn: String,
-    val cvLink: String,
+    val password: String,
+    val telegram: String,
 )

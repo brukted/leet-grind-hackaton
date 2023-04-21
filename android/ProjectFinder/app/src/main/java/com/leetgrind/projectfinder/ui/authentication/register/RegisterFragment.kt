@@ -46,32 +46,31 @@ class RegisterFragment : Fragment() {
             binding.registerBtn.isEnabled = false
 
             lifecycleScope.launch {
-                registrationViewModel.register()
-                    .collect {
-                        when (it) {
-                            is Resource.Loading -> {
-                                binding.registerBtn.hideAndDisable()
-                                binding.progressBar.show()
-                            }
-                            is Resource.Success -> {
-                                findNavController().navigate(
-                                    RegisterFragmentDirections.actionRegisterFragmentToLoginFragment2()
-                                )
-                            }
-                            else -> {
-                                binding.progressBar.gone()
-                                binding.registerBtn.showAndEnable()
-                                binding.registerBtn.isEnabled = true
-                                it.message?.let { message ->
-                                    Toast.makeText(
-                                        requireContext(),
-                                        message,
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                }
+                registrationViewModel.register().collect {
+                    when (it) {
+                        is Resource.Loading -> {
+                            binding.registerBtn.hideAndDisable()
+                            binding.progressBar.show()
+                        }
+                        is Resource.Success -> {
+                            findNavController().navigate(
+                                RegisterFragmentDirections.actionRegisterFragmentToLoginFragment2()
+                            )
+                        }
+                        else -> {
+                            binding.progressBar.gone()
+                            binding.registerBtn.showAndEnable()
+                            binding.registerBtn.isEnabled = true
+                            it.message?.let { message ->
+                                Toast.makeText(
+                                    requireContext(),
+                                    message,
+                                    Toast.LENGTH_LONG
+                                ).show()
                             }
                         }
                     }
+                }
             }
         }
 
